@@ -8,4 +8,6 @@ public interface MemberDao {
 
 	public int loginMember(Member member);
 
+	public int checkjoin(Member member);
+
 }

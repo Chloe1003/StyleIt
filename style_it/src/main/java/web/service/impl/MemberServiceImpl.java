@@ -29,4 +29,14 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 
+	@Override
+	public int checkjoin(Member member) {
+		
+		if(memberDao.checkjoin(member) == 1) {
+			return 0;
+		}else {
+			return 1;
+		}
+	}
+
 }

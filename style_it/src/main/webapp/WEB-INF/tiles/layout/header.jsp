@@ -80,24 +80,12 @@
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		/* 회원가입 정규식 */
-		 var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-
 		
 		/* 회원가입 */
 		$("input").eq(0).focus();
 		
 		$("#btnJoin").click(function() {
 			
-			 if(m_email.value=="") {
-		         alert("이메일을 입력해 주세요");
-		         m_email.focus();
-		         return false;
-		     }
-
-		     if(!check(re2, m_email, "적합하지 않은 이메일 형식입니다.")) {
-		         return false;
-		     }
 		     if(m_pw.value=="") {
 		         alert("비밀번호를 입력해 주시오");
 		         m_pw.focus();
@@ -131,6 +119,50 @@
 				 what.focus();
 				 //return false;
 			}
+			//아이디 중복체크
+			$(document).ready(function() {
+				/* 회원가입 정규식 */
+				 var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+				 
+				$("#check").click(function() {
+
+					$.ajax({
+						type : "post"
+						,url : "/member/joincheck"
+						,data : { "m_email" : $("#m_email").val() }
+						,dataType : "json"
+						,success : function( data ) {
+							console.log("성공");
+							console.log(data);
+							console.log(data.hashMap.check);
+							
+							 if(m_email.value=="") {
+						         alert("이메일을 입력해 주세요");
+						         m_email.focus();
+						         return false;
+						     }
+
+						     if(!check(re2, m_email, "적합하지 않은 이메일 형식입니다.")) {
+						         return false;
+						     }
+							
+							if(data.hashMap.check==0){
+								alert("사용 불가한 아이디입니다.") 
+								$('#m_email').val('');
+								 m_email.focus();
+							}else{
+								alert("사용 가능한 아이디입니다.")
+							}
+						}
+						,error : function(e) {
+							console.log("실패");
+							console.log(e);
+						}
+					});
+					
+				});
+			});
+
 			
 			
 			
@@ -213,10 +245,6 @@
 			<div class="form-group">
 				<input type="password" class="form-control" name="m_pw" placeholder="비밀번호">
 			</div>
-			<!-- 에이잭스처리. -->
-			<!-- <div style="text-align: center; color: red;" id="LoginUserpasswordBlankChk"></div>
-			<div style="text-align: center; color: red;" id="LoginChk"></div> -->
-			
 			<!-- 로그인폼의 로그인, 회원가입 버튼 -->
 			<div class="form-group">
 				<button id="btnlogin" class="btn btn-default"
@@ -247,10 +275,11 @@
 				<div class="col-sm-7" style="padding: 0;">
 					<input type="text" id="m_email"name="m_email" class="form-control"	style="width: 285.83px;"/>
 				</div>
+				<button type="button" id="check">중복체크</button>
 			</div>
-			<!-- 				<div class="check">
-				<button type="button" class="check_but" onclick="idCheck()">중복확인~</button>
-				</div> -->
+			
+			
+							
 			<div class="form-group">
 				<label for="m_pw" class="col-sm-3 control-label">패스워드</label>
 				<div class="col-sm-7" style="padding: 0;">
@@ -260,11 +289,11 @@
 			<div class="form-group">
 				<label for="m_nick" class="col-sm-3 control-label">nick</label>
 				<div class="col-sm-7" style="padding: 0;">
-					<input type="text" name="m_nick" class="form-control" />
+					<input type="text" id="m_nick" name="m_nick" class="form-control" />
 				</div>
 			</div>
 
-			<button id="btnJoin" class="btn btn-default"
+			<button type="submit" id="btnJoin" class="btn btn-default"
 				style="width: 285.83px; margin-left: 107px; background: #009994; color: white;">가입</button>
 
 			<div class="col-sm-offset-4"></div>

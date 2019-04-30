@@ -17,7 +17,7 @@ import web.service.face.FeedService;
 @Controller
 public class FeedController {
 
-	@Autowired public FeedService fServ;
+//	@Autowired FeedService fServ;
 	private static final Logger logger=LoggerFactory.getLogger(FeedController.class);
 	
 	// feed 좋아요순 리스트 반환

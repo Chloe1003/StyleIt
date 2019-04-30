@@ -8,4 +8,6 @@ public interface MemberService {
 
 	public boolean loginMember(Member member);
 
+	public int checkjoin(Member member);
+
 }

@@ -21,6 +21,13 @@
 		WHERE m_email = #{m_email } AND m_pw = #{m_pw } AND m_valid = 'y'
 	
 	</select>
+	
+	<select id="checkjoin" resultType="int" parameterType="web.dto.Member">
+	
+		SELECT COUNT(*) FROM member
+  		WHERE m_email= #{m_email }
+	
+	</select>
   
   
   
