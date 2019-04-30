@@ -16,13 +16,13 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public void memberInsert (Member member) {
 		
-		memberDao.memberInsert(member);
+		memberDao.insertMember(member);
 	}
 
 	@Override
 	public boolean memberLogin(Member member) {
 		
-		if(memberDao.memberLogin(member)==1) {
+		if(memberDao.loginMember(member)==1) {
 			return true;
 		}else {
 			return false;
@@ -40,7 +40,8 @@ public class MemberServiceImpl implements MemberService{
 		}else {
 			return 1;
 		}
-
+	}
+	
 	public List<Member> getLoginList() {
 		// TODO Auto-generated method stub
 		return null;
