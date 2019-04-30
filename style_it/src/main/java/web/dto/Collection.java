@@ -4,11 +4,14 @@ import java.util.Date;
 
 public class Collection {
 	
+	// 컬렉션 테이블
 	private int c_no;
 	private String c_name;
 	private String c_content;
 	private Date c_date;
 	private int cf_no;
+	
+	// 조인 테이블 만드셈
 	
 	@Override
 	public String toString() {
