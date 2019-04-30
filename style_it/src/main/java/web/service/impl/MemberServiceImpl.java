@@ -32,6 +32,15 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+
+	public int checkjoin(Member member) {
+		
+		if(memberDao.checkjoin(member) == 1) {
+			return 0;
+		}else {
+			return 1;
+		}
+
 	public List<Member> getLoginList() {
 		// TODO Auto-generated method stub
 		return null;
@@ -77,6 +86,7 @@ public class MemberServiceImpl implements MemberService{
 	public void stylingquizUpdate(int qq_no) {
 		// TODO Auto-generated method stub
 		
+
 	}
 
 }
