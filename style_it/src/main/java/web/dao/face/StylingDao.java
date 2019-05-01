@@ -4,6 +4,7 @@ import java.util.List;
 
 import web.dto.StylingComment;
 import web.dto.StylingLike;
+import web.dto.StylingTag;
 
 public interface StylingDao {
 //	스타일링 리스트 얻어오기
@@ -24,5 +25,8 @@ public interface StylingDao {
 	void CommentDelete(int s_no);
 //	스타일링 코맨트 리스트 
 	void getStylingCommentList(StylingComment sComment);
+
+//	스타일링 태그 가져오기
+	List<StylingTag> selectStylingTag();
 
 }

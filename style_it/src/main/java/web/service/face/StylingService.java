@@ -4,8 +4,12 @@ import java.util.List;
 
 import web.dto.StylingComment;
 import web.dto.StylingLike;
+import web.dto.StylingTag;
 
 public interface StylingService {
+	
+//	스타일링 태그 얻어오기
+	public List<StylingTag> getStylingTag();
 	
 //	스타일링 리스트 얻어오기
 	public List getStylingList();

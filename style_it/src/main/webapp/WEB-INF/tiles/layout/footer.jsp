@@ -13,13 +13,14 @@ body {
   margin-bottom: 60px;
 }
 .footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 60px;
   background-color: #f5f5f5;
 }
+
 
 
 /* Custom page CSS
