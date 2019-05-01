@@ -2,13 +2,16 @@ package web.dao.face;
 
 import java.util.List;
 
+import web.dto.Styling;
 import web.dto.StylingComment;
 import web.dto.StylingLike;
 import web.dto.StylingTag;
 
 public interface StylingDao {
+	
 //	스타일링 리스트 얻어오기
-	List getStylingList();
+	List<Styling> selectStylingList(int st_no);
+	
 //	스타일링 상세보기
 	void getStylingView(int s_no);
 //	스타일링 좋아요 

@@ -11,8 +11,9 @@ public interface StylingService {
 //	스타일링 태그 얻어오기
 	public List<StylingTag> getStylingTag();
 	
-//	스타일링 리스트 얻어오기
-	public List getStylingList();
+//	태그에 해당하는 스타일링 리스트 얻어오기
+	public List getStylingList(int st_no);
+	
 //	스타일링 상세보기
 	public void getStylingView(int s_no);
 //	스타일링 좋아요 

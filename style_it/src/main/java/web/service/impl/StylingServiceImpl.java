@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import web.dao.face.StylingDao;
+import web.dto.Styling;
 import web.dto.StylingComment;
 import web.dto.StylingLike;
 import web.dto.StylingTag;
@@ -15,8 +16,8 @@ public class StylingServiceImpl implements StylingService{
 	@Autowired StylingDao sDao;
 	
 	@Override
-	public List getStylingList() {
-		return sDao.getStylingList();
+	public List<Styling> getStylingList(int st_no) {
+		return sDao.selectStylingList(st_no);
 	}
 
 	@Override

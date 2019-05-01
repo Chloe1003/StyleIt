@@ -4,12 +4,18 @@ import java.util.Date;
 
 public class Styling {
 	
+//	----- 기본 테이블 컬럼 -------------
 	private int s_no;
 	private int m_no;
 	private String s_name;
 	private String s_content;
 	private int st_no;
 	private Date s_date;
+//	-------------------------------
+	
+//	----- 조인 테이블 컬럼 --------------
+//	-------------------------------
+	
 	
 	public int getS_no() {
 		return s_no;

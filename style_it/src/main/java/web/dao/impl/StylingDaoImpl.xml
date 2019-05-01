@@ -13,4 +13,8 @@
 		ON s.fu_no = f.fu_no
 	</select>
 
+	<select id="selectStylingList" parameterType="int" resultType="web.dto.Styling">
+		SELECT * FROM styling
+		WHERE st_no=#{st_no }
+	</select>
 </mapper>

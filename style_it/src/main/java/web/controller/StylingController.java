@@ -26,9 +26,9 @@ public class StylingController {
 	}
 	
 //	스타일링 리스트 보기
-	@RequestMapping (value = "/styling/list", method = RequestMethod.GET)
-	public void StylingList(Model model) {
-			
+	@RequestMapping (value = "/styling/list")
+	public void StylingList(Model model, int st_no) {
+		model.addAttribute("stylingList", sServ.getStylingList(st_no));	
 	}
 //	스타일링 상세보기
 	@RequestMapping(value = "/styling/view", method = RequestMethod.GET)
