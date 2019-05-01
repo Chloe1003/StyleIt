@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 매퍼 설정 -->  
+<mapper namespace="web.dao.face.StylingDao">
+	<select id="selectStylingTag" resultType="web.dto.StylingTag">
+		SELECT s.st_no, s.st_name, s.st_date, s.fu_no, f.fu_storedname FROM stylingtag s
+		JOIN fileupload f
+		ON s.fu_no = f.fu_no
+	</select>
+
+</mapper>
