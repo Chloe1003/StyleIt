@@ -28,17 +28,17 @@ public class StylingController {
 //	스타일링 리스트 보기
 	@RequestMapping (value = "/styling/list")
 	public void StylingList(Model model, int st_no) {
+		
 		model.addAttribute("stylingList", sServ.getStylingList(st_no));	
 	}
 //	스타일링 상세보기
 	@RequestMapping(value = "/styling/view", method = RequestMethod.GET)
-	public void StylingView(HttpSession session, Model model, int s_no, Styling styling) {
+	public void StylingView(HttpSession session, Model model, int s_no) {
 		
 //		상세보기 페이지에서 보여질 좋아요 갯수
 		int count;
-//		댓글 리스트 뿌리기
-		List<StylingComment> list;
-		
+
+//		model.addAttribute("styling", sServ.getStylingView(s_no));
 	}
 //	스타일링 좋아요
 	@RequestMapping(value = "/styling/like", method = RequestMethod.POST)

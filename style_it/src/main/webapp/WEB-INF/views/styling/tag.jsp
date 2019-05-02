@@ -9,18 +9,19 @@ height:200px;
 position:relative; 
 display:inline-block;
 margin: 30px;
+cursor: pointer;
 }
 
 #tagname {
 position:absolute;
-left: 30px;
+left: 20px;
 top: 135px;
-font-size: 1.5em;
+font-size: 1em;
 color: whitesmoke;
-font-weight: 550;
-padding: 2px 50px;
-background: #009994;
-border-radius: 10px;
+font-weight: 500;
+padding: 4px 60px;
+background: #E89994;
+/* border-radius: 10px; */
 }
 
 #img{
@@ -33,9 +34,15 @@ top: 0;
 
 <div style="text-align:center;">
 <c:forEach items="${stylingTag }" var="t" begin="0" end="${stylingTag.size()-1 }">
-<div id="block">
+<div id="block" onclick="stylingList(${t.st_no})">
 <img src="/upload/${t.fu_storedname }" alt="images" width="200" height="200" id="img">
-<a href="/styling/list?st_no=${t.st_no }"><span id="tagname"> ${t.st_name }</span></a>
+<span id="tagname"> ${t.st_name }</span>
 </div>
 </c:forEach>
 </div>
+
+<script type="text/javascript"> 
+function stylingList(st_no){
+	location.href="/styling/list?st_no="+st_no;
+}
+</script>

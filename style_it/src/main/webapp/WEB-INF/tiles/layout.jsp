@@ -18,7 +18,13 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
 /* 모든 페이지에 적용되는 자바스크립트 */
-
+$(document).ready(function() {
+	// 윈도우의 크기 변화가 있을 때마다 수행
+	$(window).resize(function() {
+		$(".wrap").css("min-height", (window.innerHeight-20-60) + "px");
+		//보정값 20은 body의 기본 margin을 고려한 것
+	});
+});
 </script>
 
 <!-- 부트스트랩 -->

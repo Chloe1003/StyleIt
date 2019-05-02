@@ -11,14 +11,30 @@ public class Styling {
 	private String s_content;
 	private int st_no;
 	private Date s_date;
+	private int fu_no;	
 //	-------------------------------
 	
 //	----- 조인 테이블 컬럼 --------------
+	private String fu_storedname;
 //	-------------------------------
+	
+	
 	
 	
 	public int getS_no() {
 		return s_no;
+	}
+	public int getFu_no() {
+		return fu_no;
+	}
+	public void setFu_no(int fu_no) {
+		this.fu_no = fu_no;
+	}
+	public String getFu_storedname() {
+		return fu_storedname;
+	}
+	public void setFu_storedname(String fu_storedname) {
+		this.fu_storedname = fu_storedname;
 	}
 	public void setS_no(int s_no) {
 		this.s_no = s_no;
@@ -56,8 +72,10 @@ public class Styling {
 	@Override
 	public String toString() {
 		return "Styling [s_no=" + s_no + ", m_no=" + m_no + ", s_name=" + s_name + ", s_content=" + s_content
-				+ ", st_no=" + st_no + ", s_date=" + s_date + "]";
+				+ ", st_no=" + st_no + ", s_date=" + s_date + ", fu_no=" + fu_no + ", fu_storedname=" + fu_storedname
+				+ "]";
 	}
+
 	
 	
 

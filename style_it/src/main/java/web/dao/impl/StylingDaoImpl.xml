@@ -14,7 +14,9 @@
 	</select>
 
 	<select id="selectStylingList" parameterType="int" resultType="web.dto.Styling">
-		SELECT * FROM styling
-		WHERE st_no=#{st_no }
+		SELECT s.s_no, s.m_no, s.s_name, s.st_no, s.s_date, s.fu_no, f.fu_storedname FROM styling s
+		JOIN fileupload f
+		ON s.fu_no = f.fu_no
+		WHERE s.st_no=#{st_no }
 	</select>
 </mapper>
