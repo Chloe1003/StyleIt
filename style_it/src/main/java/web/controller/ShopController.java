@@ -1,6 +1,7 @@
 package web.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,15 +27,35 @@ public class ShopController {
 	@Autowired ShopService shopService;
 	
 	//SHOP 화면 리스트 출력
-	@RequestMapping(value="/shop", method=RequestMethod.GET)
-	public void shopList(Model model, Paging paging, HashMap<String, Object> map, 
-			HttpServletRequest req, StylingTag st, Product product){
+	@RequestMapping(value="/shop/list", method=RequestMethod.GET)
+	public void shopList(Model model) {
+		
+		logger.info("shopList 페이지");
+		
+		List<Product> list = shopService.getList();
+		model.addAttribute("list", list);
 		
 	}
 	
 	//SHOP 상세 페이지
 	@RequestMapping(value="/shop/view", method=RequestMethod.GET)
-	public void shopView(Model model, Product product){}
+	public void shopView(Model model, int p_no){
+		
+		logger.info("제품 상세 페이지");
+		
+		Product view = shopService.view(p_no);
+		model.addAttribute("view", view);
+		
+	}
+	
+//	@RequestMapping(value="/shop/view", method=RequestMethod.POST)
+//	public void shopView(Model model, int p_no){
+//		
+//		Product view = shopService.view(p_no);
+//		System.out.println("제품"+view.toString());
+//		model.addAttribute("view", view);
+//		
+//	}
 	
 	//필터 선택 시 작동
 	@RequestMapping(value="/shop/select", method=RequestMethod.POST)

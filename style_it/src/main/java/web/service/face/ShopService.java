@@ -5,6 +5,11 @@ import java.util.List;
 import web.dto.Product;
 
 public interface ShopService {
+
+	public List<Product> getList();
+
+	public Product view(int p_no);
+
 	
 //	//SHOP List 출력
 //	public List<Product> selectSearchList();

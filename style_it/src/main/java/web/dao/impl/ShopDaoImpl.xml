@@ -8,4 +8,19 @@
 <!-- 매퍼 설정 -->
 <mapper namespace="web.dao.face.ShopDao">
 	
+	<select id="getList" resultType="web.dto.Product">
+		select * from product
+		join fileupload
+		on product.fu_no = fileupload.fu_no
+	</select>
+	
+	<select id="view" resultType="web.dto.Product" parameterType="int">
+		SELECT * FROM product p
+		 JOIN fileupload f
+		 ON f.fu_no=p.fu_no
+		 JOIN productbrand b
+		 ON b.pb_no = p.pb_no
+		 WHERE p_no = #{p_no }
+	</select>
+	
 </mapper>
