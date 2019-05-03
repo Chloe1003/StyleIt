@@ -44,7 +44,7 @@ public class MypageContorller {
 		
 	}
 //	컬렉션 작성 수정 삭제 
-	@RequestMapping(value = "/mypage/styling")
+	@RequestMapping(value = "/mypage/collection")
 	public String MypageCollection(HttpSession session, Model model) {
 		
 		return null;

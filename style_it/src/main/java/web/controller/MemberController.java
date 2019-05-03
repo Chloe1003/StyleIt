@@ -1,7 +1,12 @@
 package web.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,15 +18,16 @@ import web.service.face.MemberService;
 
 @Controller
 public class MemberController {
-	
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	@Autowired MemberService memberService;
 	
 	
 	@RequestMapping("/home")
 	public void maingo() {
 	}
-	
-	// 맴버 가입
+
+//	회원가입
+
 	@RequestMapping(value = "/member/join", method = RequestMethod.POST)
 	public String join(Member member) {
 		
@@ -30,8 +36,23 @@ public class MemberController {
 		
 		return "redirect:/home";
 	}
+//	회원가입 중복처리
+	@RequestMapping(value = "member/joincheck", method = RequestMethod.POST)
+	public String joincheck(Member member, Model model) {
+		
+		int check = memberService.checkjoin(member);
+		Map map = new HashMap();
+		map.put("check", check);
+		model.addAttribute(map);
+		
+		return "jsonView";
+	}
 	
-	// 맴버 로그인
+
+	
+//	로그인
+
+
 	@RequestMapping(value = "/member/login", method = RequestMethod.POST)
 	public String login(Member member, HttpSession session) {
 		
@@ -44,8 +65,10 @@ public class MemberController {
 			return null;
 		}
 	}
-	
-	// 맴버 로그아웃
+
+//	로그아웃
+
+
 	@RequestMapping(value = "/member/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.invalidate();
@@ -53,6 +76,7 @@ public class MemberController {
 		return "redirect:/home";
 	}
 	
+
 	// 맴버 리스트 보기
 	@RequestMapping (value = "/member/list", method = RequestMethod.GET)
 	public void LoginList(Model model) {
@@ -72,5 +96,6 @@ public class MemberController {
 		
 		return "redirect:/home";
 	}
+
 	
 }

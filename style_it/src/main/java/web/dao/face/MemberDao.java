@@ -6,17 +6,13 @@ import web.dto.Member;
 
 public interface MemberDao {
 
-	// 로그인 리스트 얻어오기
-	public List<Member> getLoginList();
-	
-	// 로그아웃 리스트 얻어오기
-	public List<Member> getLogoutList();
-	
-	// 맴버 가입
-	public void memberInsert(Member member);
-	
-	// 맴버 로그인
-	public boolean memberLogin(Member member);
+
+	public void insertMember(Member member);
+
+	public int loginMember(Member member);
+
+	public int checkjoin(Member member);
+
 	
 	// 맴버 탈퇴 업데이트
 	public void memberUpdate(int m_no);
@@ -45,4 +41,5 @@ public interface MemberDao {
 	
 	
 	
+
 }

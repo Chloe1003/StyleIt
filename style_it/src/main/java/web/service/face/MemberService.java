@@ -36,4 +36,6 @@ public interface MemberService {
 		// 스타일링퀴즈 업데이트
 		public void stylingquizUpdate(int qq_no);
 
+	public int checkjoin(Member member);
+
 }
