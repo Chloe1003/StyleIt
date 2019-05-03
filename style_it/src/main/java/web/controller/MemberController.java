@@ -22,7 +22,7 @@ public class MemberController {
 	@Autowired MemberService memberService;
 	
 	
-	@RequestMapping("/home")
+	@RequestMapping("/main")
 	public void maingo() {
 	}
 
@@ -34,7 +34,7 @@ public class MemberController {
 		
 		memberService.memberInsert(member);
 		
-		return "redirect:/home";
+		return "redirect:/main";
 	}
 //	회원가입 중복처리
 	@RequestMapping(value = "member/joincheck", method = RequestMethod.POST)
@@ -63,11 +63,13 @@ public class MemberController {
 		String m_nick = m.getM_nick();
 		
 		if(login==true) {
+
 			session.setAttribute("login", true);
 			session.setAttribute("m_no", m_no);
 			session.setAttribute("m_email", m_email);
 			session.setAttribute("m_nick", m_nick);
 			return "redirect:/home";
+
 		}else {
 			session.setAttribute("login", false);
 			return null;
@@ -81,7 +83,7 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		
-		return "redirect:/home";
+		return "redirect:/main";
 	}
 	
 
@@ -102,7 +104,7 @@ public class MemberController {
 	@RequestMapping(value = "/member/stylingquiz", method = RequestMethod.GET)
 	public String stylingquizInsert(int qq_no) {
 		
-		return "redirect:/home";
+		return "redirect:/main";
 	}
 
 	

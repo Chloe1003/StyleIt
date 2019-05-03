@@ -1,3 +1,4 @@
+
 package web.dto;
 
 import java.util.Date;
@@ -18,11 +19,10 @@ public class Styling {
 	private String fu_storedname;
 	private int cntslike;
 	private int slikecheck;
+  private int p_no;
+	private int fut_no;
 //	-------------------------------
-	
-	
-	
-	
+		
 	public int getS_no() {
 		return s_no;
 	}
@@ -83,6 +83,19 @@ public class Styling {
 	public void setS_date(Date s_date) {
 		this.s_date = s_date;
 	}
+  public int getP_no() {
+		return p_no;
+	}
+	public void setP_no(int p_no) {
+		this.p_no = p_no;
+	}
+  public int getFu_no() {
+		return fu_no;
+	}
+	public void setFu_no(int fu_no) {
+		this.fu_no = fu_no;
+
+	}
 	@Override
 	public String toString() {
 		return "Styling [s_no=" + s_no + ", m_no=" + m_no + ", s_name=" + s_name + ", s_content=" + s_content
@@ -95,3 +108,4 @@ public class Styling {
 
 
 }
+
