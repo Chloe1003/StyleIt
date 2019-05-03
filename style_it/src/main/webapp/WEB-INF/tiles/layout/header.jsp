@@ -180,8 +180,8 @@
 
 
 <!-- Start Header Area -->
-<nav class="navbar navbar-default navbar-fixed-top"
-	style="background-image: linear-gradient(to bottom, #fff 100%, #f8f8f8 100%); position: sticky; z-index: 9999; margin-bottom: 0;">
+<nav class="navbar navbar-default navbar-fixed-top" 
+	style=" background-image: linear-gradient(to bottom, #fff 100%, #f8f8f8 100%); position: sticky; z-index: 9999; margin-bottom: 0;">
 	<div class="container">
 		<div class="row">
 			<div class="navbar-header" style="margin-left: 45%">
@@ -198,7 +198,7 @@
 			</div>
 			<div id="navbar" class="navbar-right">
 				<ul class="nav navbar-nav" style="font-size: 0.85em;">
-					<li><a href="#">CREATE+&nbsp;<span><img alt="faq"
+					<li><a href="/styling/create">CREATE+&nbsp;<span><img alt="faq"
 								src="/resources/image/main/hanger.png" style="width: 20px;"></span></a></li>
 
 					<c:if test="${!empty login }">
@@ -210,7 +210,7 @@
 						<li><a href="javascript:void(0);" onclick="showlogin();">LOGIN</a></li>
 					</c:if>
 
-					<li><a href="#"><span><img alt="faq" src="/resources/image/main/faq.png" style="width: 20px;"></span></a></li>
+					<li><a href="faq"><span><img alt="faq" src="/resources/image/main/faq.png" style="width: 20px;"></span></a></li>
 				</ul>
 			</div>
 		</div>

@@ -1,3 +1,4 @@
+
 package web.controller;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class MemberController {
 	@Autowired MemberService memberService;
 	
 	
-	@RequestMapping("/home")
+	@RequestMapping("/main")
 	public void maingo() {
 	}
 
@@ -34,7 +35,7 @@ public class MemberController {
 		
 		memberService.memberInsert(member);
 		
-		return "redirect:/home";
+		return "redirect:/main";
 	}
 //	회원가입 중복처리
 	@RequestMapping(value = "member/joincheck", method = RequestMethod.POST)
@@ -57,11 +58,21 @@ public class MemberController {
 	public String login(Member member, HttpSession session) {
 		
 		boolean login = memberService.memberLogin(member);
+		Member m = memberService.getMember(member);
+		int m_no = m.getM_no();
+		String m_email = m.getM_email();
+		String m_nick = m.getM_nick();
 		
 		if(login==true) {
-			session.setAttribute("login", login);
+
+			session.setAttribute("login", true);
+			session.setAttribute("m_no", m_no);
+			session.setAttribute("m_email", m_email);
+			session.setAttribute("m_nick", m_nick);
 			return "redirect:/home";
+
 		}else {
+			session.setAttribute("login", false);
 			return null;
 		}
 	}
@@ -73,7 +84,7 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		
-		return "redirect:/home";
+		return "redirect:/main";
 	}
 	
 
@@ -94,8 +105,9 @@ public class MemberController {
 	@RequestMapping(value = "/member/stylingquiz", method = RequestMethod.GET)
 	public String stylingquizInsert(int qq_no) {
 		
-		return "redirect:/home";
+		return "redirect:/main";
 	}
 
 	
 }
+
