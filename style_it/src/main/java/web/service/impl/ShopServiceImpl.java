@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import web.controller.ShopController;
 import web.dao.face.ShopDao;
 import web.dto.Product;
+import web.dto.Styling;
 import web.service.face.ShopService;
 
 @Service
@@ -27,5 +28,12 @@ public class ShopServiceImpl implements ShopService{
 	public Product view(int p_no) {
 		return shopDao.view(p_no);
 	}
+
+	@Override
+	public List<Styling> list(int p_no) {
+		return shopDao.list(p_no);
+	}
+
+
 
 }

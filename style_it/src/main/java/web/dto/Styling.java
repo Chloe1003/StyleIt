@@ -11,6 +11,10 @@ public class Styling {
 	private int st_no;
 	private Date s_date;
 	
+	private int p_no;
+	private String fu_storedname;
+	private int fut_no;
+	
 	public int getS_no() {
 		return s_no;
 	}
@@ -46,6 +50,26 @@ public class Styling {
 	}
 	public void setS_date(Date s_date) {
 		this.s_date = s_date;
+	}
+		
+	
+	public int getP_no() {
+		return p_no;
+	}
+	public void setP_no(int p_no) {
+		this.p_no = p_no;
+	}
+	public String getFu_storedname() {
+		return fu_storedname;
+	}
+	public void setFu_storedname(String fu_storedname) {
+		this.fu_storedname = fu_storedname;
+	}
+	public int getFut_no() {
+		return fut_no;
+	}
+	public void setFut_no(int fut_no) {
+		this.fut_no = fut_no;
 	}
 	@Override
 	public String toString() {

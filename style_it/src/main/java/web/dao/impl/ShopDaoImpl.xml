@@ -15,12 +15,23 @@
 	</select>
 	
 	<select id="view" resultType="web.dto.Product" parameterType="int">
-		SELECT * FROM product p
-		 JOIN fileupload f
-		 ON f.fu_no=p.fu_no
-		 JOIN productbrand b
-		 ON b.pb_no = p.pb_no
-		 WHERE p_no = #{p_no }
+		select * from product p
+		join fileupload f
+	 	on f.fu_no=p.fu_no
+		join productbrand b
+		on b.pb_no = p.pb_no
+		where p_no = #{p_no }
+	</select>
+	
+	<select id="list" resultType="HashMap" parameterType="int">
+		select * from styling s
+		join fileupload f
+		on f.fu_no = s.fu_no
+		join fileuploadtype ft
+		on ft.fut_no = f.fut_no
+		join stylingproduct sp
+		on sp.s_no = s.s_no
+		where p_no = #{p_no }
 	</select>
 	
 </mapper>

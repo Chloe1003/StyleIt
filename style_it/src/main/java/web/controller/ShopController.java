@@ -1,9 +1,6 @@
 package web.controller;
 
-import java.util.HashMap;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import web.dto.CollectionProduct;
 import web.dto.Product;
 import web.dto.ProductLike;
-import web.dto.StylingTag;
+import web.dto.Styling;
 import web.service.face.ShopService;
-import web.util.Paging;
 
 @Controller
 public class ShopController {
@@ -44,18 +40,12 @@ public class ShopController {
 		logger.info("제품 상세 페이지");
 		
 		Product view = shopService.view(p_no);
+		List<Styling> list = shopService.list(p_no);
+		
 		model.addAttribute("view", view);
+		model.addAttribute("list", list);
 		
 	}
-	
-//	@RequestMapping(value="/shop/view", method=RequestMethod.POST)
-//	public void shopView(Model model, int p_no){
-//		
-//		Product view = shopService.view(p_no);
-//		System.out.println("제품"+view.toString());
-//		model.addAttribute("view", view);
-//		
-//	}
 	
 	//필터 선택 시 작동
 	@RequestMapping(value="/shop/select", method=RequestMethod.POST)

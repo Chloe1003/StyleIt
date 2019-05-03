@@ -3,12 +3,15 @@ package web.service.face;
 import java.util.List;
 
 import web.dto.Product;
+import web.dto.Styling;
 
 public interface ShopService {
 
 	public List<Product> getList();
 
 	public Product view(int p_no);
+
+	public List<Styling> list(int p_no);
 
 	
 //	//SHOP List 출력

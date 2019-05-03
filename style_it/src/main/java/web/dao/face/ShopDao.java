@@ -3,12 +3,17 @@ package web.dao.face;
 import java.util.List;
 
 import web.dto.Product;
+import web.dto.Styling;
 
 public interface ShopDao {
 
 	public List<Product> getList();
 
 	public Product view(int p_no);
+
+	public List<Styling> list(int p_no);
+
+
 
 //	//페이지 조회
 //	public List<Product> getSearchList();
