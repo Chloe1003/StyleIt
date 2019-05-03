@@ -28,6 +28,11 @@
   		WHERE m_email= #{m_email }
 	
 	</select>
+	
+	<select id="selectMember" parameterType="web.dto.Member" resultType="web.dto.Member">
+		SELECT m_no, m_email, m_nick FROM member
+		WHERE m_email = #{m_email } AND m_pw = #{m_pw }
+	</select>
   
   
   

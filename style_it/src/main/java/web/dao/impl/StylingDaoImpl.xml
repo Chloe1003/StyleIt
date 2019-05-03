@@ -13,4 +13,61 @@
 		ON s.fu_no = f.fu_no
 	</select>
 
+	<select id="selectStylingList" parameterType="HashMap" resultType="web.dto.Styling">
+		SELECT s.s_no, s.m_no, s.s_name, s.s_content, s.fu_no, f.fu_storedname, s.st_no, s.s_date
+   			, ( select count(*) from stylinglike l where s.s_no = l.s_no ) cntslike
+    		, ( select count(*) from stylinglike l where s.s_no = l.s_no and m_no = #{m_no } ) slikecheck
+		FROM styling S
+ 		JOIN fileupload f
+		ON s.fu_no = f.fu_no
+		WHERE s.st_no= #{st_no }
+	</select>
+	
+	<select id="selectStylingListNoLogin" parameterType="int" resultType="web.dto.Styling">
+		SELECT s.s_no, s.m_no, s.s_name, s.s_content, s.fu_no, f.fu_storedname, s.st_no, s.s_date
+   			, ( select count(*) from stylinglike l where s.s_no = l.s_no ) cntslike
+		FROM styling S
+ 		JOIN fileupload f
+		ON s.fu_no = f.fu_no
+		WHERE s.st_no= #{st_no }
+	</select>
+	
+	<select id="slikeCheck" parameterType="HashMap" resultType="int">
+		SELECT COUNT(*) FROM stylinglike
+		WHERE m_no = #{m_no } AND s_no = #{s_no }
+	</select>
+	
+	<insert id="slikeInsert" parameterType="HashMap">
+		INSERT INTO stylinglike(slike_no, s_no, m_no) 
+		VALUES (stylinglike_seq.nextval, #{s_no }, #{m_no })
+	</insert>
+	
+	<delete id="slikeDelete" parameterType="HashMap">
+		DELETE stylinglike
+		WHERE s_no = #{s_no } AND m_no = #{m_no }
+	</delete>
+	
+	<select id="slikeCnt" parameterType="int" resultType="int">
+	  	SELECT COUNT(*) FROM stylinglike
+  		WHERE s_no = #{s_no }
+	</select>
+	
+	<select id="getStylingView" parameterType="HashMap" resultType="web.dto.Styling">
+		SELECT s.s_no, s.m_no, s.s_name, s.s_content, s.fu_no, f.fu_storedname, s.st_no, s.s_date
+   			, ( select count(*) from stylinglike l where s.s_no = l.s_no ) cntslike
+    		, ( select count(*) from stylinglike l where s.s_no = l.s_no and m_no = #{m_no } ) slikecheck
+		FROM styling S
+ 		JOIN fileupload f
+		ON s.fu_no = f.fu_no
+		WHERE s.s_no= #{s_no }	
+	</select>
+	
+	<select id="getStylingViewNoLogin" parameterType="int" resultType="web.dto.Styling">
+		SELECT s.s_no, s.m_no, s.s_name, s.s_content, s.fu_no, f.fu_storedname, s.st_no, s.s_date
+   			, ( select count(*) from stylinglike l where s.s_no = l.s_no ) cntslike
+		FROM styling S
+ 		JOIN fileupload f
+		ON s.fu_no = f.fu_no
+		WHERE s.s_no= #{s_no }	
+	</select>
 </mapper>

@@ -4,17 +4,17 @@
 <style type="text/css">
 /* Sticky footer styles
 -------------------------------------------------- */
-/* html { */
-/*   position: relative; */
-/*   min-height: 100%; */
-/* } */
+/*  html {  */
+/*    position: relative;  */
+/*    min-height: 100%;  */
+/*  }  */
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 60px;
+/*   margin-bottom: 60px; */
 }
 .footer {
-  position: fixed;
-  bottom: 0;
+  position: fixed; 
+  bottom: 0; 
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 60px;
