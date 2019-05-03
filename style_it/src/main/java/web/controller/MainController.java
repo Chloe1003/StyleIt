@@ -1,6 +1,8 @@
 package web.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import web.dto.Banner;
+import web.dto.Styling;
 import web.service.face.MainService;
 
 @Controller
@@ -25,6 +28,12 @@ public class MainController {
 		List<Banner> bannerList = mainService.getBannerList();
 		model.addAttribute("bannerList", bannerList);
 				
+		List<HashMap> todayStyling = mainService.getStylingList();
+		model.addAttribute("todayStyling", todayStyling);
+		
+		List<HashMap> bestProduct = mainService.getBestProduct();
+		logger.info("bestProduct : " + bestProduct);
+		model.addAttribute("bestProduct", bestProduct);
 		
 	}
 	

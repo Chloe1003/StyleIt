@@ -12,4 +12,18 @@
 		order by b_no
 	</select>
 
+	<select id="selectStyling" resultType="HashMap">
+		select s.* , 
+		(select fu_storedname from fileupload f where f.fu_no = s.fu_no) fu_storedname
+		from styling s
+		order by s_date   
+	</select>
+	
+	<select id="selectBestProduct" resultType="HashMap">
+		select * from (	select p.p_no, p.p_name, f.fu_no, f.fu_storedname, f.fu_date, 
+		( select count(*) from productlike l where p.p_no=l.p_no ) like_cnt
+    	from product p
+    	inner join fileupload f on p.fu_no = f.fu_no) prod
+		where like_cnt >= 5
+	</select>
 </mapper>
