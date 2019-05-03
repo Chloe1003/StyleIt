@@ -17,9 +17,19 @@ import web.service.face.StylingService;
 
 @Controller
 public class StylingController {
-	@Autowired StylingService stylingService;
+	@Autowired StylingService sServ;
 	
+	//스타일링 작성 페이지
+	@RequestMapping(value="/styling/create", method=RequestMethod.GET)
+	public void styling() {
+		
+	}
 	
+	// 스타일링 태그 리스트 페이지
+	@RequestMapping(value="/styling/tag")
+	public void stylingTag(Model model) {
+		model.addAttribute("stylingTag", sServ.getStylingTag());
+	}
 	
 //	스타일링 리스트 보기
 	@RequestMapping (value = "/styling/list", method = RequestMethod.GET)

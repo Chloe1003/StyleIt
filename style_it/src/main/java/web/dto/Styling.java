@@ -3,18 +3,21 @@ package web.dto;
 import java.util.Date;
 
 public class Styling {
-	
+//-----기존 테이블 컬럼 ---------	
 	private int s_no;
 	private int m_no;
 	private String s_name;
 	private String s_content;
+	private int fu_no;	
 	private int st_no;
 	private Date s_date;
-	
+//	---------------------------
+// ----- 조인 테이블 컬럼 -------  
 	private int p_no;
 	private String fu_storedname;
 	private int fut_no;
-	
+// -----------------------------	
+  
 	public int getS_no() {
 		return s_no;
 	}
@@ -51,7 +54,6 @@ public class Styling {
 	public void setS_date(Date s_date) {
 		this.s_date = s_date;
 	}
-		
 	
 	public int getP_no() {
 		return p_no;
@@ -70,11 +72,18 @@ public class Styling {
 	}
 	public void setFut_no(int fut_no) {
 		this.fut_no = fut_no;
+
+	public int getFu_no() {
+		return fu_no;
+	}
+	public void setFu_no(int fu_no) {
+		this.fu_no = fu_no;
+
 	}
 	@Override
 	public String toString() {
 		return "Styling [s_no=" + s_no + ", m_no=" + m_no + ", s_name=" + s_name + ", s_content=" + s_content
-				+ ", st_no=" + st_no + ", s_date=" + s_date + "]";
+				+ ", fu_no=" + fu_no + ", st_no=" + st_no + ", s_date=" + s_date + "]";
 	}
 	
 	
