@@ -1,5 +1,6 @@
 package web.dao.face;
 
+import java.util.HashMap;
 import java.util.List;
 
 import web.dto.Styling;
@@ -8,16 +9,36 @@ import web.dto.StylingLike;
 import web.dto.StylingTag;
 
 public interface StylingDao {
+
+//	스타일링 태그 가져오기
+	List<StylingTag> selectStylingTag();
 	
-//	스타일링 리스트 얻어오기
-	List<Styling> selectStylingList(int st_no);
+//	로그인 시 스타일링 리스트 얻어오기
+	public List<Styling> selectStylingList(HashMap<String, Integer> map);
 	
-//	스타일링 상세보기
-	void getStylingView(int s_no);
+//	비 로그인 시 스타일링 리스트 얻어오기
+	List<Styling> selectStylingListNoLogin(int st_no);
+	
+//	좋아요 여부 확인
+	public int slikeCheck(HashMap<String, Object> like);
+	
 //	스타일링 좋아요 
-	void StylingLikeInsert(StylingLike sLike);
+	public void slikeInsert(HashMap<String, Object> like);
+	
 //	스타일링 좋아요 삭제
-	void StylingLikeDelete(StylingLike sLike);
+	public void slikeDelete(HashMap<String, Object> like);
+	
+//	해당 스타일링의 좋아요 수 반환
+	public int slikeCnt(int s_no);
+	
+	
+//	로그인시 스타일링 상세보기
+	public Styling getStylingView(HashMap<String, Integer> map);
+	
+//	비 로그인시 스타일링 상세보기
+	public Styling getStylingViewNoLogin(int s_no);
+	
+	
 //	콜렉션 추가
 	void CollectionInsert(int cs_no);
 //	콜렉션 제거
@@ -29,7 +50,9 @@ public interface StylingDao {
 //	스타일링 코맨트 리스트 
 	void getStylingCommentList(StylingComment sComment);
 
-//	스타일링 태그 가져오기
-	List<StylingTag> selectStylingTag();
+	
+
+
+
 
 }

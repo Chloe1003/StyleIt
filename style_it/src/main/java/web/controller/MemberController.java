@@ -57,11 +57,19 @@ public class MemberController {
 	public String login(Member member, HttpSession session) {
 		
 		boolean login = memberService.memberLogin(member);
+		Member m = memberService.getMember(member);
+		int m_no = m.getM_no();
+		String m_email = m.getM_email();
+		String m_nick = m.getM_nick();
 		
 		if(login==true) {
-			session.setAttribute("login", login);
+			session.setAttribute("login", true);
+			session.setAttribute("m_no", m_no);
+			session.setAttribute("m_email", m_email);
+			session.setAttribute("m_nick", m_nick);
 			return "redirect:/home";
 		}else {
+			session.setAttribute("login", false);
 			return null;
 		}
 	}

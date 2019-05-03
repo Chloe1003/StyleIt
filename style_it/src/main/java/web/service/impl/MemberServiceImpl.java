@@ -90,4 +90,10 @@ public class MemberServiceImpl implements MemberService{
 
 	}
 
+	@Override
+	public Member getMember(Member member) {
+
+		return memberDao.selectMember(member);
+	}
+
 }

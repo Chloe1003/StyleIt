@@ -16,6 +16,8 @@ public class Styling {
 	
 //	----- 조인 테이블 컬럼 --------------
 	private String fu_storedname;
+	private int cntslike;
+	private int slikecheck;
 //	-------------------------------
 	
 	
@@ -23,6 +25,18 @@ public class Styling {
 	
 	public int getS_no() {
 		return s_no;
+	}
+	public int getSlikecheck() {
+		return slikecheck;
+	}
+	public void setSlikecheck(int slikecheck) {
+		this.slikecheck = slikecheck;
+	}
+	public int getCntslike() {
+		return cntslike;
+	}
+	public void setCntslike(int cntslike) {
+		this.cntslike = cntslike;
 	}
 	public int getFu_no() {
 		return fu_no;
@@ -73,9 +87,9 @@ public class Styling {
 	public String toString() {
 		return "Styling [s_no=" + s_no + ", m_no=" + m_no + ", s_name=" + s_name + ", s_content=" + s_content
 				+ ", st_no=" + st_no + ", s_date=" + s_date + ", fu_no=" + fu_no + ", fu_storedname=" + fu_storedname
-				+ "]";
+				+ ", cntslike=" + cntslike + ", slikecheck=" + slikecheck + "]";
 	}
-
+	
 	
 	
 

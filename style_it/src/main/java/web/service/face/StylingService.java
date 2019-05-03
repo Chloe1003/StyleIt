@@ -1,9 +1,10 @@
 package web.service.face;
 
+import java.util.HashMap;
 import java.util.List;
 
+import web.dto.Styling;
 import web.dto.StylingComment;
-import web.dto.StylingLike;
 import web.dto.StylingTag;
 
 public interface StylingService {
@@ -11,15 +12,27 @@ public interface StylingService {
 //	스타일링 태그 얻어오기
 	public List<StylingTag> getStylingTag();
 	
-//	태그에 해당하는 스타일링 리스트 얻어오기
-	public List getStylingList(int st_no);
+//	로그인 시 태그에 해당하는 스타일링 리스트 얻어오기
+	public List<Styling> getStylingList(HashMap<String, Integer> map);
 	
-//	스타일링 상세보기
-	public void getStylingView(int s_no);
-//	스타일링 좋아요 
-	public void StylingLikeInsert(StylingLike sLike);
-//	스타일링 좋아요 삭제
-	public void StylingLikeDelete(StylingLike sLike);
+//	비 로그인시 태그에 해당하는 스타일링 리스트 얻어오기
+	public List<Styling> getStylingListNoLogin(int st_no);
+	
+//	로그인시 스타일링 상세보기
+	public Styling getStylingView(HashMap<String, Integer> map);
+	
+//	비 로그인시 스타일링 상세보기
+	public Styling getStylingViewNoLogin(int s_no);
+
+//	스타일링 좋아요  업데이트
+	public void sLikeUpdate(HashMap<String, Object> like);
+	
+//	스타일링별 좋아요 개수 반환
+	public int slikeCnt(int s_no);
+
+//	좋아요 여부 확인
+	public int slikeCheck(HashMap<String, Object> like);
+	
 //	콜렉션 추가
 	public void CollectionInsert(int cs_no);
 //	콜렉션 제거

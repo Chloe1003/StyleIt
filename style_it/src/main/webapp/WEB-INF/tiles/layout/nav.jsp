@@ -13,7 +13,7 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-center">
               <li class="navlist"><a href="#" style="color:#777;">INSPIRE</a></li>
-              <li class="navlist"><a href="#" style="color:#777;">DISCOVER</a></li>
+              <li class="navlist"><a href="/styling/tag" style="color:#777;">DISCOVER</a></li>
               <li class="navlist"><a href="#" style="color:#777;">SHOP</a></li>
               <li class="navlist"><a href="#" style="color:#777;">FEED</a></li>	 
            </ul>

@@ -38,4 +38,7 @@ public interface MemberService {
 
 	public int checkjoin(Member member);
 
+	// 로그인 된 멤버 정보 가져오기
+	public Member getMember(Member member);
+
 }
