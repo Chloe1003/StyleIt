@@ -8,7 +8,7 @@ public class StylingProduct {
 	private int p_no;	
 	private String sp_x;
 	private String  sp_y;
-	
+
 	public int getSp_no() {
 		return sp_no;
 	}
@@ -39,6 +39,7 @@ public class StylingProduct {
 	public void setSp_y(String sp_y) {
 		this.sp_y = sp_y;
 	}
+	
 	@Override
 	public String toString() {
 		return "StylingProduct [sp_no=" + sp_no + ", s_no=" + s_no + ", p_no=" + p_no + ", sp_x=" + sp_x + ", sp_y="

@@ -4,11 +4,14 @@ import java.util.Date;
 
 public class FileUpload {
 
+
 //	----- 기존 테이블 컬럼 -------------
+
 	private int fu_no;
 	private String fu_storedname;
 	private Date fu_date;
 	private int fut_no;
+
 //	-------------------------------
 	public int getFu_no() {
 		return fu_no;
