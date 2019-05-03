@@ -32,8 +32,10 @@ public interface MemberDao {
 	// 스타일링퀴즈 업데이트
 	public void stylingquizUpdate(int qq_no);
 
+
 	// 멤버 정보 가져오기
 	public Member selectMember(Member member);
+
 	
 	
 	
