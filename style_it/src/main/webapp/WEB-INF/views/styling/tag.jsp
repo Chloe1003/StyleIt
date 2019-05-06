@@ -3,6 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <style>
+.frame{
+width:1100px;
+text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #block{
 width:200px; 
 height:200px; 
@@ -31,8 +38,7 @@ top: 0;
 }
 
 </style>
-
-<div style="text-align:center;">
+<div class="frame">
 <c:forEach items="${stylingTag }" var="t" begin="0" end="${stylingTag.size()-1 }">
 <div id="block" onclick="stylingList(${t.st_no})">
 <img src="/upload/${t.fu_storedname }" alt="images" width="200" height="200" id="img">
@@ -40,6 +46,7 @@ top: 0;
 </div>
 </c:forEach>
 </div>
+
 
 <script type="text/javascript"> 
 function stylingList(st_no){

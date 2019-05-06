@@ -18,14 +18,27 @@ public class Product {
 //	----- join 테이블 컬럼 --------
 	private String fu_storedname;
 	private String pb_name;
+	private int s_no;
 //	---------------------------
 	
 	@Override
 	public String toString() {
 		return "Product [p_no=" + p_no + ", p_gender=" + p_gender + ", p_price=" + p_price + ", p_name=" + p_name
 				+ ", fu_no=" + fu_no + ", pca_no=" + pca_no + ", pco_no=" + pco_no + ", pb_no=" + pb_no + ", po_no="
-				+ po_no + ", ps_no=" + ps_no + ", pp_no=" + pp_no + ", p_url=" + p_url + "]";
+				+ po_no + ", ps_no=" + ps_no + ", pp_no=" + pp_no + ", p_url=" + p_url + ", fu_storedname="
+				+ fu_storedname + ", pb_name=" + pb_name + ", s_no=" + s_no + "]";
 	}
+
+	
+	public int getS_no() {
+		return s_no;
+	}
+
+
+	public void setS_no(int s_no) {
+		this.s_no = s_no;
+	}
+
 
 	public int getP_no() {
 		return p_no;

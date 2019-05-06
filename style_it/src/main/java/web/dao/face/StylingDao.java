@@ -3,9 +3,9 @@ package web.dao.face;
 import java.util.HashMap;
 import java.util.List;
 
+import web.dto.Product;
 import web.dto.Styling;
 import web.dto.StylingComment;
-import web.dto.StylingLike;
 import web.dto.StylingTag;
 
 public interface StylingDao {
@@ -37,6 +37,9 @@ public interface StylingDao {
 	
 //	비 로그인시 스타일링 상세보기
 	public Styling getStylingViewNoLogin(int s_no);
+	
+//	스타일링별 제품 정보 가져오기
+	public List<Product> selectProductByStyling(int s_no);
 	
 	
 //	콜렉션 추가

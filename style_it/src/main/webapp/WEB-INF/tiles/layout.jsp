@@ -9,7 +9,6 @@
 <style type="text/css">
 	/* 모든 페이지에 적용되는 스타일 */
 	.wrap{
-		width: 1100px;
 		margin: 0 auto;
 	}
 </style>

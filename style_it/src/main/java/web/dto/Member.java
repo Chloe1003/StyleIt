@@ -5,16 +5,34 @@ import java.util.Date;
 
 public class Member {
 
-	
+//	----- 기존 테이블 컬럼 -----------
 	private int m_no;
     private String m_email; 
     private String m_nick; 
     private Date m_date;
     private String m_pw;
     private String m_valid;
+    private int m_img;
+//  ----------------------------
+//  ----- 조인 테이블 컬럼 -----------
+    private String fu_storedname;
+//  ----------------------------  
+    
     
 	public int getM_no() {
 		return m_no;
+	}
+	public int getM_img() {
+		return m_img;
+	}
+	public void setM_img(int m_img) {
+		this.m_img = m_img;
+	}
+	public String getFu_storedname() {
+		return fu_storedname;
+	}
+	public void setFu_storedname(String fu_storedname) {
+		this.fu_storedname = fu_storedname;
 	}
 	public void setM_no(int m_no) {
 		this.m_no = m_no;
@@ -52,7 +70,7 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [m_no=" + m_no + ", m_email=" + m_email + ", m_nick=" + m_nick + ", m_date=" + m_date + ", m_pw="
-				+ m_pw + ", m_valid=" + m_valid + "]";
+				+ m_pw + ", m_valid=" + m_valid + ", m_img=" + m_img + ", fu_storedname=" + fu_storedname + "]";
 	} 
     
     

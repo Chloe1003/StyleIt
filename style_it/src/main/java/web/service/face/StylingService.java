@@ -3,6 +3,7 @@ package web.service.face;
 import java.util.HashMap;
 import java.util.List;
 
+import web.dto.Product;
 import web.dto.Styling;
 import web.dto.StylingComment;
 import web.dto.StylingTag;
@@ -32,6 +33,9 @@ public interface StylingService {
 
 //	좋아요 여부 확인
 	public int slikeCheck(HashMap<String, Object> like);
+	
+//	스타일링별 제품 정보 얻어오기
+	public List<Product> getProductByStyling(int s_no);
 	
 //	콜렉션 추가
 	public void CollectionInsert(int cs_no);
