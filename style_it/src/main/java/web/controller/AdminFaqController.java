@@ -1,5 +1,8 @@
 package web.controller;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -24,7 +27,11 @@ public class AdminFaqController {
 	
 	// FAQ 전체 리스트
 	@RequestMapping(value="/admin/faq/list", method=RequestMethod.GET)
-	public void faqList(Model model, HttpServletRequest req) {
+	public void faqList(Faq faq, Model model) {
+		
+		List<HashMap> faqList = faqService.getFaqList();
+		logger.info("faqList : "+ faqList);
+		model.addAttribute("faqList", faqList);
 		
 	}
 	
@@ -42,13 +49,17 @@ public class AdminFaqController {
 	
 	// 게시글 추가
 	@RequestMapping(value="/admin/faq/insert", method=RequestMethod.POST)
-	public String insert(Faq faq, HttpSession session) {
-		return null;
+	public String insert(Faq faq) {
+		
+		logger.info("faq : "+faq);
+		faqService.insert(faq);
+		
+		return "redirect:/admin/faq/list";
 	}
 	
 	// 게시글 수정 폼
 	@RequestMapping(value="/admin/faq/update", method=RequestMethod.GET)
-	public void updateForm(Model model, int faq_no) {
+	public void updateForm(Model model) {
 		
 	}
 	

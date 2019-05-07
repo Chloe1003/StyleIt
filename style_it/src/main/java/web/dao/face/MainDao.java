@@ -10,7 +10,7 @@ import web.dto.Styling;
 public interface MainDao {
 	
 	//배너 정보 가져오기
-	public List<Banner> selectBanner();
+	public List<HashMap> selectBanner();
 	
 	//오늘의 스타일링 리스트 가져오기
 	public List<HashMap> selectStyling();

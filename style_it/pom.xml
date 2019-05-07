@@ -22,7 +22,7 @@
 	</repositories>
 	
 	<dependencies>
-		
+	
 		<!-- Jackson-databind(Jackson Mapper를 포함하고 있음) -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>

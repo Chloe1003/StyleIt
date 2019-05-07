@@ -69,7 +69,7 @@ public class MemberController {
 			session.setAttribute("m_no", m_no);
 			session.setAttribute("m_email", m_email);
 			session.setAttribute("m_nick", m_nick);
-			return "redirect:/home";
+			return "redirect:/main";
 
 		}else {
 			session.setAttribute("login", false);

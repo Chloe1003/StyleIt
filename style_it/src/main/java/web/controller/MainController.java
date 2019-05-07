@@ -25,7 +25,7 @@ public class MainController {
 	@RequestMapping(value="/main", method=RequestMethod.GET)
 	public void main(Model model) {
 		
-		List<Banner> bannerList = mainService.getBannerList();
+		List<HashMap> bannerList = mainService.getBannerList();
 		model.addAttribute("bannerList", bannerList);
 				
 		List<HashMap> todayStyling = mainService.getStylingList();

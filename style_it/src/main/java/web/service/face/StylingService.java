@@ -44,5 +44,11 @@ public interface StylingService {
 //	스타일링 코맨트 리스트 
 	public void getStylingCommentList(StylingComment sComment);
 	
+	//스타일링 태그 리스트
+	public List<StylingTag> getStylingTagList();
+	
+	//스타일링 태그 추가
+	public void stylingTagInsert(HashMap<String, Object> map);
+	
 	
 }
