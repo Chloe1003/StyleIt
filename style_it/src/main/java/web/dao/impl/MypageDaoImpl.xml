@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 매퍼 설정 -->
+  <mapper namespace="web.dao.face.MypageDao">
+  
+	<select id="selectProductLike" parameterType="int" resultType="web.dto.ProductLike">
+		SELECT p_no, m_no, plike_date FROM productlike
+	</select>
+  
+  	<select id="recommendProduct" parameterType="web.dto.MemberQuizSet" resultType="web.dto.Product">
+  		SELECT * FROM (
+			WITH ratings AS(
+    			SELECT 
+			        p.p_no,
+			        p.p_gender,
+			        p.p_price,
+			        p.p_name,
+			        p.pca_no,
+			        p.pb_no,
+			        p.po_no,
+			        p.ps_no,
+			        p.pp_no, 
+			        0.8*(CASE WHEN p.po_no= #{po_no }    THEN 1 ELSE 0 END)
+			        + 0.2*(CASE WHEN p.pb_no= #{pb_no }   THEN 1 ELSE 0 END)
+			        + 0.5*(CASE WHEN p.ps_no= #{ps_no }  THEN 1 ELSE 0 END)
+			        + 0.9*(CASE WHEN p.pca_no= #{pca_no } THEN 1 ELSE 0 END)
+			        + 0.5*(CASE WHEN p.p_price BETWEEN #{p_lowprice } AND #{p_highprice } THEN 1 ELSE 0 END)
+			        AS score
+			    FROM product p
+			    WHERE  p.p_gender= #{p_gender } AND p.pco_no!= #{pco_no } AND p.pp_no!= #{pp_no }
+			    GROUP BY  p.p_no, p.p_gender, p.p_price, p.p_name, p.pca_no, p.pb_no, p.po_no, p.ps_no, p.pp_no
+			) 
+			    SELECT * FROM ratings 
+			    ORDER BY score DESC
+			) WHERE ROWNUM <= 10  	
+  	</select>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  </mapper>

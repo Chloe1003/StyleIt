@@ -1,12 +1,15 @@
 package web.service.impl;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import web.dao.face.MypageDao;
+import web.dto.Product;
 import web.service.face.MypageService;
+
 @Service
 public class MypageServiceImpl implements MypageService{
 	
@@ -94,8 +97,12 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public List getRecommendProduct() {
-		return mypageDao.getRecommendProduct();
+	public List<Product> getRecommendProduct(int m_no) {
+		
+		
+		
+		
+		return null;
 	}
 
 }

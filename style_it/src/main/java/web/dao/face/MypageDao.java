@@ -2,6 +2,8 @@ package web.dao.face;
 
 import java.util.List;
 
+import web.dto.ProductLike;
+
 public interface MypageDao {
 //	팔로우 리스트
 	public List getFollowList();
@@ -37,6 +39,9 @@ public interface MypageDao {
 	public void deleteCollection();
 //	추천받은 상품 리스트
 	public List getRecommendProduct();
+	
+//	제품 좋아요 리스트 가져오기
+	public String selectProductLike(int m_no);
 	
 	
 	
