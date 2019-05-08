@@ -40,7 +40,7 @@ public class MemberController {
 		return "redirect:/main";
 	}
 //	회원가입 중복처리
-	@RequestMapping(value = "member/joincheck", method = RequestMethod.POST)
+	@RequestMapping(value = "/member/joincheck", method = RequestMethod.POST)
 	public String joincheck(Member member, Model model) {
 		
 		int check = memberService.checkjoin(member);
@@ -75,18 +75,20 @@ public class MemberController {
 		
 		if(login==true) {
 			
-			int m_no = m.getM_no();
 			session.setAttribute("login", true);
-			session.setAttribute("m_no", m_no);
-			session.setAttribute("m_email", m_email);
+			session.setAttribute("m_no", m.getM_no());
+			session.setAttribute("m_email", m.getM_email());
+			session.setAttribute("m_pw", m.getM_pw());
+			session.setAttribute("m_nick", m.getM_nick());
 			
-			map.put("login", true);
-			model.addAllAttributes(map);
+			
+//			map.put("login", true);
+			model.addAttribute("login", true);
 			return "jsonView";
 
 		}else {
-			map.put("login", false);
-			model.addAllAttributes(map);
+//			map.put("login", false);
+			model.addAttribute("login", "님은 실패");
 			
 			return "jsonView";
 		}

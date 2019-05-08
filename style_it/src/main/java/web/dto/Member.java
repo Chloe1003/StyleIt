@@ -13,6 +13,10 @@ public class Member {
     private String m_pw;
     private String m_valid;
     
+//    파일업로드 조인 용
+    private int fu_no;
+    private String fu_storedName;
+    
 	public int getM_no() {
 		return m_no;
 	}
@@ -49,11 +53,26 @@ public class Member {
 	public void setM_valid(String m_valid) {
 		this.m_valid = m_valid;
 	}
+	public int getFu_no() {
+		return fu_no;
+	}
+	public void setFu_no(int fu_no) {
+		this.fu_no = fu_no;
+	}
+	public String getFu_storedName() {
+		return fu_storedName;
+	}
+	public void setFu_storedName(String fu_storedName) {
+		this.fu_storedName = fu_storedName;
+	}
 	@Override
 	public String toString() {
 		return "Member [m_no=" + m_no + ", m_email=" + m_email + ", m_nick=" + m_nick + ", m_date=" + m_date + ", m_pw="
-				+ m_pw + ", m_valid=" + m_valid + "]";
-	} 
+				+ m_pw + ", m_valid=" + m_valid + ", fu_no=" + fu_no + ", fu_storedName=" + fu_storedName + "]";
+	}
+
+    
+    
     
     
     

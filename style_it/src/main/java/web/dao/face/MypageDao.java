@@ -2,7 +2,13 @@ package web.dao.face;
 
 import java.util.List;
 
+import web.dto.Member;
+
 public interface MypageDao {
+	
+//	유저 정보 가져오기
+	public Member getUserInfo(Member member);
+	
 //	팔로우 리스트
 	public List getFollowList();
 //	팔로잉 리스트
@@ -37,6 +43,8 @@ public interface MypageDao {
 	public void deleteCollection();
 //	추천받은 상품 리스트
 	public List getRecommendProduct();
+
+
 	
 	
 	

@@ -6,11 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import web.dao.face.MypageDao;
+import web.dto.Member;
 import web.service.face.MypageService;
 @Service
 public class MypageServiceImpl implements MypageService{
 	
 	@Autowired MypageDao mypageDao;
+	
+	@Override
+	public Member getUserInfo(Member member) {
+		return mypageDao.getUserInfo(member);
+	}
 	
 	
 	@Override
@@ -98,4 +104,7 @@ public class MypageServiceImpl implements MypageService{
 		return mypageDao.getRecommendProduct();
 	}
 
+
+
+	
 }

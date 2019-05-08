@@ -7,11 +7,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import web.dto.Member;
+import web.service.face.MemberService;
 import web.service.face.MypageService;
 
 @Controller
 public class MypageContorller {
 	@Autowired MypageService mypageService;	
+	@Autowired MemberService memberService;
+	
+//	마이페이지 이동
+	@RequestMapping("/mypage/mypage")
+	public void mypagego(Model model, Member member) {
+		
+//		회원정보 뿌리기
+		model.addAttribute("mypage", mypageService.getUserInfo(member));
+		
+		
+		
+		
+	}
+	
 	
 //	팔로우 리스트
 	@RequestMapping(value = "/mypage/followlist")

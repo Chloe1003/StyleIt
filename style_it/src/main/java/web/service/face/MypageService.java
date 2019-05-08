@@ -2,7 +2,13 @@ package web.service.face;
 
 import java.util.List;
 
+import web.dto.Member;
+
 public interface MypageService {
+	
+//	유저 정보 조회
+	public Member getUserInfo(Member member);
+	
 	
 //	팔로우 리스트
 	public List getFollowList();
@@ -44,7 +50,9 @@ public interface MypageService {
 	
 //	추천받은 상품 리스트
 	public List getRecommendProduct();
+
 	
+
 	
 	
 }

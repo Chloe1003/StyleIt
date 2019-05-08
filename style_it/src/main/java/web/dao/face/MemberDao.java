@@ -12,6 +12,9 @@ public interface MemberDao {
 	public int loginMember(Member member);
 
 	public int checkjoin(Member member);
+	
+	// 멤버 정보 가져오기
+	public Member selectMember(Member member);
 
 	
 	// 맴버 탈퇴 업데이트
@@ -33,8 +36,7 @@ public interface MemberDao {
 	public void stylingquizUpdate(int qq_no);
 
 
-	// 멤버 정보 가져오기
-	public Member selectMember(Member member);
+
 
 	
 	

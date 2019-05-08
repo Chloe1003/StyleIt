@@ -67,17 +67,25 @@
 	function showlogin(){
 		document.getElementById("login_display").style.display="block";
 		document.getElementById("bg").style.display="block";//배경 어둡게 하는 것
+		document.getElementById("join_display").style.display = "none"; //회원가입창 감추기
+		document.getElementById("bg1").style.display = "none";
 	}
 //숨겨둔 회원가입창	
 	function showjoin() {
 		document.getElementById("join_display").style.display = "block";
 		document.getElementById("bg1").style.display = "block";//배경 어둡게 하는 것
+		document.getElementById("login_display").style.display = "none";
+		document.getElementById("bg").style.display = "none";
 	}
 	
 	function logout() {
-		alert("ㅃㅃ");
+		alert("로그아웃 되었습니다.");
 		location.href = "/member/logout";
 	}
+	function mypage(){
+		location.href="/mypage/mypage?m_no=${m_no }";
+	}
+	
 </script>
 
 <script type="text/javascript">
@@ -127,14 +135,15 @@
 							  }
 					,dataType : "json"
 					,success : function (data) {
-							console.log("성공");
-						
+							console.log(data.login);
 							if(data.login==true){
-							alert("성공");
+							console.log("성공");
+							alert("로그인 성공");
 							location.href = "/home";
 							}else{
 							console.log("실패");
-							 $("#loginChk").html("실패");
+							 $("#loginChk").html("로그인 실패");
+							 $("#loginChk").css("color","red");
 							}
 						}
 						,error : function(e) {
@@ -260,7 +269,7 @@
 								src="/resources/image/main/hanger.png" style="width: 20px;"></span></a></li>
 
 					<c:if test="${login eq true }">
-						<li><a href="#">MYPAGE</a></li>
+						<li><a href="javascript:void(0);" onclick="mypage();">MYPAGE</a></li>
 						<li><a href="javascript:void(0);" onclick="logout();">LOGOUT</a></li>
 					</c:if>
 					<c:if test="${empty login }">
@@ -305,11 +314,10 @@
 			</div>
 			<!-- 로그인폼의 로그인, 회원가입 버튼 -->
 			<div class="form-group">
-				<button id="btnlogin" class="btn btn-default"
+				<button type="button" id="btnlogin" class="btn btn-default"
 				style="width: 285.83px; margin-left: 38px; background: #009994; color: white;">로그인</button>
-				<div id="loginChk"></div>
-<!-- 				<button type="button" onclick="showjoin()" id="btnJoin" name="btnJoin" class="btn btn-default btn-lg" style="width: 170px;">회원가입</button>
- -->			</div>
+				<div id="loginChk" style="text-align: center;"></div>
+			</div>
 
 		</div>
 	</form>
@@ -335,7 +343,7 @@
 					<input type="text" id="m_email"name="m_email" class="form-control"	style="width: 285.83px;"/>
 						<div id="idChk"></div>
 				</div>
-				<button type="button" id="check">중복체크</button>
+				<button type="button" id="check" style="height: 33px; color: white; background-color: #009994;">중복검사</button>
 			</div>
 		
 			
@@ -345,7 +353,7 @@
 			<div class="form-group">
 				<label for="m_pw" class="col-sm-3 control-label">패스워드</label>
 				<div class="col-sm-7" style="padding: 0;">
-					<input type="text" id="m_pw" name="m_pw" class="form-control"/>
+					<input type="password" id="m_pw" name="m_pw" class="form-control"/>
 						<div id="pwChk"></div>
 				</div>
 			</div>
