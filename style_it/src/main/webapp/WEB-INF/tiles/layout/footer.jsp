@@ -28,13 +28,13 @@ body {
 /* Not required for template or sticky footer method. */
 
 .fcontainer {
-  width: auto;
-  max-width: 1200px;
+  width: 100%;
+/*   max-width: 1200px; */
   padding: 20px;
-  margin-left: 200px;
+  margin: 0 20px;
 }
-.fcontainer .text-muted {
-  margin: 10px 20px;
+.pull-right {
+  margin-right: 40px;
 }
 
 </style>    

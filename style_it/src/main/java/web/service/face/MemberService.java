@@ -41,6 +41,9 @@ public interface MemberService {
 
 	// 로그인 된 멤버 정보 가져오기
 	public Member getMember(Member member);
+	
+	// m_no로 멤버 정보 가져오기
+	public Member getMemberByMno(int m_no);
 
 
 }
