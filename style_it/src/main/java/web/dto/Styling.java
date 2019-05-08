@@ -89,11 +89,13 @@ public class Styling {
 	public void setP_no(int p_no) {
 		this.p_no = p_no;
 	}
+
 	public int getFut_no() {
 		return fut_no;
 	}
 	public void setFut_no(int fut_no) {
 		this.fut_no = fut_no;
+
 	}
 	
 	@Override

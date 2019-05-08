@@ -1,5 +1,6 @@
 package web.service.face;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,7 @@ import web.util.Paging;
 public interface AdminFaqService {
 	
 	// FAQ 전체 리스트
-	public List<Faq> getFaqList(Paging paging);
+	public List<HashMap> getFaqList();
 	
 	// 현재 페이지 얻기
 	public int getCurPage(HttpServletRequest req);

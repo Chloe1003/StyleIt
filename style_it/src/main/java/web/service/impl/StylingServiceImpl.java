@@ -3,9 +3,12 @@ package web.service.impl;
 import java.util.HashMap;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import web.controller.AdminStylingTagController;
 import web.dao.face.StylingDao;
 import web.dto.Product;
 import web.dto.Styling;
@@ -16,6 +19,7 @@ import web.service.face.StylingService;
 @Service
 public class StylingServiceImpl implements StylingService{
 	@Autowired StylingDao sDao;
+	private static final Logger logger = LoggerFactory.getLogger(StylingServiceImpl.class);
 	
 	@Override
 	public List<Styling> getStylingList(HashMap<String, Integer> map) {
@@ -88,7 +92,48 @@ public class StylingServiceImpl implements StylingService{
 	}
 
 	@Override
+	public List<StylingTag> getStylingTagList() {
+		
+		return sDao.selectStylingTagList();
+	}
+
+	@Override
+	public void stylingTagInsert(HashMap<String, Object> map) {
+		
+		logger.info("map : " + map);
+		logger.info("map.get : "+ map.get("st_name"));
+		logger.info("map.get : "+ map.get("stored_name"));
+		sDao.fileUploadInsert(map);
+		int no = sDao.fileUploadNo(map);
+		map.put("no", no);
+		logger.info("map2 : " + map);
+		sDao.stylingTagInsert(map);
+	}
+
+	@Override
+	public void stylingTagUpdate(HashMap<String, Object> map) {
+		logger.info("map : " + map);
+		logger.info("map.get : "+ map.get("st_name"));
+		logger.info("map.get : "+ map.get("stored_name"));
+		if (map.get("stored_name") == "") {
+			logger.info("비었당");
+			sDao.stylingTagUpdate(map);
+		} else {
+			logger.info("안비었당");
+			sDao.fileUploadInsert(map);
+			int no = sDao.fileUploadNo(map);
+			map.put("no", no);
+			sDao.stylingTagUpdate(map);
+		}
+	}
+
+	@Override
+	public void stylingTagDelete(StylingTag st) {
+		sDao.stylingTagDelete(st);
+		
+  @Override
 	public List<Product> getProductByStyling(int s_no) {
 		return sDao.selectProductByStyling(s_no);
+
 	}
 }

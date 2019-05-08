@@ -10,7 +10,9 @@ public class StylingTag {
 	private int fu_no;
 	private Date st_date;
 //	-----------------------------
-	
+//	----- 추가 테이블 컬럼 ------------
+	private String st_able;
+//	-----------------------------	
 //	----- 조인 테이블 컬럼 ------------
 	private String fu_storedname;
 //	-----------------------------
@@ -19,7 +21,7 @@ public class StylingTag {
 	@Override
 	public String toString() {
 		return "StylingTag [st_no=" + st_no + ", st_name=" + st_name + ", fu_no=" + fu_no + ", st_date=" + st_date
-				+ ", fu_storedname=" + fu_storedname + "]";
+				+ ", fu_storedname=" + fu_storedname + ", st_able=" + st_able + "]";
 	}
 
 	public int getFu_no() {
@@ -60,6 +62,14 @@ public class StylingTag {
 
 	public void setSt_date(Date st_date) {
 		this.st_date = st_date;
+	}
+
+	public String getSt_able() {
+		return st_able;
+	}
+
+	public void setSt_able(String st_able) {
+		this.st_able = st_able;
 	}
 	
 	

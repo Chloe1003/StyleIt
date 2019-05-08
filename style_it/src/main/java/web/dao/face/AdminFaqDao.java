@@ -1,5 +1,6 @@
 package web.dao.face;
 
+import java.util.HashMap;
 import java.util.List;
 
 import web.dto.Faq;
@@ -8,7 +9,7 @@ import web.util.Paging;
 public interface AdminFaqDao {
 	
 	// 전체 리스트 
-	public List<Faq> selectAll(Paging paging);
+	public List<HashMap> selectAll();
 	
 	// 총 게시물 
 	public int selectCntFaq();

@@ -22,22 +22,7 @@
 	</repositories>
 	
 	<dependencies>
-		
-		<!-- apache mahout -->
-<!-- 		<dependency> -->
-<!-- 		    <groupId>org.apache.mahout</groupId> -->
-<!-- 		    <artifactId>mahout-mr</artifactId> -->
-<!-- 		    <version>0.13.0</version> -->
-<!-- 		</dependency> -->
-		
-		<!-- apache mahout 데이터 연결을 위한 커넥터 -->
-<!-- 		<dependency> -->
-<!-- 		    <groupId>org.apache.mahout</groupId> -->
-<!-- 		    <artifactId>mahout-integration</artifactId> -->
-<!-- 		    <version>0.13.0</version> -->
-<!-- 		</dependency> -->
-		
-		
+
 		<!-- Jackson-databind(Jackson Mapper를 포함하고 있음) -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
