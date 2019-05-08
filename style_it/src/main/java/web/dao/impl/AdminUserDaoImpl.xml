@@ -7,6 +7,7 @@
   
 <!-- 매퍼 설정 -->
 <mapper namespace="web.dao.face.AdminUserDao">
+
 	<select id="selectMember" parameterType="web.util.Paging" resultType="web.dto.Member">
 		SELECT * FROM (
 	  		SELECT rownum rnum, M.* FROM (
@@ -23,7 +24,7 @@
 	
 	<select id="searchCnt" parameterType="String" resultType="int">
 		SELECT COUNT(*) FROM member
-	  	WHERE m_email like '%'||#{search.search }||'%' 
+	  	WHERE m_email like '%'||#{search }||'%' 
 	</select>
 	
 	<select id="emailSearch" parameterType="HashMap" resultType="web.dto.Member">

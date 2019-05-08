@@ -1,6 +1,11 @@
 package web.controller;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.util.HashMap;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import web.dto.CollectionProduct;
+import web.dto.Member;
 import web.dto.Product;
 import web.dto.ProductLike;
 import web.dto.Styling;
@@ -24,26 +31,81 @@ public class ShopController {
 	
 	//SHOP 화면 리스트 출력
 	@RequestMapping(value="/shop/list", method=RequestMethod.GET)
-	public void shopList(Model model) {
+	public void shopList(HttpSession session, Model model) {
 		
 		logger.info("shopList 페이지");
 		
-		List<Product> list = shopService.getList();
-		model.addAttribute("list", list);
+		boolean login = false;
 		
+		try {
+			
+			if(session.getAttribute("login") != null) {
+				login = (boolean) session.getAttribute("login");
+			}
+			
+		} catch (Exception e) {
+			
+		}
+		
+		
+		if (login==true) { // 로그인 되어 있을 때
+			
+			logger.info("login true");
+			
+			int m_no = (int) session.getAttribute("m_no");
+			
+			model.addAttribute("productList", shopService.getProductList(m_no));	
+		
+		} else { // 로그인 안되어 있을 때
+			logger.info("login false");
+
+			model.addAttribute("productList", shopService.getProductNoLogin());
+			
+		}
+				
 	}
 	
 	//SHOP 상세 페이지
 	@RequestMapping(value="/shop/view", method=RequestMethod.GET)
-	public void shopView(Model model, int p_no){
+	public void shopView(HttpSession session, Model model, @RequestParam HashMap<String, Integer> map, int p_no){
 		
 		logger.info("제품 상세 페이지");
 		
-		Product view = shopService.view(p_no);
-		List<Styling> list = shopService.list(p_no);
+		boolean login = false;
 		
-		model.addAttribute("view", view);
-		model.addAttribute("list", list);
+		try {
+			
+			if(session.getAttribute("login") != null) {
+				login = (boolean) session.getAttribute("login");
+			}
+			
+		} catch (Exception e) {
+			
+		}
+		
+		if (login==true) { // 로그인 되어 있을 때
+			
+			int m_no = (int) session.getAttribute("m_no");
+						
+			map.put("m_no", m_no);
+			map.put("p_no", p_no);
+			
+			Product p = shopService.getProductView(map);
+
+			model.addAttribute("view", p);	
+			model.addAttribute("styling", shopService.getStylingByProduct(map));
+			
+		} else { // 로그인 안되어 있을 때
+			logger.info("login false");
+
+			Product p = shopService.getProductViewNoLogin(p_no);
+
+			model.addAttribute("view", p);	
+			model.addAttribute("styling", shopService.getStylingByProductNoLogin(p_no));
+
+		}
+
+		
 		
 	}
 	
@@ -53,6 +115,30 @@ public class ShopController {
 		
 		return null;
 	}
+	
+//	제품 좋아요
+	@RequestMapping(value = "/shop/like", method = RequestMethod.GET)
+	public void productLike(int p_no, HttpSession session, 
+			@RequestParam HashMap<String, Object> like, Writer out) {
+		
+		logger.info("좋아요");
+
+		int m_no = (int) session.getAttribute("m_no");
+		
+		like.put("m_no", m_no);
+		like.put("p_no", p_no);
+		
+		shopService.pLikeUpdate(like);
+		
+		logger.info("업데이트 완료");
+		
+		try {
+			out.write("{\"cnt\" :"+ shopService.plikeCnt(p_no)+", \"check\" :"+shopService.plikeCheck(like)+"}");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}	
 	
 	//추천
 	@RequestMapping(value="/shop/recommend", method=RequestMethod.GET)

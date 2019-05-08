@@ -19,6 +19,8 @@ public class Product {
 	private String fu_storedname;
 	private String pb_name;
 	private int s_no;
+	private int cntplike;
+	private int plikecheck;
 //	---------------------------
 	
 	@Override
@@ -26,10 +28,31 @@ public class Product {
 		return "Product [p_no=" + p_no + ", p_gender=" + p_gender + ", p_price=" + p_price + ", p_name=" + p_name
 				+ ", fu_no=" + fu_no + ", pca_no=" + pca_no + ", pco_no=" + pco_no + ", pb_no=" + pb_no + ", po_no="
 				+ po_no + ", ps_no=" + ps_no + ", pp_no=" + pp_no + ", p_url=" + p_url + ", fu_storedname="
-				+ fu_storedname + ", pb_name=" + pb_name + ", s_no=" + s_no + "]";
+				+ fu_storedname + ", pb_name=" + pb_name + ", s_no=" + s_no + ", cntplike=" + cntplike + ", plikecheck="
+				+ plikecheck + "]";
 	}
 
 	
+	public int getCntplike() {
+		return cntplike;
+	}
+
+
+	public void setCntplike(int cntplike) {
+		this.cntplike = cntplike;
+	}
+
+
+	public int getPlikecheck() {
+		return plikecheck;
+	}
+
+
+	public void setPlikecheck(int plikecheck) {
+		this.plikecheck = plikecheck;
+	}
+
+
 	public int getS_no() {
 		return s_no;
 	}
