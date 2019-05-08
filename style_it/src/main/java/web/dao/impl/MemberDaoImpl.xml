@@ -36,9 +36,14 @@
 	</select>
 
   
+    <select id="selectMemberByMno" parameterType="int" resultType="web.dto.Member">
+    	SELECT m.m_no, m.m_email, m.m_nick, m.m_img, f.fu_storedname FROM member m
+    	JOIN fileupload f
+    	ON m.m_img = f.fu_no
+    	WHERE m_no = #{m_no }
+    </select>
   
-  
-  
+
   
   
   

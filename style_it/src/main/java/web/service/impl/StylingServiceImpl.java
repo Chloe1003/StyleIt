@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import web.controller.AdminStylingTagController;
 import web.dao.face.StylingDao;
+import web.dto.Product;
 import web.dto.Styling;
 import web.dto.StylingComment;
 import web.dto.StylingLike;
@@ -130,5 +131,9 @@ public class StylingServiceImpl implements StylingService{
 	public void stylingTagDelete(StylingTag st) {
 		sDao.stylingTagDelete(st);
 		
+  @Override
+	public List<Product> getProductByStyling(int s_no) {
+		return sDao.selectProductByStyling(s_no);
+
 	}
 }

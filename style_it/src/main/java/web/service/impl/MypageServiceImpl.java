@@ -1,23 +1,26 @@
 package web.service.impl;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import web.dao.face.MypageDao;
+import web.dto.MemberQuiz;
+import web.dto.Product;
 import web.service.face.MypageService;
+
 @Service
 public class MypageServiceImpl implements MypageService{
 	
 	@Autowired MypageDao mypageDao;
 	
-	
 	@Override
 	public List getFollowList() {
 		return mypageDao.getFollowList();
 	}
-
+	
 	@Override
 	public List getFollowingList() {
 		return mypageDao.getFollowingList();
@@ -94,8 +97,13 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public List getRecommendProduct() {
-		return mypageDao.getRecommendProduct();
+	public List<Product> getRecommendProduct(int m_no) {
+		
+		List<MemberQuiz> mq = mypageDao.selectMemberQuiz(m_no);
+		
+		
+		
+		return null;
 	}
 
 }

@@ -2,6 +2,8 @@ package web.service.face;
 
 import java.util.List;
 
+import web.dto.Product;
+
 public interface MypageService {
 	
 //	팔로우 리스트
@@ -43,7 +45,7 @@ public interface MypageService {
 	public void deleteCollection();
 	
 //	추천받은 상품 리스트
-	public List getRecommendProduct();
+	public List<Product> getRecommendProduct(int m_no);
 	
 	
 	

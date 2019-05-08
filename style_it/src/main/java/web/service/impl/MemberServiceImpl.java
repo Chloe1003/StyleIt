@@ -97,5 +97,10 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.selectMember(member);
 	}
 
+	@Override
+	public Member getMemberByMno(int m_no) {
+		return memberDao.selectMemberByMno(m_no);
+	}
+
 
 }
