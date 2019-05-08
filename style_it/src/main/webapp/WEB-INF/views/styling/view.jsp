@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<script src="/resources/js/jssor.slider-23.0.0.mini.js" type="text/javascript"></script>
 <style>
 
 .frame{
@@ -155,29 +155,32 @@ display:inline-flex;
 
 }
 .p-header{
-    font-size: 18px;
+    font-size: 16px;
     line-height: 16px;
     text-transform: uppercase;
-    color: #35284f;
-    height: 70px;
-
+    color: #333;
+    height: 40px;
     display: flex;
     -webkit-box-pack: center;
-/*     justify-content: center; */
+    /* justify-content: center; */
     -webkit-box-align: center;
     align-items: center;
+    border-bottom: #E89C8B;
+    border-bottom-style: double;
+    margin: 20px 5px;
 }
 .product-area{
-	height: 356px;
-    width: 100%;
-    text-align: center;
+    height: 100%;
+    width: 96%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 .product-container{
-width:300px; 
-height:300px; 
-position:relative; 
-display:inline-block;
-margin: 20px;
+    width: 290px;
+    height: 300px;
+    position: relative;
+    display: inline-block;
+    margin: 5px;
 
 }
 .product-img{
@@ -236,6 +239,7 @@ object-fit: contain;
   opacity:1;
 /*   transform:scale(1); */
 }
+
 
 </style> 
     
@@ -304,12 +308,18 @@ object-fit: contain;
 		</div>
 	</c:forEach>
 	</div>
+	
+
+
+
+
 </div>
   
 <br>
-  
-    
-<script type="text/javascript">
+
+
+
+<script type="text/javascript">  
 $(document.body).css("background-color", "#eff6f6");
 $(document.body).find(".navbar").css("background-color", "#ffffff");
 

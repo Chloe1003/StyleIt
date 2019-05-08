@@ -81,7 +81,7 @@ public class StylingController {
 	@RequestMapping(value = "/styling/view", method = RequestMethod.GET)
 	public void StylingView(HttpSession session, Model model, int s_no,
 			@RequestParam HashMap<String, Integer> map) {
-
+		
 		boolean login = false;
 		
 		try {

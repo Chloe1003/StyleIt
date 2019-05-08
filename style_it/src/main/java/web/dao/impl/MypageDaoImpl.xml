@@ -11,8 +11,15 @@
 	<select id="selectProductLike" parameterType="int" resultType="web.dto.ProductLike">
 		SELECT p_no, m_no, plike_date FROM productlike
 	</select>
+	
+	<select id="selectMemberQuiz" parameterType="int" resultType="web.dto.MemberQuiz">
+		SELECT 	* FROM memberquiz
+		WHERE m_no = #{m_no }
+	</select>
+	
   
   	<select id="recommendProduct" parameterType="web.dto.MemberQuizSet" resultType="web.dto.Product">
+  	<![CDATA[
   		SELECT * FROM (
 			WITH ratings AS(
     			SELECT 
@@ -37,7 +44,8 @@
 			) 
 			    SELECT * FROM ratings 
 			    ORDER BY score DESC
-			) WHERE ROWNUM <= 10  	
+			) WHERE ROWNUM <= 10
+			]]>  	
   	</select>
 
   

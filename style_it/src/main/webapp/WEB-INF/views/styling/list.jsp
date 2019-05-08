@@ -13,7 +13,7 @@ width:300px;
 height:350px; 
 position:relative; 
 display:inline-block;
-margin: 20px;
+margin: 6px;
 }
 
 .img-wrapper{

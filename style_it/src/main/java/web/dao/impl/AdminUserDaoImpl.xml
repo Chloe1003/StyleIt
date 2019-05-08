@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 매퍼 설정 -->
+<mapper namespace="web.dao.face.AdminUserDao">
+	<select id="selectMember" parameterType="web.util.Paging" resultType="web.dto.Member">
+		SELECT * FROM (
+	  		SELECT rownum rnum, M.* FROM (
+			  	SELECT * FROM member
+			  	ORDER BY m_no desc
+	  			)M
+	  		)R
+	  	WHERE rnum BETWEEN #{startNo } AND #{endNo }
+	</select>
+	
+	<select id="memberCnt" resultType="int">
+	  SELECT COUNT(*) FROM member
+	</select>
+	
+	<select id="searchCnt" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM member
+	  	WHERE m_email like '%'||#{search.search }||'%' 
+	</select>
+	
+	<select id="emailSearch" parameterType="HashMap" resultType="web.dto.Member">
+		 SELECT * FROM (
+	  		SELECT rownum rnum, M.* FROM (
+			  	SELECT * FROM member
+			  	WHERE m_email like '%'||#{search }||'%'
+			  	ORDER BY m_no desc
+	  			)M
+	  		)R
+	  	WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
+	</select>
+	
+</mapper>
