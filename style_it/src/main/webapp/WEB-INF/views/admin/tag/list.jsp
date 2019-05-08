@@ -16,18 +16,48 @@ function showAddTag(){
 	document.getElementById("addTag_display").style.display="block";
 	document.getElementById("bg").style.display="block";//배경 어둡게 하는 것
 }
+var filesize = 0;
+function sizeCheck(){
+	var size = document.getElementById("file").files[0].size;
+	
+	filesize = size;
+}
 
 $(document).ready(function(){
 	//태그 제목 미입력시 반환처리
 	$("#btnInsert").click(function(){
 		if(st_name.value=="") {
 			alert("태그를 입력해주세요");
-			m_pw.focus();
 			return false;
 		}
+		if(filesize == 0){
+			alert("파일을 넣어주세요");
+			return false;
+		}
+	
 	});
 	
 	$(this).parents("form").submit();
+	
+	$(".tagUpdate").click(function() {
+		var title = $(this).parents("tr").children("td").eq(1).html();
+		var no = $(this).parents("tr").children("td").eq(0).html()
+		var able = $(this).parents("tr").children("td").eq(3).html()
+		$("input[name='st_name']").val(title);
+		$("input[name='st_no']").val(no);
+		$("input[name='st_able'][value='"+able+"']").attr("checked", true);
+	});
+	
+	$(".tagDelete").click(function() {
+		var no = $(this).parents("tr").children("td").eq(0).html()
+		result = confirm('삭제 하시겠습니까');
+		if(result == true){
+			$(location).attr("href","/admin/tag/delete?st_no="+no);
+		}else{
+			return false;
+		}
+// 		$("input[name='st_no']").val(no);
+	});
 });
 
   
@@ -84,15 +114,20 @@ th, td {
 				</div>
 				<hr>
 				<!-- 태그추가 form -->
-				<form action="/admin/tag/insert" style="z-index: 999;" method="post" class="form-horizontal" >
+				<form action="/admin/tag/insert" style="z-index: 999;" method="post" class="form-horizontal" enctype="multipart/form-data">
 				<div style="padding: 20px;">
 					<!-- 태그 입력 창 -->
 					<div class="form-group">
 						<input type="text" class="form-control" id="st_name" name="st_name" placeholder="태그명">
 					</div>
+					<!-- 태그 활성화 수정 -->
+					<div class="form-group">
+						<input type="radio" name="st_able" value="y" checked/>활성화
+						<input type="radio" name="st_able" value="n" />비활성화
+					</div>
 					<!-- 태그 이미지 추가 -->
 					<div class="form-group">
-						<label>첨부파일 : <input type="file" name="fu_storedname" /></label>
+						<label>첨부파일 : <input type="file" name="file" id="file" /></label>
 					</div> 
 					<!-- 확인  -->
 					<div class="form-group">
@@ -104,8 +139,7 @@ th, td {
 			</div>
 		</div>
 	</div>
-	
-	
+		  
 	<!-- 숨겨둔 태그 수정창 -->
 	<div class="modal fade" id="updateTag_display">
 		<div class="modal-dialog">
@@ -117,21 +151,27 @@ th, td {
 					</button>
 				</div>
 				<hr>
-				<!-- 태그추가 form -->
-				<form action="/admin/tag/update" style="z-index: 999;" method="post" class="form-horizontal">
+				<!-- 태그수정 form -->
+				<form action="/admin/tag/update" style="z-index: 999;" method="post" class="form-horizontal" enctype="multipart/form-data">
 				<div style="padding: 20px;">
 					<!-- 태그 입력 창 -->
 					<div class="form-group">
-						<input type="text" class="form-control" name="st_name" placeholder="태그명" value="하하하">
+						<input type="hidden" class="form-control" name="st_no">
+						<input type="text" class="form-control" name="st_name">
 					</div>
-					<!-- 태그 이미지 추가 -->
+					<!-- 태그 활성화 수정 -->
 					<div class="form-group">
-						<label>첨부파일 : <input type="file" name="fu_storedname" /></label>
-					</div>  
+						<input type="radio" name="st_able" value="y" />활성화
+						<input type="radio" name="st_able" value="n" />비활성화
+					</div> 
+					<!-- 태그 이미지 수정 -->
+					<div class="form-group">
+						<label>첨부파일 : <input type="file" name="file" id="file" /></label>
+					</div> 
 					<!-- 확인  -->
 					<div class="form-group">
 						<button id="btnInsert" class="btn btn-default" style="width: 285.83px; margin-left: 38px; background: #009994; color: white;">확인</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal" onclick='$("input[name=\"st_name\"]").val("")'>닫기</button>
 					</div>
 				</div>
 				</form>
@@ -143,8 +183,9 @@ th, td {
 	<thead>
 	<tr>
 	<th style="width: 10%">No.</th>
-	<th style="width: 50%">태그</th>
-	<th style="width: 25%">등록일</th>
+	<th style="width: 45%">태그</th>
+	<th style="width: 20%">등록일</th>
+	<th style="width: 10%">활성 여부</th>
 	<th style="width: 15%">관리</th>
 	</tr>
 	</thead>
@@ -155,7 +196,9 @@ th, td {
 	<td>${i.st_no }</td>
 	<td>${i.st_name }</td>
 	<td><fmt:formatDate value="${i.st_date }" pattern="yyyy-MM-dd"/></td>
-	<td><button class="tagUpdate" style="background-color: transparent; border-color: transparent;" data-target="#updateTag_display" data-toggle="modal">수정</button> / 삭제</td>
+	<td>${i.st_able }</td>
+	<td><button class="tagUpdate" style="background-color: transparent; border-color: transparent;" data-target="#updateTag_display" data-toggle="modal" onclick="update()">수정</button> / 
+	<button class="tagDelete" style="background-color: transparent; border-color: transparent;" onclick="delete()">삭제</button></td>
 	</tr>
 	</c:forEach>
 	</tbody>

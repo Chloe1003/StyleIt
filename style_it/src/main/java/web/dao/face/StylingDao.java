@@ -62,8 +62,11 @@ public interface StylingDao {
 	//스타일링 태그 추가
 	public void stylingTagInsert(HashMap<String, Object> map);
 	
-
-
-
-
+	//스타일링 태그 수정
+	public void stylingTagUpdate(HashMap<String, Object> map);
+	
+	//스타일링 태그 삭제
+	public void stylingTagDelete(StylingTag st);
+	
+	
 }

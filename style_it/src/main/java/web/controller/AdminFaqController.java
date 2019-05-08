@@ -35,18 +35,6 @@ public class AdminFaqController {
 		
 	}
 	
-	// 게시글 상세보기
-	@RequestMapping(value="/admin/faq/view", method=RequestMethod.GET)
-	public void view(Model model, int faq_no) {
-		
-	}
-	
-	// 게시글 추가 폼
-	@RequestMapping(value="/admin/faq/insert", method=RequestMethod.GET)
-	public void insertForm() {
-		
-	}
-	
 	// 게시글 추가
 	@RequestMapping(value="/admin/faq/insert", method=RequestMethod.POST)
 	public String insert(Faq faq) {
@@ -55,12 +43,6 @@ public class AdminFaqController {
 		faqService.insert(faq);
 		
 		return "redirect:/admin/faq/list";
-	}
-	
-	// 게시글 수정 폼
-	@RequestMapping(value="/admin/faq/update", method=RequestMethod.GET)
-	public void updateForm(Model model) {
-		
 	}
 	
 	// 게시글 수정

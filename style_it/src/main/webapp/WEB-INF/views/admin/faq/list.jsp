@@ -118,14 +118,14 @@ th, td {
 					</div>
 					<!-- faq 내용 입력 창 -->
 					<div class="form-group">
-						<textarea rows="13" cols="80" id="faq_answer" name="faq_answer" style="width : 98%; height: 500px;"></textarea>
+						<textarea rows="13" cols="80" id="faq_answer" name="faq_answer" style="width : 98%; height: 300px;"></textarea>
 					</div>
 					<!-- 확인  -->
 					<div class="form-group">
 						<button id="btnInsert" class="btn btn-default" style="width: 285.83px; margin-left: 38px; background: #009994; color: white;">확인</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 					</div> 
-				</div>
+				</div>   
 				</form>
 			</div>
 		</div>

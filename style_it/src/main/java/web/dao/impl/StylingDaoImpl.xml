@@ -76,17 +76,29 @@
 	</select>
 	
 	<insert id="fileUploadInsert" parameterType="HashMap" >
-		insert into fileupload(fu_no, fu_storedname, fu_date, fut_no) values(fileupload_seq.nextval, #{fu_storedname }, sysdate, 4); 
+		insert into fileupload(fu_no, fu_storedname, fu_date, fut_no) values(fileupload_seq.nextval, #{stored_name }, sysdate, 4) 
 	</insert>
 	
 	<select id="fileUploadNo" parameterType="HashMap" resultType="int">
 		select fu_no from fileupload
-		where fu_storedname=#{fu_storedname}
+		where fu_storedname=#{stored_name}
 	</select>
 	
 	<insert id="stylingTagInsert" parameterType="HashMap">
 		insert into stylingtag(st_no, st_name, st_date, fu_no) 
 		values(stylingtag_seq.nextval, #{st_name} , sysdate, #{no})
 	</insert> 
+	
+	<insert id="fileUploadUpdate" parameterType="HashMap">
+		update fileupload(fu_no, fu_storedname, fu_date, fut_no) values(fileupload_seq.nextval, #{stored_name }, sysdate, 4)
+	</insert>
+	
+	<insert id="stylingTagUpdate" parameterType="HashMap">
+		update stylingtag set st_name = #{st_name } where st_no=#{st_no } 
+	</insert> 
+	
+	<delete id="stylingTagDelete" parameterType="web.dto.StylingTag">
+		delete stylingtag where st_no=#{st_no }
+	</delete>
 	
 </mapper>

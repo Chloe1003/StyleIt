@@ -1,8 +1,12 @@
 package web.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -24,6 +28,7 @@ import web.service.face.StylingService;
 public class AdminStylingTagController {
 
 	@Autowired AdminStylingTagService stylingTagService;
+	@Autowired ServletContext context;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminStylingTagController.class);
 	@Autowired StylingService stylingService;
@@ -43,8 +48,43 @@ public class AdminStylingTagController {
 
 	// 태그 추가 폼
 	@RequestMapping(value="/admin/tag/insert", method=RequestMethod.POST)
-	public String insertForm( @RequestParam HashMap<String, Object> map) {
+	public String insertForm( @RequestParam HashMap<String, Object> map, MultipartFile file, FileUpload upFile) {
 		
+		
+		logger.info("파일업로드");        
+		logger.info("ST : "+map);
+		logger.info("Title : "+map.get("st_name"));
+		logger.info("file : "+map.get("fu_storedname"));
+		logger.info(file.toString());
+		logger.info(file.getOriginalFilename());
+		logger.info(String.valueOf(file.getSize()));
+		logger.info(file.getContentType());
+		logger.info(String.valueOf(file.isEmpty()));
+		
+		//저장될 파일 이름
+		String stored_name = null;
+		stored_name = file.getOriginalFilename();
+		
+		//파일 저장 경로
+		String path = context.getRealPath("upload");
+		
+		//저장될 파일
+		File dest = new File(path, stored_name);
+		
+		//파일 업로드
+		try {
+			file.transferTo(dest);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		upFile.setFu_storedname(file.getOriginalFilename());
+		
+		logger.info(upFile.toString());
+		
+		map.put("stored_name", upFile.getFu_storedname());
 		
 		logger.info("ST : "+map);
 		stylingService.stylingTagInsert(map);
@@ -52,22 +92,58 @@ public class AdminStylingTagController {
 		return "redirect:/admin/tag/list";
 	}
 
-	// 태그 수정 폼
-	@RequestMapping(value="/admin/tag/update", method=RequestMethod.GET)
-	public void updateForm(Model model, int faq_no) {
-		
-	}
-	
 	// 태그 수정
 	@RequestMapping(value="/admin/tag/update", method=RequestMethod.POST)
-	public String update(StylingTag stylingTag, HttpSession session) {
-		return null;
+	public String update(@RequestParam HashMap<String, Object> map, MultipartFile file, FileUpload upFile) {
+		
+		logger.info("파일업로드");        
+		logger.info("ST : "+map);
+		logger.info("Title : "+map.get("st_name"));
+		logger.info("file : "+map.get("fu_storedname"));
+		logger.info(file.toString());
+		logger.info(file.getOriginalFilename());
+		logger.info(String.valueOf(file.getSize()));
+		logger.info(file.getContentType());
+		logger.info(String.valueOf(file.isEmpty()));
+		
+		//저장될 파일 이름
+		String stored_name = null;
+		stored_name = file.getOriginalFilename();
+		
+		//파일 저장 경로
+		String path = context.getRealPath("upload");
+		
+		//저장될 파일
+		File dest = new File(path, stored_name);
+		
+		//파일 업로드
+		try {
+			file.transferTo(dest);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		upFile.setFu_storedname(file.getOriginalFilename());
+		
+		logger.info(upFile.toString());
+		
+		map.put("stored_name", upFile.getFu_storedname());
+		
+		logger.info("ST : "+map);
+		stylingService.stylingTagUpdate(map);
+		   
+		return "redirect:/admin/tag/list";
 	}
-	
 	// 태그 삭제
 	@RequestMapping(value="/admin/tag/delete", method=RequestMethod.GET)
-	public String delete(StylingTag stylingTag) {
-		return null;
+	public String delete(StylingTag st) {
+		
+		logger.info("ST : "+ st);
+		stylingService.stylingTagDelete(st);
+		
+		return "redirect:/admin/tag/list";
 	}
 	
 	
