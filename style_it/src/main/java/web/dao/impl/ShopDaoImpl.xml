@@ -14,24 +14,94 @@
 		on product.fu_no = fileupload.fu_no
 	</select>
 	
-	<select id="view" resultType="web.dto.Product" parameterType="int">
-		select * from product p
-		join fileupload f
-	 	on f.fu_no=p.fu_no
-		join productbrand b
-		on b.pb_no = p.pb_no
-		where p_no = #{p_no }
+	<select id="selectProductList" parameterType="int" resultType="web.dto.Product">
+        SELECT p.p_no, p.p_price, p.p_name, f.fu_storedname, b.pb_name,
+            (select count(*) from productlike l where p.p_no = l.p_no) cntplike,
+            (select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck
+        FROM product p
+        JOIN fileupload f
+		ON p.fu_no = f.fu_no
+        JOIN productbrand b
+        ON p.pb_no = b.pb_no
+        where p.pb_no=7 and p.pca_no=1
+       	</select>	
+	
+	<select id="selectProductListNoLogin" resultType="web.dto.Product">
+        SELECT p.p_no, p.p_price, p.p_name, f.fu_storedname, b.pb_name,
+            (select count(*) from productlike l where p.p_no = l.p_no) cntplike
+        FROM product p
+        JOIN fileupload f
+		ON p.fu_no = f.fu_no
+        JOIN productbrand b
+        ON p.pb_no = b.pb_no
+        where p.pb_no=7 and p.pca_no=1
 	</select>
 	
-	<select id="list" resultType="HashMap" parameterType="int">
-		select * from styling s
-		join fileupload f
-		on f.fu_no = s.fu_no
-		join fileuploadtype ft
-		on ft.fut_no = f.fut_no
-		join stylingproduct sp
-		on sp.s_no = s.s_no
-		where p_no = #{p_no }
+	<select id="plikeCheck" parameterType="HashMap" resultType="int">
+		SELECT COUNT(*) FROM productlike
+		WHERE m_no = #{m_no } AND p_no = #{p_no }	
 	</select>
 	
+	<select id="plikeInsert" parameterType="HashMap">
+		INSERT INTO productlike(plike_no, p_no, m_no) 
+		VALUES (productlike_seq.nextval, #{p_no }, #{m_no })	
+	</select>
+	
+	<select id="plikeDelete" parameterType="HashMap">
+		DELETE productlike
+		WHERE p_no = #{p_no } AND m_no = #{m_no }	
+	</select>
+	
+	<select id="plikeCnt" parameterType="int" resultType="int">
+	  	SELECT COUNT(*) FROM productlike
+  		WHERE p_no = #{p_no }	
+	</select>
+	
+	<select id="selectProductView" parameterType="HashMap" resultType="web.dto.Product">
+        SELECT p.p_no, p.p_price, p.p_name, f.fu_storedname, b.pb_name,
+            (select count(*) from productlike l where p.p_no = l.p_no) cntplike,
+            (select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck
+        FROM product p
+        JOIN fileupload f
+		ON p.fu_no = f.fu_no
+        JOIN productbrand b
+        ON p.pb_no = b.pb_no
+        WHERE p.p_no= #{p_no }
+	</select>
+	
+	<select id="selectProductViewNoLogin" parameterType="int" resultType="web.dto.Product">
+        SELECT p.p_no, p.p_price, p.p_name, f.fu_storedname, b.pb_name,
+            (select count(*) from productlike l where p.p_no = l.p_no) cntplike,
+        FROM product p
+        JOIN fileupload f
+		ON p.fu_no = f.fu_no
+        JOIN productbrand b
+        ON p.pb_no = b.pb_no
+        WHERE p.p_no= #{p_no }	
+	</select>
+
+	
+	<select id="selectStylingByProduct" parameterType="HashMap" resultType="web.dto.Styling">
+        SELECT s.s_no, s.m_no, s.s_name, s.s_content, s.fu_no, f.fu_storedname, s.st_no, s.s_date
+   			, ( select count(*) from stylinglike l where s.s_no = l.s_no ) cntslike
+    		, ( select count(*) from stylinglike l where s.s_no = l.s_no and m_no = #{m_no } ) slikecheck
+        FROM styling s
+        JOIN fileupload f
+        ON f.fu_no = s.fu_no
+        JOIN stylingproduct sp
+        ON sp.s_no = s.s_no
+        WHERE sp.p_no = #{p_no }
+	</select>
+	
+	<select id="selectStylingByProductNoLogin" parameterType="int" resultType="web.dto.Styling">
+        SELECT s.s_no, s.m_no, s.s_name, s.s_content, s.fu_no, f.fu_storedname, s.st_no, s.s_date
+   			, ( select count(*) from stylinglike l where s.s_no = l.s_no ) cntslike
+        FROM styling s
+        JOIN fileupload f
+        ON f.fu_no = s.fu_no
+        JOIN stylingproduct sp
+        ON sp.s_no = s.s_no
+        WHERE sp.p_no = #{p_no }
+	</select>
+
 </mapper>

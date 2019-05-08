@@ -1,5 +1,6 @@
 package web.service.face;
 
+import java.util.HashMap;
 import java.util.List;
 
 import web.dto.Product;
@@ -7,12 +8,39 @@ import web.dto.Styling;
 
 public interface ShopService {
 
-	public List<Product> getList();
-
+//	public List<Product> getList();
+	
+//	제품 상세 
 	public Product view(int p_no);
 
-	public List<Styling> list(int p_no);
 
+//	로그인시 제품 리스트 얻어오기
+	public List<Product> getProductList(int m_no);
+	
+//	비 로그인시 제품 리스트 얻어오기
+	public List<Product> getProductNoLogin();
+	
+//	제품 좋아요  업데이트
+	public void pLikeUpdate(HashMap<String, Object> like);
+
+//	제품 별 좋아요 개수 반환
+	public int plikeCnt(int p_no);
+
+//	좋아요 여부 확인
+	public int plikeCheck(HashMap<String, Object> like);
+	
+//	로그인시 제품 상세보기	
+	public Product getProductView(HashMap<String, Integer> map);
+
+//	비로그인시 제품 상세보기	
+	public Product getProductViewNoLogin(int p_no);
+
+//	로그인시 제품별 스타일링 정보 얻어오기
+	public List<Styling> getStylingByProduct(HashMap<String, Integer> map);
+
+//	비로그인시 제품별 스타일링 정보 얻어오기
+	public List<Styling> getStylingByProductNoLogin(int p_no);
+	
 	
 //	//SHOP List 출력
 //	public List<Product> selectSearchList();

@@ -130,8 +130,9 @@ public class StylingServiceImpl implements StylingService{
 	@Override
 	public void stylingTagDelete(StylingTag st) {
 		sDao.stylingTagDelete(st);
+	}
 		
-  @Override
+	@Override
 	public List<Product> getProductByStyling(int s_no) {
 		return sDao.selectProductByStyling(s_no);
 

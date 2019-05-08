@@ -1,5 +1,6 @@
 package web.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,19 +20,65 @@ public class ShopServiceImpl implements ShopService{
 	private final Logger logger = LoggerFactory.getLogger(ShopController.class);
 	@Autowired ShopDao shopDao;
 	
-	@Override
-	public List<Product> getList() {
-		return shopDao.getList();
-	}
+//	@Override
+//	public List<Product> getList() {
+//		return shopDao.getList();
+//	}
 
 	@Override
 	public Product view(int p_no) {
 		return shopDao.view(p_no);
 	}
 
+
 	@Override
-	public List<Styling> list(int p_no) {
-		return shopDao.list(p_no);
+	public List<Product> getProductList(int m_no) {
+		return shopDao.selectProductList(m_no);
+	}
+
+	@Override
+	public List<Product> getProductNoLogin() {
+		return shopDao.selectProductListNoLogin();
+	}
+
+	@Override
+	public void pLikeUpdate(HashMap<String, Object> like) {
+		if(shopDao.plikeCheck(like)>0) {
+			shopDao.plikeDelete(like);
+		} else {
+			shopDao.plikeInsert(like);
+		}
+		
+	}
+
+	@Override
+	public int plikeCnt(int p_no) {
+		return shopDao.plikeCnt(p_no);
+	}
+
+	@Override
+	public int plikeCheck(HashMap<String, Object> like) {
+		return shopDao.plikeCheck(like);
+	}
+
+	@Override
+	public Product getProductView(HashMap<String, Integer> map) {
+		return shopDao.selectProductView(map);
+	}
+
+	@Override
+	public Product getProductViewNoLogin(int p_no) {
+		return shopDao.selectProductViewNoLogin(p_no);
+	}
+
+	@Override
+	public List<Styling> getStylingByProductNoLogin(int p_no) {
+		return shopDao.selectStylingByProductNoLogin(p_no);
+	}
+	
+	@Override
+	public List<Styling> getStylingByProduct(HashMap<String, Integer> map) {
+		return shopDao.selectStylingByProduct(map);
 	}
 
 
