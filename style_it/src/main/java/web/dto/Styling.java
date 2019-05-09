@@ -89,13 +89,15 @@ public class Styling {
 	public void setP_no(int p_no) {
 		this.p_no = p_no;
 	}
-  public int getFut_no() {
-		return fu_no;
+
+	public int getFut_no() {
+		return fut_no;
 	}
-	public void setFut_no(int fu_no) {
-		this.fu_no = fu_no;
+	public void setFut_no(int fut_no) {
+		this.fut_no = fut_no;
 
 	}
+	
 	@Override
 	public String toString() {
 		return "Styling [s_no=" + s_no + ", m_no=" + m_no + ", s_name=" + s_name + ", s_content=" + s_content

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import web.controller.AdminStylingTagController;
 import web.dao.face.StylingDao;
+import web.dto.Product;
 import web.dto.Styling;
 import web.dto.StylingComment;
 import web.dto.StylingLike;
@@ -114,7 +115,7 @@ public class StylingServiceImpl implements StylingService{
 		logger.info("map : " + map);
 		logger.info("map.get : "+ map.get("st_name"));
 		logger.info("map.get : "+ map.get("stored_name"));
-		if (map.get("stored_name") == null) {
+		if (map.get("stored_name") == "") {
 			logger.info("비었당");
 			sDao.stylingTagUpdate(map);
 		} else {
@@ -126,9 +127,14 @@ public class StylingServiceImpl implements StylingService{
 		}
 	}
 
-//	@Override
-//	public void stylingTagDelete(StylingTag st) {
-//		sDao.stylingTagDelete(st);
-//		
-//	}
+	@Override
+	public void stylingTagDelete(StylingTag st) {
+		sDao.stylingTagDelete(st);
+	}
+		
+	@Override
+	public List<Product> getProductByStyling(int s_no) {
+		return sDao.selectProductByStyling(s_no);
+
+	}
 }
