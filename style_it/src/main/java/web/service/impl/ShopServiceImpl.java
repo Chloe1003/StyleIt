@@ -26,8 +26,8 @@ public class ShopServiceImpl implements ShopService{
 //	}
 
 	@Override
-	public Product view(int p_no) {
-		return shopDao.view(p_no);
+	public Product getProduct(int p_no) {
+		return shopDao.selectProduct(p_no);
 	}
 
 
@@ -79,6 +79,18 @@ public class ShopServiceImpl implements ShopService{
 	@Override
 	public List<Styling> getStylingByProduct(HashMap<String, Integer> map) {
 		return shopDao.selectStylingByProduct(map);
+	}
+
+
+	@Override
+	public List<Product> getSimilarProduct(HashMap<String, Object> map) {
+		return shopDao.selectSimilarProduct(map);
+	}
+
+
+	@Override
+	public List<Product> getSimilarProductNoLogin(Product p) {
+		return shopDao.selectSimilarProductNoLogin(p);
 	}
 
 

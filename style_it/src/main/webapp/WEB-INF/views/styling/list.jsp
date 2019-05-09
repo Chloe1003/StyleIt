@@ -139,7 +139,14 @@ function stylingView(s_no){
 $(document).ready(function(){
 	
 	$(".like").click(function(){
+
+	var login = false;
 		
+	if(${login ne true}){
+//	 		console.log("비로그인");
+		showlogin();
+			
+	}	else {		
 		
 	var s_no = $(this).parent().attr("data-sno");
 // 	console.log("s_no: "+s_no);
@@ -169,7 +176,7 @@ $(document).ready(function(){
 			console.log("실패");
 		}			
 	});
-	 
+	} 
     //jQuery 이벤트의 경우,
     //return false는 event.stopPropagation()과 event.preventDefault() 를
     //모두 수행한 것과 같은 결과를 보인다.

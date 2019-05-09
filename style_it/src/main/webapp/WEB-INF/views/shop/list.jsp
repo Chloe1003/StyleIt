@@ -139,7 +139,14 @@ $(document).ready(function(){
 	
 	$(".like").click(function(){
 		
+	var login = false;	
+	
+	if(${login ne true}){
+// 		console.log("비로그인");
+		showlogin();
 		
+	}	else {	
+	
 	var p_no = $(this).parent().attr("data-pno");
 	
 	$.ajax({
@@ -168,6 +175,8 @@ $(document).ready(function(){
 		}			
 	});
 	 
+	}
+	
     return false;
     
 	

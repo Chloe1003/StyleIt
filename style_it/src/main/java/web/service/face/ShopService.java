@@ -11,9 +11,8 @@ public interface ShopService {
 //	public List<Product> getList();
 	
 //	제품 상세 
-	public Product view(int p_no);
-
-
+	public Product getProduct(int p_no);
+	
 //	로그인시 제품 리스트 얻어오기
 	public List<Product> getProductList(int m_no);
 	
@@ -41,6 +40,11 @@ public interface ShopService {
 //	비로그인시 제품별 스타일링 정보 얻어오기
 	public List<Styling> getStylingByProductNoLogin(int p_no);
 	
+//	로그인시 유사한 제품 정보 얻어오기(5개)
+	public List<Product> getSimilarProduct(HashMap<String, Object> map);
+
+//	비로그인시 유사한 제품 정보 얻어오기(5개)
+	public List<Product> getSimilarProductNoLogin(Product p);
 	
 //	//SHOP List 출력
 //	public List<Product> selectSearchList();

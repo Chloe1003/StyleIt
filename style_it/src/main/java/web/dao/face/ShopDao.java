@@ -9,9 +9,9 @@ import web.dto.Styling;
 public interface ShopDao {
 
 	public List<Product> getList();
-
-	public Product view(int p_no);
-
+	
+//	제품번호로 제품 정보 가져오기
+	public Product selectProduct(int p_no);
 
 //	로그인시 제품 리스트 얻어오기
 	public List<Product> selectProductList(int m_no);
@@ -43,8 +43,11 @@ public interface ShopDao {
 //	비로그인시 제품별 스타일링 정보 얻어오기
 	public List<Styling> selectStylingByProductNoLogin(int p_no);
 	
+//	로그인시 유사한 제품 정보 얻어오기(5개)
+	public List<Product> selectSimilarProduct(HashMap<String, Object> map);
 
-
+//	비로그인시 유사한 제품 정보 얻어오기(5개)
+	public List<Product> selectSimilarProductNoLogin(Product p);
 
 //	//페이지 조회
 //	public List<Product> getSearchList();

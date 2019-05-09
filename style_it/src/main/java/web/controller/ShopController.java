@@ -67,7 +67,8 @@ public class ShopController {
 	
 	//SHOP 상세 페이지
 	@RequestMapping(value="/shop/view", method=RequestMethod.GET)
-	public void shopView(HttpSession session, Model model, @RequestParam HashMap<String, Integer> map, int p_no){
+	public void shopView(HttpSession session, Model model, @RequestParam HashMap<String, Integer> map, 
+			@RequestParam HashMap<String, Object> view, int p_no){
 		
 		logger.info("제품 상세 페이지");
 		
@@ -91,17 +92,30 @@ public class ShopController {
 			map.put("p_no", p_no);
 			
 			Product p = shopService.getProductView(map);
-
-			model.addAttribute("view", p);	
-			model.addAttribute("styling", shopService.getStylingByProduct(map));
+			Product selected = shopService.getProduct(p_no);
+			
+			view.put("m_no", m_no);
+			view.put("products", selected);
+			
+			List<Product> pList = shopService.getSimilarProduct(view);
+			List<Styling> sList = shopService.getStylingByProduct(map);			
+			
+			model.addAttribute("products", pList);
+			model.addAttribute("styling", sList);
+			model.addAttribute("view", p);
 			
 		} else { // 로그인 안되어 있을 때
 			logger.info("login false");
 
 			Product p = shopService.getProductViewNoLogin(p_no);
+			Product selected = shopService.getProduct(p_no);
 
+			List<Product> pList = shopService.getSimilarProductNoLogin(selected);
+			List<Styling> sList = shopService.getStylingByProductNoLogin(p_no);			
+			
 			model.addAttribute("view", p);	
-			model.addAttribute("styling", shopService.getStylingByProductNoLogin(p_no));
+			model.addAttribute("products", pList);
+			model.addAttribute("styling", sList);
 
 		}
 
