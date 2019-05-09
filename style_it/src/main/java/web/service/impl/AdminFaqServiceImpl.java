@@ -35,9 +35,8 @@ public class AdminFaqServiceImpl implements AdminFaqService {
 	}
 
 	@Override
-	public Faq view(int faq_no) {
-		// TODO Auto-generated method stub
-		return null;
+	public Faq fal(Faq faq) {
+		return fd.fal(faq);
 	}
 
 	@Override
@@ -47,15 +46,16 @@ public class AdminFaqServiceImpl implements AdminFaqService {
 
 	@Override
 	public void update(Faq faq) {
-		// TODO Auto-generated method stub
+		fd.update(faq);
 		
 	}
 
 	@Override
 	public void delete(Faq faq) {
-		// TODO Auto-generated method stub
+		fd.delete(faq);
 		
 	}
+
 
 	
 

@@ -114,7 +114,7 @@ public class StylingServiceImpl implements StylingService{
 		logger.info("map : " + map);
 		logger.info("map.get : "+ map.get("st_name"));
 		logger.info("map.get : "+ map.get("stored_name"));
-		if (map.get("stored_name") == "") {
+		if (map.get("stored_name") == null) {
 			logger.info("비었당");
 			sDao.stylingTagUpdate(map);
 		} else {
@@ -126,9 +126,9 @@ public class StylingServiceImpl implements StylingService{
 		}
 	}
 
-	@Override
-	public void stylingTagDelete(StylingTag st) {
-		sDao.stylingTagDelete(st);
-		
-	}
+//	@Override
+//	public void stylingTagDelete(StylingTag st) {
+//		sDao.stylingTagDelete(st);
+//		
+//	}
 }
