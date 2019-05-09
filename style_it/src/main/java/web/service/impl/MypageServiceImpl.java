@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import web.dao.face.MypageDao;
+import web.dto.FileUpload;
 import web.dto.Member;
 import web.service.face.MypageService;
 @Service
@@ -17,6 +18,46 @@ public class MypageServiceImpl implements MypageService{
 	public Member getUserInfo(Member member) {
 		return mypageDao.getUserInfo(member);
 	}
+	@Override
+	public int checkPass(Member member) {
+		if( mypageDao.checkPass(member) == 1) {
+			return 1;
+		}else {
+			return 0;
+		}
+		
+	}
+	@Override
+	public void changePass(Member member) {
+		mypageDao.changePass(member);
+	}
+	
+	@Override
+	public void changeNick(Member member) {
+		mypageDao.changeNick(member);
+	}
+	@Override
+	public void insertImg(FileUpload fu) {
+		mypageDao.insertImg(fu);
+	}
+	@Override
+	public void updateUserImg(Member member) {
+		mypageDao.updateUserImg(member);
+	}
+	@Override
+	public int dualNo() {
+		
+		return mypageDao.dualNo();
+	}
+	@Override
+	public void deleteUser(Member member) {
+		 mypageDao.deleteUser(member);
+	}
+	
+	
+	
+	
+	
 	
 	
 	@Override
@@ -103,6 +144,11 @@ public class MypageServiceImpl implements MypageService{
 	public List getRecommendProduct() {
 		return mypageDao.getRecommendProduct();
 	}
+
+	
+	
+	
+	
 
 
 

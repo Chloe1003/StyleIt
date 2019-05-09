@@ -10,13 +10,69 @@
   
 	
 	<select id="getUserInfo" parameterType="web.dto.Member" resultType="web.dto.Member">
-		
 	
 	  select * from member m, FileUpload f
 	  where m.fu_no = f.fu_no and m_no=#{m_no }
-
 	  
 	</select>
+	
+	<select id="checkPass" resultType="int" parameterType="web.dto.Member">
+	
+		SELECT COUNT(*) FROM member
+  		WHERE m_email = #{m_email } AND m_pw = #{m_pw }
+	
+	</select>
+	
+	<update id="changePass" parameterType="web.dto.Member">
+	
+		UPDATE member
+  		SET m_pw = #{m_pw }
+  		WHERE m_no = #{m_no }
+		
+	</update>
+	<update id="changeNick" parameterType="web.dto.Member">
+	
+		UPDATE member
+  		SET m_nick = #{m_nick }
+  		WHERE m_no = #{m_no }
+		
+	</update>
+	
+	<!-- 다음 번호 미리 받아오기 -->
+	<select id="dualNo" resultType="int">
+	
+		SELECT FileUpload_SEQ.nextval from dual
+	
+	</select>
+	
+	<insert id="insertImg" parameterType="web.dto.FileUpload">
+		
+		<!-- SELECT FileUpload_SEQ.nextval from dual -->
+		
+		INSERT INTO FILEUPLOAD
+			(fu_no, fu_storedName, fut_no )
+		VALUES 
+			( #{fu_no}, #{fu_storedName }, 5 )
+		<!-- <selectKey>  </selectKey> -->
+			
+	</insert>
+	
+	<update id="updateUserImg" parameterType="web.dto.Member">
+      
+		UPDATE member
+  		SET fu_no = #{fu_no }
+  		WHERE m_no = #{m_no }
+		
+	</update>
+	
+	<update id="deleteUser" parameterType="web.dto.Member">
+      
+		UPDATE member
+  		SET m_valid = 'N'
+  		WHERE m_no = #{m_no }
+		
+	</update>
+	
 
   
   

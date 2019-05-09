@@ -2,13 +2,27 @@ package web.service.face;
 
 import java.util.List;
 
+import web.dto.FileUpload;
 import web.dto.Member;
 
 public interface MypageService {
 	
 //	유저 정보 조회
 	public Member getUserInfo(Member member);
-	
+//	비밀번호 확인
+	public int checkPass(Member member);
+//	비밀번호 변경
+	public void changePass(Member member);
+//	nick 변경
+	public void changeNick(Member member);
+//고객 다음 사진 번호 받아오기
+	public int dualNo();
+//	프로필 사진 삽입
+	public void insertImg(FileUpload fu);
+//	유저 사진 업데이트
+	public void updateUserImg(Member member);
+//	회원 탈퇴
+	public void deleteUser(Member member);
 	
 //	팔로우 리스트
 	public List getFollowList();
@@ -50,6 +64,14 @@ public interface MypageService {
 	
 //	추천받은 상품 리스트
 	public List getRecommendProduct();
+	
+
+	
+	
+	
+
+
+
 
 	
 

@@ -2,12 +2,29 @@ package web.dao.face;
 
 import java.util.List;
 
+import web.dto.FileUpload;
 import web.dto.Member;
 
 public interface MypageDao {
 	
 //	유저 정보 가져오기
 	public Member getUserInfo(Member member);
+//	비밀번호 확인하기
+	public int checkPass(Member member);
+//	비밀번호 변경하기
+	public void changePass(Member member);
+//	nick 변경
+	public void changeNick(Member member);
+//고객 다음 사진 번호 받아오기
+	public int dualNo();
+//	프로필 사진 삽입
+	public void insertImg(FileUpload fu);
+//	유저 사진 바꾸기
+	public void updateUserImg(Member member);
+//	유저 탈퇴 하기
+	public void deleteUser(Member member);
+	
+	
 	
 //	팔로우 리스트
 	public List getFollowList();
@@ -43,6 +60,13 @@ public interface MypageDao {
 	public void deleteCollection();
 //	추천받은 상품 리스트
 	public List getRecommendProduct();
+	
+	
+	
+	
+
+
+
 
 
 	
