@@ -3,6 +3,8 @@ package web.service.impl;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import web.dao.face.ShopDao;
 import web.dto.Product;
 import web.dto.Styling;
 import web.service.face.ShopService;
+import web.util.imgPaging;
 
 @Service
 public class ShopServiceImpl implements ShopService{
@@ -37,8 +40,8 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 	@Override
-	public List<Product> getProductNoLogin() {
-		return shopDao.selectProductListNoLogin();
+	public List<Product> getProductNoLogin(imgPaging paging) {
+		return shopDao.selectProductListNoLogin(paging);
 	}
 
 	@Override
@@ -91,6 +94,27 @@ public class ShopServiceImpl implements ShopService{
 	@Override
 	public List<Product> getSimilarProductNoLogin(Product p) {
 		return shopDao.selectSimilarProductNoLogin(p);
+	}
+
+
+	@Override
+	public int getCurPage(HttpServletRequest req) {
+		//요청파라미터 curPage 받기
+		String param = req.getParameter("curPage");
+	
+		//null이나 ""이 아니면 int로 리턴
+		if( param != null && !"".equals(param) ) {
+			int curPage = Integer.parseInt(param);
+			return curPage;
+		}
+		//null이나 ""면 0으로 반환하기
+		return 0;	
+	}
+
+
+	@Override
+	public int getTotalCount() {
+		return shopDao.totalCnt();
 	}
 
 

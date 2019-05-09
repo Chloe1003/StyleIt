@@ -8,6 +8,10 @@
 <!-- 매퍼 설정 -->
 <mapper namespace="web.dao.face.ShopDao">
 	
+	<select id="totalCnt" resultType="int">
+		SELECT count(*) FROM product
+	</select>
+	
 	<select id="selectProduct" parameterType="int" resultType="web.dto.Product">
 		SELECT * FROM product
 		WHERE p_no=#{p_no }
@@ -25,7 +29,7 @@
         where p.pb_no=7 and p.pca_no=1
        	</select>	
 	
-	<select id="selectProductListNoLogin" resultType="web.dto.Product">
+	<select id="selectProductListNoLogin" parameterType="web.util.imgPaging" resultType="web.dto.Product">
         SELECT p.p_no, p.p_price, p.p_name, f.fu_storedname, b.pb_name,
             (select count(*) from productlike l where p.p_no = l.p_no) cntplike
         FROM product p

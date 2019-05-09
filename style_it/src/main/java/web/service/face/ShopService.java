@@ -3,8 +3,11 @@ package web.service.face;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import web.dto.Product;
 import web.dto.Styling;
+import web.util.imgPaging;
 
 public interface ShopService {
 
@@ -17,7 +20,7 @@ public interface ShopService {
 	public List<Product> getProductList(int m_no);
 	
 //	비 로그인시 제품 리스트 얻어오기
-	public List<Product> getProductNoLogin();
+	public List<Product> getProductNoLogin(imgPaging paging);
 	
 //	제품 좋아요  업데이트
 	public void pLikeUpdate(HashMap<String, Object> like);
@@ -45,6 +48,12 @@ public interface ShopService {
 
 //	비로그인시 유사한 제품 정보 얻어오기(5개)
 	public List<Product> getSimilarProductNoLogin(Product p);
+	
+// 현재페이지 반환
+	public int getCurPage(HttpServletRequest req);
+
+//	총 제품 수 얻기
+	public int getTotalCount();
 	
 //	//SHOP List 출력
 //	public List<Product> selectSearchList();

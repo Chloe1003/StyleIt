@@ -5,6 +5,8 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import web.dto.CollectionProduct;
 import web.dto.Member;
@@ -22,6 +25,8 @@ import web.dto.Product;
 import web.dto.ProductLike;
 import web.dto.Styling;
 import web.service.face.ShopService;
+import web.util.Paging;
+import web.util.imgPaging;
 
 @Controller
 public class ShopController {
@@ -31,9 +36,12 @@ public class ShopController {
 	
 	//SHOP 화면 리스트 출력
 	@RequestMapping(value="/shop/list", method=RequestMethod.GET)
-	public void shopList(HttpSession session, Model model) {
+	public void shopList(HttpSession session, HttpServletRequest req, Model model) {
 		
 		logger.info("shopList 페이지");
+		
+		int curPage = shopService.getCurPage(req);
+		imgPaging paging;
 		
 		boolean login = false;
 		
@@ -47,6 +55,9 @@ public class ShopController {
 			
 		}
 		
+		int totalCount = shopService.getTotalCount();
+		paging = new imgPaging (totalCount, curPage);
+		List<Product> pList;
 		
 		if (login==true) { // 로그인 되어 있을 때
 			
@@ -55,12 +66,13 @@ public class ShopController {
 			int m_no = (int) session.getAttribute("m_no");
 			
 			model.addAttribute("productList", shopService.getProductList(m_no));	
-		
+			model.addAttribute("paging", paging);
 		} else { // 로그인 안되어 있을 때
 			logger.info("login false");
-
-			model.addAttribute("productList", shopService.getProductNoLogin());
 			
+			pList = shopService.getProductNoLogin(paging);
+			model.addAttribute("productList", pList);
+			model.addAttribute("paging", paging);
 		}
 				
 	}
@@ -154,13 +166,6 @@ public class ShopController {
 
 	}	
 	
-	//추천
-	@RequestMapping(value="/shop/recommend", method=RequestMethod.GET)
-	public String shopRecommend(ProductLike plike){ 
-		
-		return null;
-	}
-	
 	//콜렉션 추가
 	@RequestMapping(value="/shop/collection", method=RequestMethod.GET)
 	public String shopCollection(CollectionProduct clike){ 
@@ -169,4 +174,5 @@ public class ShopController {
 	}
 	
 
+	
 }
