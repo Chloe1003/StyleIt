@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+
 import web.dto.CollectionProduct;
 import web.dto.Member;
 import web.dto.Product;
@@ -36,7 +38,8 @@ public class ShopController {
 	
 	//SHOP 화면 리스트 출력
 	@RequestMapping(value="/shop/list", method=RequestMethod.GET)
-	public void shopList(HttpSession session, HttpServletRequest req, Model model) {
+	public void shopList(HttpSession session, HttpServletRequest req, 
+			@RequestParam HashMap<String, Object> map, Model model) {
 		
 		logger.info("shopList 페이지");
 		
@@ -64,8 +67,11 @@ public class ShopController {
 			logger.info("login true");
 			
 			int m_no = (int) session.getAttribute("m_no");
+			map.put("m_no", m_no);
+			map.put("paging", paging);
+			pList = shopService.getProductList(map);
 			
-			model.addAttribute("productList", shopService.getProductList(m_no));	
+			model.addAttribute("productList", pList);	
 			model.addAttribute("paging", paging);
 		} else { // 로그인 안되어 있을 때
 			logger.info("login false");
@@ -173,6 +179,31 @@ public class ShopController {
 		return null;
 	}
 	
+	@RequestMapping(value="/shop/loading")
+	@ResponseBody
+	public String getScrollList(HttpServletRequest req, HttpServletResponse resp, 
+			@RequestParam HashMap<String, Object> map, Model model) {
+		
+		logger.info("스크롤 로딩 요청");
+		
+	    Gson gson = new Gson();
+	    
+	    int totalCount = shopService.getTotalCount();  //데이터의 전체 갯수를 가져온다.
+        int curPage = shopService.getCurPage(req); 
+        
+        logger.info(Integer.toString(curPage));
+        
+		imgPaging paging = new imgPaging (totalCount, curPage);
+
+	    List<Product> pList = shopService.getProductNoLogin(paging);
+	       
+	    map.put("productList", pList);
+	    map.put("totalCnt", totalCount);
+	    map.put("startNo", paging.getStartNo());
+	    map.put("resultCode", 200);
+	    
+		return gson.toJson(map);
+	}
 
 	
 }

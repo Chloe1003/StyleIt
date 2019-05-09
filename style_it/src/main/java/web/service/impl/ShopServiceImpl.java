@@ -35,8 +35,8 @@ public class ShopServiceImpl implements ShopService{
 
 
 	@Override
-	public List<Product> getProductList(int m_no) {
-		return shopDao.selectProductList(m_no);
+	public List<Product> getProductList(HashMap<String, Object> map) {
+		return shopDao.selectProductList(map);
 	}
 
 	@Override

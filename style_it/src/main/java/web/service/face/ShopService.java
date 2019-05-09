@@ -17,7 +17,7 @@ public interface ShopService {
 	public Product getProduct(int p_no);
 	
 //	로그인시 제품 리스트 얻어오기
-	public List<Product> getProductList(int m_no);
+	public List<Product> getProductList(HashMap<String, Object> map);
 	
 //	비 로그인시 제품 리스트 얻어오기
 	public List<Product> getProductNoLogin(imgPaging paging);

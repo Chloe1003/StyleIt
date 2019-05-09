@@ -104,7 +104,7 @@ object-fit: contain;
 </style>
 
 
-<div class="frame">
+<div class="frame" id="frame">
 <c:forEach items="${productList }" var="p" begin="0" end="${productList.size()-1 }">
 <div id="block">
 	<div class="img-wrapper img" onclick="productView(${p.p_no })" data-pno="${p.p_no }">
@@ -126,55 +126,63 @@ object-fit: contain;
 </div>
 </c:forEach>
 </div>
+<br><br>
 
 <script type="text/javascript">
-var page = 1;  //페이징과 같은 방식이라고 생각하면 된다. 
- 
-$(function(){  //페이지가 로드되면 데이터를 가져오고 page를 증가시킨다.
-     getList(page);
-     page++;
-}); 
- 
-$(window).scroll(function(){   //스크롤이 최하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.
-     if($(window).scrollTop() >= $(document).height() - $(window).height()){
-          getList(page);
-           page++;   
-     } 
+var nextPage = 2;
+
+$(window).scroll(function() {
+    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+      console.log("스크롤 발생");
+      console.log(nextPage);
+      getList(nextPage);
+      nextPage++
+    }
 });
- 
-function getList(page){
- 
-    $.ajax({
-        type : 'POST',  
-        dataType : 'json', 
-        data : {"page" : page},
-        url : '/shop/list'
-        success : function(returnData) {
-            var data = returnData.rows;
-            var html = "";
-            if (page==1){ //페이지가 1일경우에만 class가 frame인 html을 비운다.
-                  $(".frame").html(""); 
-            }
-            if (returnData.startNum<=returnData.totCnt){
-                if(data.length>0){
-                // for문을 돌면서 행을 그린다.
-                }else{
-                //데이터가 없을경우
-                }
-            }
-            html = html.replace(/%20/gi, " ");
-            if (page==1){  //페이지가 1이 아닐경우 데이터를 붙힌다.
-                $(".frame").html(html); 
-            }else{
-                $("#busStopList").append(html);
-            }
-       },error:function(e){
-           if(e.status==300){
-               alert("데이터를 가져오는데 실패하였습니다.");
-           };
-       }
-    }); 
-}
+      
+function getList(nextPage){
+	
+	  	$.ajax({
+			type : "get",
+			url : "/shop/loading",
+			data : {"curPage": nextPage },
+			dataType : "json",
+			success : function(res){
+				console.log("스크롤 로딩 성공");
+				
+				var data = res.productList;
+				
+				$(".frame").append(
+						'<c:forEach items="'+data+'" var="p" begin="0" end="39">'+
+						'<div id="block">'+
+						'<div class="img-wrapper img" onclick="productView(${p.p_no })" data-pno="${p.p_no }">'+
+							'<img src="/upload/${p.fu_storedname }" alt="images">'+
+							'<div class="likecnt" id="likecnt">${p.cntplike }</div>'+
+							'<c:if test="${p.plikecheck eq 0 }">'+
+								'<div class="like empty"></div>'+
+							'</c:if>'+
+							'<c:if test="${p.plikecheck eq 1 }">'+
+								'<div class="like red"></div>'+
+							'</c:if>'+
+							'<div class="darkness"></div>'+
+					   		'<div class="productname"><div style="font-weight:600;">KRW ${p.p_price }</div>'+
+					     	'<span draggable="false">${p.pb_name } <br> ${p.p_name } </span></div></div></div></c:forEach>');
+				
+
+// 			      $("#block").append(res.productList);
+				
+			},
+			error : function(e){
+				if(e.status==300){
+				alert("데이터를 가져오는데 실패하였습니다.");
+				console.log("실패");
+				}
+			}			
+		});
+	      
+}      
+
+
 
 </script>
 

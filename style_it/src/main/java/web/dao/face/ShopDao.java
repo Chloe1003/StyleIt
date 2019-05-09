@@ -16,7 +16,7 @@ public interface ShopDao {
 	public Product selectProduct(int p_no);
 
 //	로그인시 제품 리스트 얻어오기
-	public List<Product> selectProductList(int m_no);
+	public List<Product> selectProductList(HashMap<String, Object> map);
 	
 //	비로그인시 제품 리스트 얻어오기
 	public List<Product> selectProductListNoLogin(imgPaging paging);
