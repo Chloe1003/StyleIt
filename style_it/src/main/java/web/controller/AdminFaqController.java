@@ -33,7 +33,7 @@ public class AdminFaqController {
 		
 		List<HashMap> faqList = faqService.getFaqList();
 		logger.info("faqList : "+ faqList);
-		model.addAttribute("faqList", faqList);
+		model.addAttribute("faqList", faqList);  
 		
 	}
 	
