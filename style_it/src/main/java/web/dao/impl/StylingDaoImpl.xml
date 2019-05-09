@@ -112,5 +112,5 @@
         ON p.pb_no = b.pb_no
   		WHERE s.s_no = #{s_no }
   	</select>
-
+  
 </mapper>

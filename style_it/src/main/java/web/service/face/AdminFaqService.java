@@ -19,8 +19,8 @@ public interface AdminFaqService {
 	// 총 게시물 수 얻기
 	public int getTotalCount();
 	
-	// 게시글 상세보기
-	public Faq view(int faq_no);
+	// 게시글 본문 찾기
+	public Faq fal(Faq faq);
 	
 	// 게시글 추가
 	public void insert(Faq faq);
