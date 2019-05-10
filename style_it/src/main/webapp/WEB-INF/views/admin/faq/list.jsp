@@ -28,7 +28,10 @@ $(document).ready(function(){
 		}
 	});
 	
-	
+	$("#word").click(function(){
+	  var word =  $("input[type='text'][name='search']").val();
+	  $(location).attr("href", "/admin/faq/list?word="+word); 
+	});
 	
 	$(this).parents("form").submit();
 	
@@ -97,7 +100,6 @@ th, td {
 
 <div class="row row-offcanvas row-offcanvas-right">
 
-<%-- <jsp:include page="/WEB-INF/views/layout/admin_sidebar.jsp" /> --%>
 <div style="text-align: right; padding-bottom: 100px;" class="container">
 	<div id="stylingContainer" style="display: flex;">
 		<div id="styling_left" style="flex: 1;"></div>
@@ -218,10 +220,15 @@ th, td {
 	</tbody>
 
 	</table>
+	
+	<div class="text-center">
+		<input type="text" style="width: 400px" name="search" id="search">
+		<button id="word" class="btn btn-success btn-sm">검색</button>
+	</div>
+
+<jsp:include page="./paging.jsp" />
 
 </div>
-
-<%-- <jsp:include page="./paging.jsp" /> --%>
 
 </div>
 

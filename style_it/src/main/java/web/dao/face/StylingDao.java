@@ -55,23 +55,5 @@ public interface StylingDao {
 //	스타일링 코맨트 리스트 
 	void getStylingCommentList(StylingComment sComment);
 
-	//스타일링 태그 리스트
-	public List<StylingTag> selectStylingTagList();
-	
-	//스타일링 태그 파일 추가
-	public void fileUploadInsert(HashMap<String, Object> map);
-	
-	//스타일링 태그 파일넘버
-	public int fileUploadNo(HashMap<String, Object> map);
-	
-	//스타일링 태그 추가
-	public void stylingTagInsert(HashMap<String, Object> map);
-	
-	//스타일링 태그 수정
-	public void stylingTagUpdate(HashMap<String, Object> map);
-	
-//	//스타일링 태그 삭제
-//	public void stylingTagDelete(StylingTag st);
-	
 	
 }

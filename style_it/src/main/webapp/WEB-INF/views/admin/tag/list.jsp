@@ -47,8 +47,9 @@ $(document).ready(function(){
 	function checkFileName(str){
 		//1. 확장자명 체크
 		var ext =  str.split('.').pop().toLowerCase();
-		if($.inArray(ext, ['jpg', 'jpeg', 'bmp', 'gif']) == -1) {
+		if($.inArray(ext, ['jpg', 'jpeg', 'bmp', 'gif','png']) == -1) {
 			alert(ext+'파일은 업로드 하실 수 없습니다.');
+			return false;
 		}else {
 		}
 		//2. 파일명에 특수문자 체크
@@ -74,15 +75,6 @@ $(document).ready(function(){
 		$("input[name='st_able'][value='"+able+"']").attr("checked", true);
 	});
 	
-// 	$(".tagDelete").click(function() {
-// 		var no = $(this).parents("tr").children("td").eq(0).html()
-// 		result = confirm('삭제 하시겠습니까');
-// 		if(result == true){
-// 			$(location).attr("href","/admin/tag/delete?st_no="+no);
-// 		}else{
-// 			return false;
-// 		}
-// 	});
 });
 
   
@@ -115,8 +107,6 @@ th, td {
 <div class="container">
 
 <div class="row row-offcanvas row-offcanvas-right">
-
-<%-- <jsp:include page="/WEB-INF/views/layout/admin_sidebar.jsp" /> --%>
 
 <div style="text-align: right; padding-bottom: 100px;" class="container">
 	<div id="stylingContainer" style="display: flex;">
@@ -223,16 +213,16 @@ th, td {
 	<td><fmt:formatDate value="${i.st_date }" pattern="yyyy-MM-dd"/></td>
 	<td>${i.st_able }</td>
 	<td><button class="tagUpdate" style="background-color: transparent; border-color: transparent;" data-target="#updateTag_display" data-toggle="modal" onclick="update()">수정</button>
-<!-- 	<button class="tagDelete" style="background-color: transparent; border-color: transparent;" onclick="delete()">삭제</button></td> -->
 	</tr>
 	</c:forEach>
 	</tbody>
 
 	</table>
+	
+<jsp:include page="./paging.jsp" />
 
 </div>
 
-<%-- <jsp:include page="./paging.jsp" /> --%>
 
 </div>
 
