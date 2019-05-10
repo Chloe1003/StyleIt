@@ -42,6 +42,7 @@ public class MemberServiceImpl implements MemberService{
 		}
 	}
 	
+	
 	public List<Member> getLoginList() {
 		// TODO Auto-generated method stub
 		return null;
@@ -97,10 +98,12 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.selectMember(member);
 	}
 
+
 	@Override
 	public Member getMemberByMno(int m_no) {
 		return memberDao.selectMemberByMno(m_no);
 	}
+
 
 
 }
