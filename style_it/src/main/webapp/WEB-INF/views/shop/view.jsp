@@ -57,13 +57,13 @@
 
 }
 .info-header{
-/* font-family: Montserrat-Light,sans-serif; */
-    font-size: 18px;
-    line-height: 18px;
+	font-size: 18px;
+    line-height: 25px;
     color: #4a3a3a;
     text-transform: capitalize;
     text-align: center;
-    margin-bottom: 26px;
+    margin-bottom: 15px;
+}
     
 }
 .info-divider{
@@ -88,30 +88,29 @@ display:inline-flex;
 margin-bottom: 20px;
 }
 
-.like{
+.like, .similarlike, .stylinglike{
   position:absolute;
   top:20px;
-  right:10px;
+  right:20px;
   width:22px;
   height:22px;
   z-index:999;
-  
+  cursor:pointer;
   background-size: contain;
 }
-
 .likecnt{
   position:absolute;
   top:20px;
-  right:30px;
+  right:40px;
   width:22px;
   height:22px;
   z-index:999;
 }
 
-.like.red {
+.like.red, .similarlike.red, .stylinglike.red {
 	background-image: url(/resources/image/styling/redheart.png)
 }
-.like.empty {
+.like.empty, .similarlike.empty, .stylinglike.empty {
 	background-image: url(/resources/image/styling/emptyheart.png)
 }
 .styling {
@@ -134,8 +133,9 @@ margin-bottom: 20px;
     background: #009994;
     border-radius: 15px;
     color: white;
-
+    cursor: pointer;
 }
+
 .product{
 	position: relative;
     height: 500px;
@@ -214,10 +214,21 @@ object-fit: contain;
   transition:all .6s linear; 
 }
 .product-info {
+    position: absolute;
+    top: 200px;
+    left: 20px;
+    width: 250px;
+    height: 55px;
+    opacity: 0;
+    transition: all .3s linear;
+    text-align: left;
+}
+
+.styling-info {
   position:absolute;
-  top:220px;
+  top:250px;
   left:20px;
-  width:inherit;
+  width: 250px;
   height:55px;
   opacity:0; 
   transition:all .3s linear; 
@@ -225,6 +236,14 @@ object-fit: contain;
 }
 
 .product-info span {
+  font-size:0.9em; 
+  color:#777;
+  user-select:none;
+/*   font-weight: bold; */
+  line-height: 15px;
+}
+
+.styling-info span {
   font-size:0.9em; 
   color:#777;
   user-select:none;
@@ -241,7 +260,10 @@ object-fit: contain;
 /*   transform:scale(1); */
 }
 
-
+.product-img:hover .styling-info {
+  opacity:1;
+/*   transform:scale(1); */
+}
 
 </style>
 
@@ -282,38 +304,94 @@ object-fit: contain;
 	</div>
 </div>
 
+<c:if test="${products.size()>0 }">
+<div class="product">
+<div class="p-header">비슷한 제품</div>
+	<div class="product-area">
+	<c:forEach items="${products }" var="p" begin="0" end="${products.size()-1 }">
+		<div class="product-container" onclick="productView(${p.p_no })" data-similarno="${p.p_no }">
+		<div class="product-img">
+			<img src="/upload/${p.fu_storedname }" alt="products">
+			
+			<div class="likecnt" id="likecnt">${p.cntplike }</div>
+			
+			<c:if test="${p.plikecheck eq 0 }">
+				<div class="similarlike empty"></div>
+			</c:if>
+			<c:if test="${p.plikecheck eq 1 }">
+				<div class="similarlike red"></div>
+			</c:if>			
+			
+			<div class="darkness"></div>
+     		<div class="product-info"><div style="font-size:1.1em; color:#181818;">KRW ${p.p_price }</div>
+     		<span draggable="false">${p.pb_name } <br> ${p.p_name }</span></div>
+		</div>
+		</div>
+	</c:forEach>	
+	</div>
+</div>
+</c:if>
+<%-- 	<c:if test="${products.size() eq 0 }"> --%>
+<!-- 		비슷한 제품이 없어용ㅠㅠ -->
+<%-- 	</c:if>	 --%>
 
 
 
 
+<c:if test="${styling.size()>0 }">
+<div class="product">
+<div class="p-header">어떻게 입을까?</div>
+	<div class="product-area">
+	<c:forEach items="${styling }" var="s" begin="0" end="${styling.size()-1 }">
+		<div class="product-container" onclick="stylingView(${s.s_no })" data-sno="${s.s_no }">
+		<div class="product-img">
+			<img src="/upload/${s.fu_storedname }" alt="styling">
+			
+			<div class="likecnt" id="likecnt">${s.cntslike }</div>
+			
+			<c:if test="${s.slikecheck eq 0 }">
+				<div class="stylinglike empty"></div>
+			</c:if>
+			<c:if test="${s.slikecheck eq 1 }">
+				<div class="stylinglike red"></div>
+			</c:if>			
+			
+			<div class="darkness"></div>
+     		<div class="styling-info"><span draggable="false">${s.s_name }</span></div>
+		</div>
+		</div>
+	</c:forEach>
+	</div>
+</div>
+</c:if>
+<%-- 	<c:if test="${styling.size() eq 0 }"> --%>
+<!-- 		해당되는 스타일링이 없어요ㅠㅠ -->
+<%-- 	</c:if> --%>
 
-<!-- <hr> -->
-
-<!-- <div> -->
-
-<!-- <h5>어떻게 입을까?</h5> -->
-
-<%-- <c:forEach items="${list }" var="l" begin="0" end="${list.size() }"> --%>
-<!-- <div id=block> -->
-<%-- <img src="/upload/${l.fu_storedname }" width="200px" height="200px"> --%>
-<%-- <span>${l.s_name }</span> --%>
-<!-- </div> -->
-<%-- </c:forEach> --%>
-
-<!-- </div> -->
 
 
 <script type="text/javascript">  
 $(document.body).css("background-color", "#eff6f6");
 $(document.body).find(".navbar").css("background-color", "#ffffff");
 
-function StylingView(s_no){
+function stylingView(s_no){
 	location.href="/styling/view?s_no="+s_no;
+}
+
+function productView(p_no){
+	location.href="/shop/view?p_no="+p_no;
 }
 
 $(document).ready(function(){
 	
-	$(".like").click(function(){
+	var login = false;
+
+	$(".like").click(function(){	
+	if(${login ne true}){
+// 		console.log("비로그인"); 
+		showlogin();
+		
+	}	else {
 		
 	var p_no = ${view.p_no }
 	
@@ -341,15 +419,94 @@ $(document).ready(function(){
 			console.log("실패");
 		}			
 	});
-	 
+	
+	}
+	
     return false;
     
 	
 	});
 	
-	$(".buy").click(function(){
 		
-		window.open(view.p_url , '_blank'); 
+		$(".stylinglike").click(function(){
+		if(${login ne true}){
+//		 		console.log("비로그인");
+			showlogin();				
+		}	else {	
+			
+		var s_no = $(this).parent().parent().attr("data-sno");	
+		
+	 	$.ajax({
+			type : "get",
+			url : "/styling/like",
+			data : {"s_no": s_no },
+			dataType : "json",
+			success : function(res){
+				console.log("성공");			
+//	 			console.log($("[data-sno='"+s_no+"']").find(".likecnt"))
+				$("[data-sno='"+s_no+"']").find(".likecnt").html(res.cnt);				
+				$like = $("[data-sno='"+s_no+"']").find(".stylinglike");
+				if($like.hasClass("red")) {
+					$like.removeClass("red");
+					$like.addClass("empty");
+				} else {
+					$like.addClass("red");
+					$like.removeClass("empty");
+				}
+				
+			},
+			error : function(e){
+				console.log("실패");
+			}			
+		});
+		} 
+	    //jQuery 이벤트의 경우,
+	    //return false는 event.stopPropagation()과 event.preventDefault() 를
+	    //모두 수행한 것과 같은 결과를 보인다.
+	    return false;
+		});
+			
+		$(".similarlike").click(function(){
+					
+			if(${login ne true}){
+//		 		console.log("비로그인");
+				showlogin();
+			}	else {	
+				
+			var p_no = $(this).parent().parent().attr("data-similarno");
+			
+			$.ajax({
+				type : "get",
+				url : "/shop/like",
+				data : {"p_no": p_no },
+				dataType : "json",
+				success : function(res){
+					console.log("성공");
+					
+//		 			console.log($("[data-sno='"+s_no+"']").find(".likecnt"))
+					$("[data-similarno='"+p_no+"']").find(".likecnt").html(res.cnt);				
+					$like = $("[data-similarno='"+p_no+"']").find(".similarlike");
+					if($like.hasClass("red")) {
+						$like.removeClass("red");
+						$like.addClass("empty");
+					} else {
+						$like.addClass("red");
+						$like.removeClass("empty");
+					}				
+				},
+				error : function(e){
+					console.log("실패");
+				}			
+			});
+			}
+		    return false;
+			});	
+
+
+	$(".buy").click(function(){
+		var url = "${view.p_url }";
+// 		console.log(url);
+		window.open(url , '_blank'); 
 	});
 	
 });	
