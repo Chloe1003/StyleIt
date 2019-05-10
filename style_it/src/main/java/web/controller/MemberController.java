@@ -4,6 +4,8 @@ package web.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -23,7 +25,7 @@ public class MemberController {
 	@Autowired MemberService memberService;
 	
 	
-	@RequestMapping("/main")
+	@RequestMapping("/home")
 	public void maingo() {
 	}
 
@@ -35,10 +37,10 @@ public class MemberController {
 		
 		memberService.memberInsert(member);
 		
-		return "redirect:/main";
+		return "redirect:/home";
 	}
 //	회원가입 중복처리
-	@RequestMapping(value = "member/joincheck", method = RequestMethod.POST)
+	@RequestMapping(value = "/member/joincheck", method = RequestMethod.POST)
 	public String joincheck(Member member, Model model) {
 		
 		int check = memberService.checkjoin(member);
@@ -55,25 +57,42 @@ public class MemberController {
 
 
 	@RequestMapping(value = "/member/login", method = RequestMethod.POST)
-	public String login(Member member, HttpSession session) {
+	public String login(Member member, HttpSession session, Model model, HttpServletRequest req) {
 		
 		boolean login = memberService.memberLogin(member);
-		Member m = memberService.getMember(member);
-		int m_no = m.getM_no();
-		String m_email = m.getM_email();
-		String m_nick = m.getM_nick();
+		
+		String m_email = req.getParameter("m_email");
+		String m_pw = req.getParameter("m_pw");
+		
+		Member m = new Member();
+		
+		m.setM_email(m_email);
+		m.setM_pw(m_pw);
+		
+		m = memberService.getMember(m);
+		
+		Map map = new HashMap();
 		
 		if(login==true) {
-
+			
 			session.setAttribute("login", true);
-			session.setAttribute("m_no", m_no);
-			session.setAttribute("m_email", m_email);
-			session.setAttribute("m_nick", m_nick);
-			return "redirect:/main";
+
+			session.setAttribute("m_no", m.getM_no());
+			session.setAttribute("m_email", m.getM_email());
+			session.setAttribute("m_pw", m.getM_pw());
+			session.setAttribute("m_nick", m.getM_nick());
+			
+			
+//			map.put("login", true);
+			model.addAttribute("login", true);
+			return "jsonView";
+
 
 		}else {
-			session.setAttribute("login", false);
-			return null;
+//			map.put("login", false);
+			model.addAttribute("login", "님은 실패");
+			
+			return "jsonView";
 		}
 	}
 
@@ -84,7 +103,7 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		
-		return "redirect:/main";
+		return "redirect:/home";
 	}
 	
 

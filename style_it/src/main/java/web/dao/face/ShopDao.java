@@ -5,19 +5,21 @@ import java.util.List;
 
 import web.dto.Product;
 import web.dto.Styling;
+import web.util.imgPaging;
+import web.util.imgPaging;
 
 public interface ShopDao {
 
 	public List<Product> getList();
-
-	public Product view(int p_no);
-
+	
+//	제품번호로 제품 정보 가져오기
+	public Product selectProduct(int p_no);
 
 //	로그인시 제품 리스트 얻어오기
-	public List<Product> selectProductList(int m_no);
+	public List<Product> selectProductList(HashMap<String, Object> map);
 	
 //	비로그인시 제품 리스트 얻어오기
-	public List<Product> selectProductListNoLogin();
+	public List<Product> selectProductListNoLogin(imgPaging paging);
 
 //	좋아요 여부 확인
 	public int plikeCheck(HashMap<String, Object> like);
@@ -43,8 +45,14 @@ public interface ShopDao {
 //	비로그인시 제품별 스타일링 정보 얻어오기
 	public List<Styling> selectStylingByProductNoLogin(int p_no);
 	
+//	로그인시 유사한 제품 정보 얻어오기(5개)
+	public List<Product> selectSimilarProduct(HashMap<String, Object> map);
 
+//	비로그인시 유사한 제품 정보 얻어오기(5개)
+	public List<Product> selectSimilarProductNoLogin(Product p);
 
+//	총 제품 수 반환
+	public int totalCnt();
 
 //	//페이지 조회
 //	public List<Product> getSearchList();

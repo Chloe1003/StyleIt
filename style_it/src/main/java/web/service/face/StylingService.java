@@ -34,10 +34,13 @@ public interface StylingService {
 //	좋아요 여부 확인
 	public int slikeCheck(HashMap<String, Object> like);
 	
-//	스타일링별 제품 정보 얻어오기
-	public List<Product> getProductByStyling(int s_no);
-	
-//	콜렉션 추가
+//	로그인시 스타일링별 제품 정보 얻어오기
+	public List<Product> getProductByStyling(HashMap<String, Integer> map);
+
+//	비로그인시 스타일링별 제품 정보 얻어오기
+	public List<Product> getProductByStylingNoLogin(int s_no);
+
+	//	콜렉션 추가
 	public void CollectionInsert(int cs_no);
 //	콜렉션 제거
 	public void CollectionDelete(int cs_no);
@@ -47,8 +50,10 @@ public interface StylingService {
 	public void CommentDelete(int s_no);
 //	스타일링 코맨트 리스트 
 	public void getStylingCommentList(StylingComment sComment);
+
 	
 	
 	
 	
 }
+

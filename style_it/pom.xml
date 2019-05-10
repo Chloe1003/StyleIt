@@ -22,7 +22,14 @@
 	</repositories>
 	
 	<dependencies>
-
+	
+		<!-- gson -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <version>2.8.5</version>
+		</dependency>
+	
 		<!-- Jackson-databind(Jackson Mapper를 포함하고 있음) -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>

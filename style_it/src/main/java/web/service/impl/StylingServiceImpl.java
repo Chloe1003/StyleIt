@@ -91,9 +91,15 @@ public class StylingServiceImpl implements StylingService{
 		return sDao.selectStylingListNoLogin(st_no);
 	}
 
-	@Override
-	public List<Product> getProductByStyling(int s_no) {
-		return sDao.selectProductByStyling(s_no);
 
+	@Override
+	public List<Product> getProductByStyling(HashMap<String, Integer> map) {
+		return sDao.selectProductByStyling(map);
+
+	}
+
+	@Override
+	public List<Product> getProductByStylingNoLogin(int s_no) {
+		return sDao.selectProductByStylingNoLogin(s_no);
 	}
 }
