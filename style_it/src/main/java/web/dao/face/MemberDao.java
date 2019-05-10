@@ -38,7 +38,9 @@ public interface MemberDao {
 
 
 
-	
+	// m_no로 멤버 정보 가져오기
+	public Member selectMemberByMno(int m_no);
+
 	
 	
 	

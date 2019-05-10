@@ -3,9 +3,9 @@ package web.dao.face;
 import java.util.HashMap;
 import java.util.List;
 
+import web.dto.Product;
 import web.dto.Styling;
 import web.dto.StylingComment;
-import web.dto.StylingLike;
 import web.dto.StylingTag;
 
 public interface StylingDao {
@@ -38,6 +38,11 @@ public interface StylingDao {
 //	비 로그인시 스타일링 상세보기
 	public Styling getStylingViewNoLogin(int s_no);
 	
+//	로그인시 스타일링별 제품 정보 가져오기
+	public List<Product> selectProductByStyling(HashMap<String, Integer> map);
+
+//	비로그인시 스타일링별 제품 정보 가져오기
+	public List<Product> selectProductByStylingNoLogin(int s_no);
 	
 //	콜렉션 추가
 	void CollectionInsert(int cs_no);
@@ -50,9 +55,23 @@ public interface StylingDao {
 //	스타일링 코맨트 리스트 
 	void getStylingCommentList(StylingComment sComment);
 
+	//스타일링 태그 리스트
+	public List<StylingTag> selectStylingTagList();
 	
-
-
-
-
+	//스타일링 태그 파일 추가
+	public void fileUploadInsert(HashMap<String, Object> map);
+	
+	//스타일링 태그 파일넘버
+	public int fileUploadNo(HashMap<String, Object> map);
+	
+	//스타일링 태그 추가
+	public void stylingTagInsert(HashMap<String, Object> map);
+	
+	//스타일링 태그 수정
+	public void stylingTagUpdate(HashMap<String, Object> map);
+	
+//	//스타일링 태그 삭제
+//	public void stylingTagDelete(StylingTag st);
+	
+	
 }

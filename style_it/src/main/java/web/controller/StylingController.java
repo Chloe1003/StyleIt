@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import web.dto.Member;
+import web.dto.Product;
 import web.dto.Styling;
-import web.dto.StylingComment;
 import web.dto.StylingLike;
+import web.service.face.MemberService;
 import web.service.face.StylingService;
 
 @Controller
@@ -26,6 +28,7 @@ public class StylingController {
 	private static final Logger logger=LoggerFactory.getLogger(StylingController.class);
 
 	@Autowired StylingService sServ;
+	@Autowired MemberService mServ;
 	
 	//스타일링 작성 페이지
 	@RequestMapping(value="/styling/create", method=RequestMethod.GET)
@@ -44,8 +47,20 @@ public class StylingController {
 	public void StylingList(HttpSession session , 
 			@RequestParam HashMap<String, Integer> map, Model model, int st_no) {
 		
+		boolean login = false;
 		
-		if ((boolean)session.getAttribute("login")==true) { // 로그인 되어 있을 때
+		try {
+			
+			if(session.getAttribute("login") != null) {
+				login = (boolean) session.getAttribute("login");
+			}
+			
+		} catch (Exception e) {
+			
+		}
+		
+		
+		if (login==true) { // 로그인 되어 있을 때
 			
 			logger.info("login true");
 			
@@ -69,21 +84,46 @@ public class StylingController {
 	public void StylingView(HttpSession session, Model model, int s_no,
 			@RequestParam HashMap<String, Integer> map) {
 		
+		boolean login = false;
 		
-		if ((boolean)session.getAttribute("login")==true) { // 로그인 되어 있을 때
+		try {
+			
+			if(session.getAttribute("login") != null) {
+				login = (boolean) session.getAttribute("login");
+			}
+			
+		} catch (Exception e) {
+			
+		}
+		
+		if (login==true) { // 로그인 되어 있을 때
 			
 			int m_no = (int) session.getAttribute("m_no");
 						
 			map.put("m_no", m_no);
-			map.put("s_no", s_no);	
+			map.put("s_no", s_no);
 			
-			model.addAttribute("styling", sServ.getStylingView(map));	
-		
+			Styling s = sServ.getStylingView(map);
+			int make = s.getM_no();
+			Member maker = mServ.getMemberByMno(make);			
+			
+			List<Product> pList = sServ.getProductByStyling(map);
+
+			model.addAttribute("styling", s);	
+			model.addAttribute("maker", maker);
+			model.addAttribute("product", pList);
+			
 		} else { // 로그인 안되어 있을 때
 			logger.info("login false");
 
-			model.addAttribute("styling", sServ.getStylingViewNoLogin(s_no));
+			Styling s = sServ.getStylingViewNoLogin(s_no);
+			int make = s.getM_no();
+			Member maker = mServ.getMemberByMno(make);
 			
+			model.addAttribute("styling", s);
+			model.addAttribute("maker", maker);
+			model.addAttribute("product", sServ.getProductByStylingNoLogin(s_no));
+
 		}
 
 	}

@@ -2,12 +2,18 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <style>
+.frame{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #block{
 width:300px; 
 height:350px; 
 position:relative; 
 display:inline-block;
-margin: 20px;
+margin: 6px;
 }
 
 .img-wrapper{
@@ -16,12 +22,13 @@ width:inherit;
 height:inherit; 
 position:absolute;
 cursor: pointer; 
+background:white;
 }
 
 .img-wrapper img {
 width:inherit;
 height:inherit;
-
+object-fit: contain;
 }
 
 .darkness {
@@ -30,7 +37,7 @@ height:inherit;
   left:0;
   width:inherit;
   height:inherit;
-  background:#E89C8B;
+  background:linear-gradient(to bottom, #E89C8B, transparent );
   opacity:0; 
   transition:all .6s linear; 
 }
@@ -48,10 +55,10 @@ height:inherit;
 /* 추가된 부분 */
 .stylingname span {
   font-size:0.9em;
-  color:#ffffff;
+  color:#777;
   user-select:none;
   font-weight: bold;
-  text-shadow: 0 1px 10px rgba(0,0,0,0.4);
+/*   text-shadow: 0 1px 10px rgba(0,0,0,0.4); */
 }
 
 .img-wrapper:hover .darkness{
@@ -108,7 +115,7 @@ height:inherit;
 		<c:if test="${s.slikecheck eq 0 }">
 			<div class="like empty"></div>
 		</c:if>
-		<c:if test="${s.slikecheck eq 1 }">
+		<c:if test="${s.slikecheck>= 1 }">
 			<div class="like red"></div>
 		</c:if>
 		
@@ -132,6 +139,15 @@ function stylingView(s_no){
 $(document).ready(function(){
 	
 	$(".like").click(function(){
+
+	var login = false;
+		
+	if(${login ne true}){
+//	 		console.log("비로그인");
+		showlogin();
+			
+	}	else {		
+		
 	var s_no = $(this).parent().attr("data-sno");
 // 	console.log("s_no: "+s_no);
 	
@@ -160,12 +176,13 @@ $(document).ready(function(){
 			console.log("실패");
 		}			
 	});
-	 
+	} 
     //jQuery 이벤트의 경우,
     //return false는 event.stopPropagation()과 event.preventDefault() 를
     //모두 수행한 것과 같은 결과를 보인다.
     return false;
     
+	
 	});
 		
 	

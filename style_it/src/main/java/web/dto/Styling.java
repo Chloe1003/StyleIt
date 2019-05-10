@@ -19,7 +19,7 @@ public class Styling {
 	private String fu_storedname;
 	private int cntslike;
 	private int slikecheck;
-  private int p_no;
+	private int p_no;
 	private int fut_no;
 //	-------------------------------
 		
@@ -89,18 +89,21 @@ public class Styling {
 	public void setP_no(int p_no) {
 		this.p_no = p_no;
 	}
-  public int getFu_no() {
-		return fu_no;
+
+	public int getFut_no() {
+		return fut_no;
 	}
-	public void setFu_no(int fu_no) {
-		this.fu_no = fu_no;
+	public void setFut_no(int fut_no) {
+		this.fut_no = fut_no;
 
 	}
+	
 	@Override
 	public String toString() {
 		return "Styling [s_no=" + s_no + ", m_no=" + m_no + ", s_name=" + s_name + ", s_content=" + s_content
 				+ ", st_no=" + st_no + ", s_date=" + s_date + ", fu_no=" + fu_no + ", fu_storedname=" + fu_storedname
-				+ ", cntslike=" + cntslike + ", slikecheck=" + slikecheck + "]";
+				+ ", cntslike=" + cntslike + ", slikecheck=" + slikecheck + ", p_no=" + p_no + ", fut_no=" + fut_no
+				+ "]";
 	}
 	
 	

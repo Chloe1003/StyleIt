@@ -2,8 +2,12 @@ package web.dao.face;
 
 import java.util.List;
 
+
 import web.dto.FileUpload;
 import web.dto.Member;
+import web.dto.MemberQuiz;
+import web.dto.ProductLike;
+
 
 public interface MypageDao {
 	
@@ -84,7 +88,11 @@ public interface MypageDao {
 
 
 	
+//	제품 좋아요 리스트 가져오기
+	public String selectProductLike(int m_no);
 	
+//	멤버 번호로 스타일링 퀴즈 가져오기
+	public List<MemberQuiz> selectMemberQuiz(int m_no);
 	
 
 }

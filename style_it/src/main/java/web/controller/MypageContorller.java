@@ -1,5 +1,6 @@
 package web.controller;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -17,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import web.dto.FileUpload;
 import web.dto.Member;
@@ -156,7 +159,7 @@ public class MypageContorller {
 		return null;
 	}
 //	마이페이지에서 보는 본인이 체크한 모든 좋아요 리스트
-	@RequestMapping(value = "/mypage/allikelist")
+	@RequestMapping(value = "/mypage/alllikelist")
 	public void AllLikeList(Model model) {
 		
 	}
@@ -172,7 +175,7 @@ public class MypageContorller {
 		return null;
 	}
 //	본인이 만든 모든 컬렉션리스트
-	@RequestMapping(value = "/mypage/alcollectionlist")
+	@RequestMapping(value = "/mypage/allcollectionlist")
 	public void AllCollectionList(Model model) {
 		
 	}
@@ -184,8 +187,12 @@ public class MypageContorller {
 	}
 	
 //	추천받은 제품 리스트
-	@RequestMapping(value = "/mypage/rp")
-	public void RecommendProduct(Model model) {
+	@RequestMapping(value = "/mypage/recommend")
+	public void RecommendProduct(HttpSession session, Model model) {
+		int m_no = (int) session.getAttribute("m_no");
+
+		
+		
 		
 	}
 	

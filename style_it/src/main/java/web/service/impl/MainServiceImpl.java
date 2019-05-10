@@ -17,7 +17,7 @@ public class MainServiceImpl implements MainService {
 	@Autowired MainDao mainDao;
 
 	@Override
-	public List<Banner> getBannerList() {
+	public List<HashMap> getBannerList() {
 		return mainDao.selectBanner();
 	}
 

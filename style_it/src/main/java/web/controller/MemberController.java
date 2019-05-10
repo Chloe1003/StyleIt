@@ -76,6 +76,7 @@ public class MemberController {
 		if(login==true) {
 			
 			session.setAttribute("login", true);
+
 			session.setAttribute("m_no", m.getM_no());
 			session.setAttribute("m_email", m.getM_email());
 			session.setAttribute("m_pw", m.getM_pw());
@@ -85,6 +86,7 @@ public class MemberController {
 //			map.put("login", true);
 			model.addAttribute("login", true);
 			return "jsonView";
+
 
 		}else {
 //			map.put("login", false);

@@ -7,8 +7,9 @@
   
 <!-- 매퍼 설정 -->
 <mapper namespace="web.dao.face.MainDao">
-	<select id="selectBanner" resultType="web.dto.Banner">
-		select * from banner
+	<select id="selectBanner" resultType="HashMap">
+		select b.*, f.fu_storedname from banner b
+		inner join fileupload f on f.fu_no = b.fu_no
 		order by b_no
 	</select>
 
@@ -26,4 +27,4 @@
     	inner join fileupload f on p.fu_no = f.fu_no) prod
 		where like_cnt >= 5
 	</select>
-</mapper>
+</mapper>  
