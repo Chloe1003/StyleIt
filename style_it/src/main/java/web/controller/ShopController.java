@@ -179,31 +179,5 @@ public class ShopController {
 		return null;
 	}
 	
-	@RequestMapping(value="/shop/loading")
-	@ResponseBody
-	public String getScrollList(HttpServletRequest req, HttpServletResponse resp, 
-			@RequestParam HashMap<String, Object> map, Model model) {
-		
-		logger.info("스크롤 로딩 요청");
-		
-	    Gson gson = new Gson();
-	    
-	    int totalCount = shopService.getTotalCount();  //데이터의 전체 갯수를 가져온다.
-        int curPage = shopService.getCurPage(req); 
-        
-        logger.info(Integer.toString(curPage));
-        
-		imgPaging paging = new imgPaging (totalCount, curPage);
 
-	    List<Product> pList = shopService.getProductNoLogin(paging);
-	       
-	    map.put("productList", pList);
-	    map.put("totalCnt", totalCount);
-	    map.put("startNo", paging.getStartNo());
-	    map.put("resultCode", 200);
-	    
-		return gson.toJson(map);
-	}
-
-	
 }

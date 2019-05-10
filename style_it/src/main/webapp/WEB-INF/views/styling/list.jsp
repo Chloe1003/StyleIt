@@ -115,7 +115,7 @@ object-fit: contain;
 		<c:if test="${s.slikecheck eq 0 }">
 			<div class="like empty"></div>
 		</c:if>
-		<c:if test="${s.slikecheck eq 1 }">
+		<c:if test="${s.slikecheck>= 1 }">
 			<div class="like red"></div>
 		</c:if>
 		

@@ -28,6 +28,7 @@
 				ON p.fu_no = f.fu_no
 		        JOIN productbrand b
 		        ON p.pb_no = b.pb_no
+		        where p.pb_no=7 and p.pca_no=1
 		        )M
 	  		)R
 	  	WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
@@ -43,6 +44,7 @@
 				ON p.fu_no = f.fu_no
 		        JOIN productbrand b
 		        ON p.pb_no = b.pb_no
+		        where p.pb_no=7 and p.pca_no=1
 		        )M
 	  		)R
 	  	WHERE rnum BETWEEN #{startNo } AND #{endNo }

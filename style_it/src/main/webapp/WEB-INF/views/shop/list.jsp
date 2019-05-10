@@ -128,63 +128,6 @@ object-fit: contain;
 </div>
 <br><br>
 
-<script type="text/javascript">
-var nextPage = 2;
-
-$(window).scroll(function() {
-    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-      console.log("스크롤 발생");
-      console.log(nextPage);
-      getList(nextPage);
-      nextPage++
-    }
-});
-      
-function getList(nextPage){
-	
-	  	$.ajax({
-			type : "get",
-			url : "/shop/loading",
-			data : {"curPage": nextPage },
-			dataType : "json",
-			success : function(res){
-				console.log("스크롤 로딩 성공");
-				
-				var data = res.productList;
-				
-				$(".frame").append(
-						'<c:forEach items="'+data+'" var="p" begin="0" end="39">'+
-						'<div id="block">'+
-						'<div class="img-wrapper img" onclick="productView(${p.p_no })" data-pno="${p.p_no }">'+
-							'<img src="/upload/${p.fu_storedname }" alt="images">'+
-							'<div class="likecnt" id="likecnt">${p.cntplike }</div>'+
-							'<c:if test="${p.plikecheck eq 0 }">'+
-								'<div class="like empty"></div>'+
-							'</c:if>'+
-							'<c:if test="${p.plikecheck eq 1 }">'+
-								'<div class="like red"></div>'+
-							'</c:if>'+
-							'<div class="darkness"></div>'+
-					   		'<div class="productname"><div style="font-weight:600;">KRW ${p.p_price }</div>'+
-					     	'<span draggable="false">${p.pb_name } <br> ${p.p_name } </span></div></div></div></c:forEach>');
-				
-
-// 			      $("#block").append(res.productList);
-				
-			},
-			error : function(e){
-				if(e.status==300){
-				alert("데이터를 가져오는데 실패하였습니다.");
-				console.log("실패");
-				}
-			}			
-		});
-	      
-}      
-
-
-
-</script>
 
 <script type="text/javascript">
 $(document.body).css("background-color", "#eff6f6");
@@ -250,4 +193,36 @@ function comment(s_no){
 	
 }
 
+var page = 2;
+
+$(window).scroll(function() {
+    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+      console.log("스크롤 발생");
+      console.log(page);
+      getList(page);
+      page++
+    }
+});
+function getList(page){
+	
+  	$.ajax({
+		type : "get",
+		url : "/shop/list",
+		data : {"curPage": page },
+		dataType : "html",
+		success : function(res){
+			console.log("스크롤 로딩 성공");			
+			$("#page").append(res);
+			
+		},
+		error : function(e){
+			console.log("실패");
+		}			
+	});
+      
+}      
+
+
+
+</script>
 </script> 
