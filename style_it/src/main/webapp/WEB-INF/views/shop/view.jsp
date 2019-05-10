@@ -138,7 +138,7 @@ margin-bottom: 20px;
 
 .product{
 	position: relative;
-    height: 500px;
+    height: 400px;
     width: 100%;
     background-color: rgba(250,211,204,.25);
 

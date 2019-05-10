@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import web.controller.ShopController;
 import web.dao.face.ShopDao;
 import web.dto.Product;
+import web.dto.ProductOccasion;
+import web.dto.ProductStyle;
 import web.dto.Styling;
 import web.service.face.ShopService;
 import web.util.imgPaging;
@@ -118,5 +120,18 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 
+	@Override
+	public List<ProductOccasion> getProductOccasion() {
+		return shopDao.selectProductOccasion();
+	}
+
+
+	@Override
+	public List<ProductStyle> getProductStyle() {
+		return shopDao.selectProductStyle();
+	}
+
+
+	
 
 }

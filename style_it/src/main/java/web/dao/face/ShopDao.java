@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import web.dto.Product;
+import web.dto.ProductOccasion;
+import web.dto.ProductStyle;
 import web.dto.Styling;
-import web.util.imgPaging;
 import web.util.imgPaging;
 
 public interface ShopDao {
@@ -53,6 +54,12 @@ public interface ShopDao {
 
 //	총 제품 수 반환
 	public int totalCnt();
+	
+//	제품 상황 카테고리 얻어오기
+	public List<ProductOccasion> selectProductOccasion();
+	
+//	제품 스타일 카테고리 얻어오기
+	public List<ProductStyle> selectProductStyle();
 
 //	//페이지 조회
 //	public List<Product> getSearchList();

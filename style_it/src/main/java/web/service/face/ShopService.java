@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import web.dto.Product;
+import web.dto.ProductOccasion;
+import web.dto.ProductStyle;
 import web.dto.Styling;
 import web.util.imgPaging;
 
@@ -54,6 +56,12 @@ public interface ShopService {
 
 //	총 제품 수 얻기
 	public int getTotalCount();
+
+//	제품 상황 카테고리 얻기
+	public List<ProductOccasion> getProductOccasion();
+
+//	제품 스타일 카테고리 얻기
+	public List<ProductStyle> getProductStyle();
 	
 //	//SHOP List 출력
 //	public List<Product> selectSearchList();

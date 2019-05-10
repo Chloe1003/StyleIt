@@ -21,34 +21,22 @@
        	SELECT * FROM (
 	  		SELECT rownum rnum, M.* FROM (  
 		        SELECT p.p_no, p.p_price, p.p_name, f.fu_storedname, b.pb_name,
-		            (select count(*) from productlike l where p.p_no = l.p_no) cntplike,
-		            (select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck
+		            (select count(*) from productlike l where p.p_no = l.p_no) cntplike
+		            <if test="login">
+		            ,(select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck
+		            </if>
 		        FROM product p
 		        JOIN fileupload f
 				ON p.fu_no = f.fu_no
 		        JOIN productbrand b
 		        ON p.pb_no = b.pb_no
-		        where p.pb_no=7 and p.pca_no=1
+		        <if test="ps_no>0">
+		        WHERE p.ps_no = #{ps_no }
+		        </if>
 		        )M
 	  		)R
 	  	WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
        	</select>	
-	
-	<select id="selectProductListNoLogin" parameterType="web.util.imgPaging" resultType="web.dto.Product">
-       	SELECT * FROM (
-	  		SELECT rownum rnum, M.* FROM ( 
-		        SELECT p.p_no, p.p_price, p.p_name, f.fu_storedname, b.pb_name,
-		            (select count(*) from productlike l where p.p_no = l.p_no) cntplike
-		        FROM product p
-		        JOIN fileupload f
-				ON p.fu_no = f.fu_no
-		        JOIN productbrand b
-		        ON p.pb_no = b.pb_no
-		        where p.pb_no=7 and p.pca_no=1
-		        )M
-	  		)R
-	  	WHERE rnum BETWEEN #{startNo } AND #{endNo }
-	</select>
 	
 	<select id="plikeCheck" parameterType="HashMap" resultType="int">
 		SELECT COUNT(*) FROM productlike
@@ -72,8 +60,10 @@
 	
 	<select id="selectProductView" parameterType="HashMap" resultType="web.dto.Product">
         SELECT p.p_no, p.p_price, p.p_name, f.fu_storedname, b.pb_name, p.p_url,
-            (select count(*) from productlike l where p.p_no = l.p_no) cntplike,
-            (select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck
+            (select count(*) from productlike l where p.p_no = l.p_no) cntplike
+            <if test="login=true">
+            ,(select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck
+            </if>
         FROM product p
         JOIN fileupload f
 		ON p.fu_no = f.fu_no
@@ -82,33 +72,12 @@
         WHERE p.p_no= #{p_no }
 	</select>
 	
-	<select id="selectProductViewNoLogin" parameterType="int" resultType="web.dto.Product">
-        SELECT p.p_no, p.p_price, p.p_name, f.fu_storedname, b.pb_name, p.p_url,
-            (select count(*) from productlike l where p.p_no = l.p_no) cntplike
-        FROM product p
-        JOIN fileupload f
-		ON p.fu_no = f.fu_no
-        JOIN productbrand b
-        ON p.pb_no = b.pb_no
-        WHERE p.p_no= #{p_no }	
-	</select>
-
-	
 	<select id="selectStylingByProduct" parameterType="HashMap" resultType="web.dto.Styling">
         SELECT s.s_no, s.m_no, s.s_name, s.s_content, s.fu_no, f.fu_storedname, s.st_no, s.s_date
    			, ( select count(*) from stylinglike l where s.s_no = l.s_no ) cntslike
+    		<if test="login=true">
     		, ( select count(*) from stylinglike l where s.s_no = l.s_no and m_no = #{m_no } ) slikecheck
-        FROM styling s
-        JOIN fileupload f
-        ON f.fu_no = s.fu_no
-        JOIN stylingproduct sp
-        ON sp.s_no = s.s_no
-        WHERE sp.p_no = #{p_no }
-	</select>
-	
-	<select id="selectStylingByProductNoLogin" parameterType="int" resultType="web.dto.Styling">
-        SELECT s.s_no, s.m_no, s.s_name, s.s_content, s.fu_no, f.fu_storedname, s.st_no, s.s_date
-   			, ( select count(*) from stylinglike l where s.s_no = l.s_no ) cntslike
+    		</if>
         FROM styling s
         JOIN fileupload f
         ON f.fu_no = s.fu_no
@@ -123,9 +92,11 @@
 			WITH ratings AS(
     			SELECT 
 			        p.p_no, p.p_price, p.p_name, f.fu_storedname, b.pb_name,
-                    (select count(*) from productlike l where p.p_no = l.p_no) cntplike,
-                    (select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck,
-			        0.7*(CASE WHEN p.po_no= #{products.po_no }    THEN 1 ELSE 0 END)
+                    (select count(*) from productlike l where p.p_no = l.p_no) cntplike
+                    <if test="#{login }">
+                    ,(select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck
+                    </if>
+			        ,0.7*(CASE WHEN p.po_no= #{products.po_no }    THEN 1 ELSE 0 END)
 			        + 0.1*(CASE WHEN p.pb_no= #{products.pb_no }   THEN 1 ELSE 0 END)
 			        + 0.8*(CASE WHEN p.ps_no= #{products.ps_no }  THEN 1 ELSE 0 END)
 			        + 0.7*(CASE WHEN p.pco_no= #{products.pco_no } THEN 1 ELSE 0 END)
@@ -143,30 +114,12 @@
 			) WHERE ROWNUM <= 5
 			]]>  	
   	</select>	
-
-	<select id="selectSimilarProductNoLogin" parameterType="web.dto.Product" resultType="web.dto.Product">
-  	<![CDATA[
-  		SELECT * FROM (
-			WITH ratings AS(
-    			SELECT 
-			        p.p_no, p.p_price, p.p_name, f.fu_storedname, b.pb_name,
-                    (select count(*) from productlike l where p.p_no = l.p_no) cntplike,
-			        0.7*(CASE WHEN p.po_no= #{po_no }    THEN 1 ELSE 0 END)
-			        + 0.1*(CASE WHEN p.pb_no= #{pb_no }   THEN 1 ELSE 0 END)
-			        + 0.8*(CASE WHEN p.ps_no= #{ps_no }  THEN 1 ELSE 0 END)
-			        + 0.7*(CASE WHEN p.pco_no= #{pco_no } THEN 1 ELSE 0 END)
-			        + 0.3*(CASE WHEN p.pp_no= #{pp_no } THEN 1 ELSE 0 END)
-			        AS score
-			    FROM product p
-			    JOIN fileupload f
-		        ON p.fu_no = f.fu_no
-                JOIN productbrand b
-                ON p.pb_no = b.pb_no
-			    WHERE  p.p_gender= #{p_gender } AND p.pca_no = #{pca_no } AND p.p_no!= #{p_no }
-			) 
-			    SELECT * FROM ratings 
-			    ORDER BY score DESC
-			) WHERE ROWNUM <= 5
-			]]>  	
-  	</select>	
+  	
+  	<select id="selectProductOccasion" resultType="web.dto.ProductOccasion">
+  		SELECT * FROM productoccasion
+  	</select>
+  	
+  	<select id="selectProductStyle" resultType="web.dto.ProductStyle">
+  		SELECT * FROM productstyle
+  	</select>
 </mapper>

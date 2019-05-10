@@ -5,127 +5,79 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <style>
+
+.wrap-loading{ /*화면 전체를 어둡게 합니다.*/
+    position: fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background: rgba(0,0,0,0.2); /*not in ie */
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');    /* ie */
+}
+.wrap-loading div{ /*로딩 이미지*/
+    position: fixed;
+    top:50%;
+    left:50%;
+    margin-left: -21px;
+    margin-top: -21px;
+}
+
+.display-none{ /*감추기*/
+	display:none;
+}
+
 .frame{
     width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
-
-#block{
-    width: 280px;
-    height: 280px;
-    position: relative;
-    display: inline-block;
+.shop-section{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.section-cate{
+    width: 108px;
     margin: 10px;
-}
+    font-size: 12px;
+    line-height: 15px;
+    color: #4a3a3a;
 
-.img-wrapper{
-box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-width:inherit;
-height:inherit; 
-position:absolute;
-cursor: pointer; 
-background:white;
 }
-
-.img-wrapper img {
-width:inherit;
-height:inherit;
-object-fit: contain;
-}
-
-.darkness {
-  position:absolute;
-  top:0;
-  left:0;
-  width:inherit;
-  height:inherit;
-  background:linear-gradient(to bottom, #E89C8B, transparent );
-  opacity:0; 
-  transition:all .6s linear; 
-}
-
-.productname {
-  position:absolute;
-  top:180px;
-  left:20px;
-  width:240px;
-  height:55px;
-  opacity:0; 
-  transition:all .3s linear; 
-}
-
-/* 추가된 부분 */
-.productname span {
-  font-size:0.9em;
-  color:#777;
-  user-select:none;
-  font-weight: bold;
-/*   text-shadow: 0 1px 10px rgba(0,0,0,0.4); */
-}
-
-.img-wrapper:hover .darkness{
-  opacity:0.4;
-}
-
-.img-wrapper:hover .productname {
-  opacity:1;
-/*   transform:scale(1); */
-}
-
-.like{
-  position:absolute;
-  top:20px;
-  left:240px;
-  width:22px;
-  height:22px;
-  z-index:999;
-  
-  background-size: contain;
-}
-
-.likecnt{
-  position:absolute;
-  top:20px;
-  left:225px;
-  width:22px;
-  height:22px;
-  z-index:999;
-}
-
-
-.like.red {
-	background-image: url(/resources/image/styling/redheart.png)
-}
-.like.empty {
-	background-image: url(/resources/image/styling/emptyheart.png)
+.section-type-button{
+	height: 44px;
+    min-width: 125px;
+    margin: 10px 3px;
+    border: 2px solid rgba(231,214,207,.66);
+    font-size: 14px;
+    line-height: 18px;
+    color: #4a3a3a;
+    letter-spacing: .09px;
 }
 
 </style>
+<!-- <div class="wrap-loading display-none"> -->
+<!-- 	<div><img src="/image/shop/loading.gif"/></div> -->
+<!-- </div> -->
 
-
-<div class="frame" id="frame">
-<c:forEach items="${productList }" var="p" begin="0" end="${productList.size()-1 }">
-<div id="block">
-	<div class="img-wrapper img" onclick="productView(${p.p_no })" data-pno="${p.p_no }">
-		<img src="/upload/${p.fu_storedname }" alt="images">
-		<div class="likecnt" id="likecnt">${p.cntplike }</div>
-		
-		<c:if test="${p.plikecheck eq 0 }">
-			<div class="like empty"></div>
-		</c:if>
-		<c:if test="${p.plikecheck eq 1 }">
-			<div class="like red"></div>
-		</c:if>
-		
-		<div class="darkness"></div>
-   		<div class="productname"><div style="font-weight:600;">KRW ${p.p_price }</div>
-     	<span draggable="false">${p.pb_name } <br> ${p.p_name } </span></div>
-
+<div class="shop-section">
+	<div class="section">
+<!-- 		<span class="section-cate">상황별</span> -->
+<!-- 		<span class="section-cate">스타일별</span> -->
+	</div>
+	
+	<div class="section-type">
+		<c:forEach items="${psList }" var="ps" begin="0" end="${psList.size()-1 }">
+			<button class="section-type-button" type="button" onclick="sortByStyle(${ps.ps_no })"><span>${ps.ps_name }</span></button>
+		</c:forEach>
 	</div>
 </div>
-</c:forEach>
+
+<div class="frame" id="frame">
+
 </div>
+
 <br><br>
 
 
@@ -137,8 +89,14 @@ function productView(p_no){
 	location.href="/shop/view?p_no="+p_no;
 }
 
+function sortByStyle(ps_no){
+	location.href="/shop/list?ps_no="+ps_no;
+}
+
 
 $(document).ready(function(){
+	
+	
 	
 	$(".like").click(function(){
 		
@@ -184,6 +142,8 @@ $(document).ready(function(){
     
 	
 	});
+	
+	getList(1);
 		
 	
 });	
@@ -207,13 +167,21 @@ function getList(page){
 	
   	$.ajax({
 		type : "get",
-		url : "/shop/list",
+		url : "/shop/listloading",
 		data : {"curPage": page },
 		dataType : "html",
 		success : function(res){
 			console.log("스크롤 로딩 성공");			
-			$("#page").append(res);
+// 			$("#page").append(res);
+			$(".frame").append(res);
 			
+		},
+		beforeSend:function(){
+// 			이미지 보여주기 처리
+			$(".wrap-loading").removeClass('display-none');
+		},
+		complete:function(){
+			$(".wrap-loading").addClass('display-none');
 		},
 		error : function(e){
 			console.log("실패");
@@ -225,4 +193,4 @@ function getList(page){
 
 
 </script>
-</script> 
+
