@@ -71,37 +71,6 @@
 		WHERE s.s_no= #{s_no }	
 	</select>
 	
-	<select id="selectStylingTagList" resultType="web.dto.StylingTag">
-		select * from stylingtag
-	</select>
-	
-	<insert id="fileUploadInsert" parameterType="HashMap" >
-		insert into fileupload(fu_no, fu_storedname, fu_date, fut_no) values(fileupload_seq.nextval, #{stored_name }, sysdate, 4) 
-	</insert>
-	
-	<select id="fileUploadNo" parameterType="HashMap" resultType="int">
-		select fu_no from fileupload
-		where fu_storedname=#{stored_name}
-	</select>
-	
-	<insert id="stylingTagInsert" parameterType="HashMap">
-		insert into stylingtag(st_no, st_name, st_date, fu_no) 
-		values(stylingtag_seq.nextval, #{st_name} , sysdate, #{no})
-	</insert> 
-	
-	<insert id="fileUploadUpdate" parameterType="HashMap">
-		update fileupload(fu_no, fu_storedname, fu_date, fut_no) values(fileupload_seq.nextval, #{stored_name }, sysdate, 4)
-	</insert>
-	
-	<insert id="stylingTagUpdate" parameterType="HashMap">
-		update stylingtag set st_name = #{st_name } where st_no=#{st_no } 
-	</insert> 
-	
-	<delete id="stylingTagDelete" parameterType="web.dto.StylingTag">
-		delete stylingtag where st_no=#{st_no }
-	</delete>
-	
-
 	<select id="selectProductByStyling" parameterType="int" resultType="web.dto.Product">
 		SELECT s.s_no, s.p_no, p.p_name, p.p_price, b.pb_name, f.fu_storedname FROM stylingproduct s
   		JOIN product p

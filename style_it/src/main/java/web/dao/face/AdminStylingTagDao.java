@@ -1,5 +1,6 @@
 package web.dao.face;
 
+import java.util.HashMap;
 import java.util.List;
 
 import web.dto.StylingTag;
@@ -7,19 +8,21 @@ import web.util.Paging;
 
 public interface AdminStylingTagDao {
 	
-	// 전체 리스트
-	public List<StylingTag> selectTagList(Paging paging);
+	//스타일링 태그 리스트
+	public List<StylingTag> selectStylingTagList(Paging paging);
 	
-	// 총 게시물 
-	public int selectCntTag();
-		
-	// 태그 추가
-	public void insert(StylingTag stylingTag);
-			
-	// 태그 수정
-	public void update(StylingTag stylingTag);
-			
-	// 태그 삭제
-	public void delete(StylingTag stylingTag); 
-
+	//스타일링 태그 총게시글 수 반환
+	public int selectCntStylingTag();
+	
+	//스타일링 태그 파일 추가
+	public void fileUploadInsert(HashMap<String, Object> map);
+	
+	//스타일링 태그 파일넘버
+	public int fileUploadNo(HashMap<String, Object> map);
+	
+	//스타일링 태그 추가
+	public void stylingTagInsert(HashMap<String, Object> map);
+	
+	//스타일링 태그 수정
+	public void stylingTagUpdate(HashMap<String, Object> map);
 }

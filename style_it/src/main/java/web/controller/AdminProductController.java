@@ -1,9 +1,11 @@
 package web.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,17 +14,70 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import web.dto.Product;
 import web.service.face.AdminProductService;
+import web.util.Paging;
 
 @Controller
 public class AdminProductController {
 	
-	public AdminProductService apServ;
+	@Autowired public AdminProductService aps;
 	private static final Logger logger=LoggerFactory.getLogger(AdminProductController.class);
 	
 	// 페이징 처리된 제품 리스트 반환(검색/카테고리&브랜드 필터링 처리)
-	@RequestMapping(value="/admin/product/list")
-	public void productList(Model model, String search, int pca_no, int pb_no, @RequestParam HashMap<String, Object> map) {
+	@RequestMapping(value="/admin/product/list", method=RequestMethod.GET)
+	public void productList(Model model, String word, @RequestParam HashMap<String, Object> map
+			, @RequestParam(defaultValue="0") int curPage
+			) {
 	
+		logger.info("word : "+word);
+		logger.info("페이징 처리하기... ");
+//		HashMap<String, Object> map2 = new HashMap<String, Object>();
+//		map2 = aps.getpcaList();
+		Paging paging;
+		List<HashMap> productList;
+		
+		if( word != null) {
+			
+		logger.info("proudct word 존재");
+		
+		//총 게시글 수 얻기
+		int totalCount = aps.getSearchCount(word);
+		logger.info("총 수 : " + totalCount);
+			
+		//페이지 객체 생성
+		paging = new Paging(totalCount, curPage);
+		logger.info("페이징 : "+ paging);
+		
+		//업로드된 파일 전체 조회
+		map.put("startNo", paging.getStartNo());
+		map.put("endNo", paging.getEndNo());
+		map.put("word", word);
+		
+		productList = aps.getSearchedList(map);
+		
+		} else {
+			
+		logger.info("proudct word 존재안함");
+		
+		//총 게시글 수 얻기
+		logger.info("test");
+		int totalCount = aps.getTotalCount();
+		logger.info("총 수 : " + totalCount);
+			
+		//페이지 객체 생성
+		paging = new Paging(totalCount, curPage);
+		logger.info("페이징 : "+ paging);
+		
+		//업로드된 파일 전체 조회
+		productList = aps.getProductList(paging);
+		logger.info("productList : "+productList);
+		
+		}
+		
+		//페이징객체 MODEL로 추가
+		model.addAttribute("paging", paging);
+		
+		//게시글목록 MODEL로 추가
+		model.addAttribute("productList", productList);
 	}
 	
 	// 제품 상세 보기

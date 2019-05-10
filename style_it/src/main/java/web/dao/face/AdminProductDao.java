@@ -9,13 +9,13 @@ import web.util.Paging;
 public interface AdminProductDao {
 	
 	// 페이징 처리된 제품 리스트 반환
-	public List<Product> selectProductList(Paging paging);
+	public List<HashMap> selectProductList(Paging paging);
 	
 	// 페이징 처리된 제품 카테고리, 브랜드 필터링 리스트 반환
-	public List<Product> selectFilteredList(HashMap<String, Integer> map);
+	public List<HashMap> selectFilteredList(HashMap<String, Integer> map);
 	
 	// 페이징 처리된 검색 제품 리스트 반환
-	public List<Product> selectSearchedList(HashMap<String, Object> map);
+	public List<HashMap> selectSearchedList(HashMap<String, Object> map);
 	
 	// 제품 상세 정보 반환
 	public Product selectProduct(int p_no);
@@ -46,4 +46,13 @@ public interface AdminProductDao {
 	
 	// 검색된 선택 제품 속성 갯수 반환
 	public int cntProductByProductAttribute(HashMap<String, String> map);
+	
+	// 검색된 제품 수
+	public int selectSearchCount(String word);
+	
+	// 총 제품 수
+	public int selectProductCnt();
+	
+//	// 제품 카테고리
+//	public List<HashMap> selectpcaList(HashMap<String, Object> map);
 }
