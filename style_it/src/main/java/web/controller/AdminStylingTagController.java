@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -48,13 +49,17 @@ public class AdminStylingTagController {
 
 	// 태그 추가 폼
 	@RequestMapping(value="/admin/tag/insert", method=RequestMethod.POST)
-	public String insertForm( @RequestParam HashMap<String, Object> map, MultipartFile file, FileUpload upFile) {
+	public String insertForm( @RequestParam HashMap<String, Object> map, MultipartFile file, FileUpload upFile, Model model) {
 		
 		
 		logger.info("파일업로드");        
 		logger.info("ST : "+map);
 		logger.info("Title : "+map.get("st_name"));
 		logger.info("file : "+map.get("fu_storedname"));
+//		if (file == null) {
+//			model.addAttribute("msg", "파일을 선택해 주세요");
+//			return "redirect:/admin/tag/list";
+//		}
 		logger.info(file.toString());
 		logger.info(file.getOriginalFilename());
 		logger.info(String.valueOf(file.getSize()));
@@ -100,6 +105,13 @@ public class AdminStylingTagController {
 		logger.info("ST : "+map);
 		logger.info("Title : "+map.get("st_name"));
 		logger.info("file : "+map.get("fu_storedname"));
+		if (file.isEmpty()) {
+			logger.info("isEmpty");
+			logger.info("file : "+file);
+			logger.info("fileToString : "+file.toString());
+			stylingService.stylingTagUpdate(map);
+		} else {
+		
 		logger.info(file.toString());
 		logger.info(file.getOriginalFilename());
 		logger.info(String.valueOf(file.getSize()));
@@ -133,18 +145,20 @@ public class AdminStylingTagController {
 		
 		logger.info("ST : "+map);
 		stylingService.stylingTagUpdate(map);
+		
+		}
 		   
 		return "redirect:/admin/tag/list";
 	}
-	// 태그 삭제
-	@RequestMapping(value="/admin/tag/delete", method=RequestMethod.GET)
-	public String delete(StylingTag st) {
-		
-		logger.info("ST : "+ st);
-		stylingService.stylingTagDelete(st);
-		
-		return "redirect:/admin/tag/list";
-	}
+//	// 태그 삭제
+//	@RequestMapping(value="/admin/tag/delete", method=RequestMethod.GET)
+//	public String delete(StylingTag st) {
+//		
+//		logger.info("ST : "+ st);
+//		stylingService.stylingTagDelete(st);
+//		
+//		return "redirect:/admin/tag/list";
+//	}
 	
 	
 }

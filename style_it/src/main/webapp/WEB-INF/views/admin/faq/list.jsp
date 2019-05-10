@@ -19,34 +19,52 @@ function showfaq(){
 	document.getElementById("bg").style.display="block";//배경 어둡게 하는 것
 }
 
-function show2(){
-	//show 호출시 넘겨준 값을 이용하여 ajax 등을 통해 modal 을 띄울때 동적으로 바뀌어야 하는 값을 얻어온다.  
-	//얻어온 값을 이용하여, modal 에서 동적으로 바뀌어야 하는 값을 바꾸어 준다..  
-    $("#title").html("ajax를 통해 얻어온 id에 해당하는 값");
-    $("#content").html("ajax를 통해 얻어온 id에 해당하는 값");
-    //modal을 띄워준다.  
-    $("#myModal").modal('show');
-
-
-
-출처: https://carami.tistory.com/61 [carami's story]
-}
-
 $(document).ready(function(){
-	//FAQ 수정하기
-	$("button[name='faqUpdate']").click(function(){
-		action = 'faqUpdate';
-		type = 'PUT';
-		bno = this.value;
-		
-		//content담기
-		var row = $(this).parent().parent().parent();
-		var tr = row.children();
-		
-		var 
+	//태그 제목 미입력시 반환처리
+	$("#btnInsert").click(function(){
+		if(faq_name.value=="") {
+			alert("제목를 입력해주세요");
+			return false;
+		}
 	});
 	
-// 	$(this).parents("form").submit();
+	
+	
+	$(this).parents("form").submit();
+	
+	$(".faqDelete").click(function() {
+		var no = $(this).parents("tr").children("td").eq(0).html()
+		result = confirm('삭제 하시겠습니까');
+		if(result == true){
+			$(location).attr("href","/admin/faq/delete?faq_no="+no);
+		}else{
+			return false;
+		}
+	});
+	
+	$(".faqUpdate").click(function(){
+		var no = $(this).val();
+		
+		$.ajax({
+			type: "get"
+			, url: "/admin/faq/ajax?faq_no="+no
+			, data: { } //요청파라미터
+			, dataType: "json"
+			, success: function( res ){
+				console.log("성공");
+				console.log(res.faqct_no);
+				$("#updateFaq_no").val(res.faq_no);
+				$("#updateFaq_name").val(res.faq_name);
+				$("#updateFaq_answer").val(res.faq_answer);
+				var faqctNo = res.faqct_no;
+				$("input[name='faqct_no'][value='"+faqctNo+"']").attr("checked", true);
+			}
+			, error: function( e ) {
+				console.log("실패");
+			}
+		});
+	});
+	
 });
   
 </script>
@@ -105,12 +123,12 @@ th, td {
 				<div style="padding: 20px;">
 					<!-- faqCategory 선택 -->
 					<div class="form-group">
-						<input type="radio" id="faqct_no" name="faqct_no" value="1" /> 회원
-						<input type="radio" id="faqct_no" name="faqct_no" value="2" /> 스타일링
-						<input type="radio" id="faqct_no" name="faqct_no" value="3" /> 팔로우
-						<input type="radio" id="faqct_no" name="faqct_no" value="4" /> 컬렉션
-						<input type="radio" id="faqct_no" name="faqct_no" value="5" /> 제품
-						<input type="radio" id="faqct_no" name="faqct_no" value="6" /> 기타
+						<input type="radio" name="faqct_no" value="1" checked/> 회원
+						<input type="radio" name="faqct_no" value="2" /> 스타일링
+						<input type="radio" name="faqct_no" value="3" /> 팔로우
+						<input type="radio" name="faqct_no" value="4" /> 컬렉션
+						<input type="radio" name="faqct_no" value="5" /> 제품
+						<input type="radio" name="faqct_no" value="6" /> 기타  
 					</div>
 					<!-- faq 제목 입력 창 -->
 					<div class="form-group">
@@ -143,29 +161,30 @@ th, td {
 					</button>
 				</div>
 				<hr>
-				<!-- faq추가 form -->
+				<!-- faq수정 form -->
 				<form action="/admin/faq/update" style="z-index: 999;" method="post" class="form-horizontal" >
 				<div style="padding: 20px;">
 					<!-- faqCategory 선택 -->
 					<div class="form-group">
-<%-- 						<label class="radio-inline"> <input type="radio" id="faqct_no" name="faqct_no" value="1" <c:if test="${faqList.faqct_no eq 1 }"> checked </c:if> /> 회원 </label> --%>
-<%-- 						<label class="radio-inline"> <input type="radio" id="faqct_no" name="faqct_no" value="2" <c:if test="${faqList.faqct_no eq 2 }"> checked </c:if> /> 스타일링 </label> --%>
-<%-- 						<label class="radio-inline"> <input type="radio" id="faqct_no" name="faqct_no" value="3" <c:if test="${faqList.faqct_no eq 3 }"> checked </c:if> /> 팔로우 </label>  --%>
-<%-- 						<label class="radio-inline"> <input type="radio" id="faqct_no" name="faqct_no" value="4" <c:if test="${faqList.faqct_no eq 4 }"> checked </c:if> /> 컬렉션 </label>  --%>
-<%-- 						<label class="radio-inline"> <input type="radio" id="faqct_no" name="faqct_no" value="5" <c:if test="${faqList.faqct_no eq 5 }"> checked </c:if> /> 제품 </label>  --%>
-<%-- 						<label class="radio-inline"> <input type="radio" id="faqct_no" name="faqct_no" value="6" <c:if test="${faqList.faqct_no eq 6 }"> checked </c:if> /> 기타 </label> --%>
+						<input type="radio" name="faqct_no" value="1" /> 회원
+						<input type="radio" name="faqct_no" value="2" /> 스타일링
+						<input type="radio" name="faqct_no" value="3" /> 팔로우
+						<input type="radio" name="faqct_no" value="4" /> 컬렉션
+						<input type="radio" name="faqct_no" value="5" /> 제품
+						<input type="radio" name="faqct_no" value="6" /> 기타  
 					</div>
 					<!-- faq 제목 입력 창 -->
 					<div class="form-group">
-<%-- 						<input type="text"  class="form-control" id="faq_name" name="faq_name" placeholder="FAQ제목" value="${faqList.faq_name }"> --%>
+						<input type="hidden" class="form-control" id="updateFaq_no" name="faq_no">
+						<input type="text"  class="form-control" id="updateFaq_name" name="faq_name" placeholder="FAQ제목" value="${updateFAQ.faq_name }">
 					</div>
 					<!-- faq 내용 입력 창 -->
 					<div class="form-group">
-<%-- 						<textarea rows="13" cols="80" id="faq_answer" name="faq_answer" style="width : 98%; height: 500px;" value="${faqList.faq_answer }"></textarea> --%>
+						<textarea rows="13" cols="80" id="updateFaq_answer" name="faq_answer" style="width : 98%; height: 300px;" >${updateFAQ.faq_answer }</textarea>
 					</div>
 					<!-- 확인  -->
 					<div class="form-group">
-						<button id="btnInsert" class="btn btn-default" style="width: 285.83px; margin-left: 38px; background: #009994; color: white;">확인</button>
+						<button id="btnInsert2" class="btn btn-default" style="width: 285.83px; margin-left: 38px; background: #009994; color: white;">확인</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 					</div>
 				</div>
@@ -192,7 +211,8 @@ th, td {
 	<td>${i.FAQ_NAME }</td>
 	<td>${i.FAQCT_NAME }</td>
 	<td>관리자</td>
-	<td><button class="faqUpdate" style="background-color: transparent; border-color: transparent;" data-target="#faqUpdate_display" data-toggle="modal" value="${i.FAQ_NO }">수정</button> / 삭제</td>
+	<td><button class="faqUpdate"  style="background-color: transparent; border-color: transparent;" data-target="#faqUpdate_display" data-toggle="modal" value="${i.FAQ_NO }">수정</button> / 
+	 	<button class="faqDelete" style="background-color: transparent; border-color: transparent;">삭제</button></td>
 	</tr>
 	</c:forEach>
 	</tbody>
