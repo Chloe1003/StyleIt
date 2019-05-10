@@ -13,9 +13,15 @@ public class Member {
     private String m_pw;
     private String m_valid;
     
-//    파일업로드 조인 용
+//    프로필 사진 파일업로드 조인 용
     private int fu_no;
     private String fu_storedName;
+//    팔로우 리스트 조회용
+    private int follower_no;
+    private int followee_no;
+    
+    
+    
     
 	public int getM_no() {
 		return m_no;
@@ -65,12 +71,27 @@ public class Member {
 	public void setFu_storedName(String fu_storedName) {
 		this.fu_storedName = fu_storedName;
 	}
+	public int getFollower_no() {
+		return follower_no;
+	}
+	public void setFollower_no(int follower_no) {
+		this.follower_no = follower_no;
+	}
+	public int getFollowee_no() {
+		return followee_no;
+	}
+	public void setFollowee_no(int followee_no) {
+		this.followee_no = followee_no;
+	}
 	@Override
 	public String toString() {
 		return "Member [m_no=" + m_no + ", m_email=" + m_email + ", m_nick=" + m_nick + ", m_date=" + m_date + ", m_pw="
-				+ m_pw + ", m_valid=" + m_valid + ", fu_no=" + fu_no + ", fu_storedName=" + fu_storedName + "]";
+				+ m_pw + ", m_valid=" + m_valid + ", fu_no=" + fu_no + ", fu_storedName=" + fu_storedName
+				+ ", follower_no=" + follower_no + ", followee_no=" + followee_no + "]";
 	}
+    
 
+    
     
     
     

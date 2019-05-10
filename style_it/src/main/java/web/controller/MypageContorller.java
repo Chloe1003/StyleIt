@@ -35,6 +35,23 @@ public class MypageContorller {
 		
 //		회원정보 뿌리기
 		model.addAttribute("mypage", mypageService.getUserInfo(member));
+		
+//		팔로우 숫자 뿌리기
+		int countFollower = mypageService.getFollower(member);
+		model.addAttribute("countFollower", countFollower);
+//		팔로잉 숫자 뿌리기
+		int countFollowee = mypageService.getFollowee(member);
+		model.addAttribute("countFollowee", countFollowee);
+//		본인이 만든 스타일링 숫자 뿌리기
+		int countStyling = mypageService.getCoStyling(member);
+		model.addAttribute("countStyling", countStyling);
+//		본인이 만든 컬렉션 숫자 뿌리기
+		int countCollection = mypageService.getCoCollection(member);
+		model.addAttribute("countCollection", countCollection);
+//		본인이 체크한 모든 좋아요 숫자 뿌리기
+		int countLike = mypageService.getCoLike(member);
+		model.addAttribute("countLike", countLike);
+		
 	}
 //	현재 아이디 비밀번호 확인
 	@RequestMapping(value = "/mypage/checkPass", method = RequestMethod.POST)
@@ -125,13 +142,13 @@ public class MypageContorller {
 		
 	}
 	
-	
-	
-	
-	
-//	팔로우 리스트
+//	팔로우 리스트 
 	@RequestMapping(value = "/mypage/followlist")
 	public void FollowList(Model model) {
+		
+		
+		
+		
 	}
 //	팔로잉 리스트
 	@RequestMapping(value = "/mypage/followinglist")

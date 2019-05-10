@@ -37,7 +37,7 @@ public class MemberController {
 		
 		memberService.memberInsert(member);
 		
-		return "redirect:/main";
+		return "redirect:/home";
 	}
 //	회원가입 중복처리
 	@RequestMapping(value = "/member/joincheck", method = RequestMethod.POST)

@@ -23,6 +23,18 @@ public interface MypageService {
 	public void updateUserImg(Member member);
 //	회원 탈퇴
 	public void deleteUser(Member member);
+//	팔로우 숫자 뿌리기
+	public int getFollower(Member member);
+//	팔로잉 숫자 뿌리기
+	public int getFollowee(Member member);
+//	스타일링 숫자 뿌리기
+	public int getCoStyling(Member member);
+//	컬렉션 숫자 뿌리기
+	public int getCoCollection(Member member);
+//	본인이 체크한 모든 좋아요 수 
+	public int getCoLike(Member member);
+	
+	
 	
 //	팔로우 리스트
 	public List getFollowList();
@@ -64,6 +76,11 @@ public interface MypageService {
 	
 //	추천받은 상품 리스트
 	public List getRecommendProduct();
+
+	
+	
+	
+	
 	
 
 	

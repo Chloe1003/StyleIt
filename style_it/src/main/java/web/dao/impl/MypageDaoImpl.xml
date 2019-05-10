@@ -73,6 +73,40 @@
 		
 	</update>
 	
+	<select id="getFollower" resultType="int" parameterType="web.dto.Member">
+		 
+		 select count(*) from member m, Follow f
+     	 where  m.m_no = f.follower_no and m_no = #{m_no }
+	
+	</select>
+	
+	<select id="getFollowee" resultType="int" parameterType="web.dto.Member">
+		 
+		 select count(*) from member m, Follow f
+     	 where  m.m_no = f.followee_no and m_no = #{m_no }
+	
+	</select>
+	
+	<select id="getCoStyling" resultType="int" parameterType="web.dto.Member">
+	
+		select count(*) from member m, Styling s
+      	where m.m_no = s.m_no and m.m_no = #{m_no }
+      		
+	</select>
+
+	<select id="getCoCollection" resultType="int" parameterType="web.dto.Member">
+	
+		select count(*) from member m, CollectionFolder cf
+      	where m.m_no = cf.m_no and m.m_no = #{m_no }
+      		
+	</select>
+	
+	<select id="getCoLike" resultType="int" parameterType="web.dto.Member">
+	
+	    select count(*) from member m, StylingLike sl, ProductLike pl
+        where m.m_no = sl.m_no and m.m_no = pl.m_no and m.m_no = #{m_no }
+      		
+	</select>
 
   
   
