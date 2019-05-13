@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import web.dto.Product;
+import web.dto.ProductCategory;
 import web.util.Paging;
 
 public interface AdminProductDao {
@@ -20,8 +21,14 @@ public interface AdminProductDao {
 	// 제품 상세 정보 반환
 	public Product selectProduct(int p_no);
 	
+	//스타일링 태그 파일 추가
+	public void fileUploadInsert(HashMap<String, Object> map);
+	
+	//스타일링 태그 파일넘버
+	public int fileUploadNo(HashMap<String, Object> map);
+	
 	// 제품 추가
-	public void insertProduct(Product p);
+	public void insertProduct(HashMap<String, Object> map);
 	
 	// 제품 정보 수정
 	public void updateProduct(Product p);
@@ -48,11 +55,23 @@ public interface AdminProductDao {
 	public int cntProductByProductAttribute(HashMap<String, String> map);
 	
 	// 검색된 제품 수
-	public int selectSearchCount(String word);
+	public int selectSearchCount(HashMap<String, Object> map);
 	
 	// 총 제품 수
 	public int selectProductCnt();
 	
-//	// 제품 카테고리
-//	public List<HashMap> selectpcaList(HashMap<String, Object> map);
+	// 제품 카테고리
+	public List<HashMap> selectpcaList();
+	
+	// 제품 브랜드
+	public List<HashMap> selectpbList();
+	
+	// 제품 색
+	public List<HashMap> selectpcList();
+	
+	// 제품 태그
+	public List<HashMap> selectpoList();
+	public List<HashMap> selectppList();
+	public List<HashMap> selectpsList();
+	
 }

@@ -23,9 +23,12 @@
 		</if>							
 	</insert>
 	
-	<select id="selectSearchCount" resultType="int" parameterType="String">
-		select count(*) from product
-		where p_name like '%'||#{value }||'%'
+	<select id="selectSearchCount" resultType="int" parameterType="HashMap">
+		select count(*) from ( 
+		select p.*, pca.pca_category, pb.pb_name from product p 
+		inner join productcategory pca on pca.pca_no = p.pca_no
+		inner join productbrand pb on pb.pb_no = p.pb_no
+		where p_name like '%'||#{word}||'%' and pca_category like '%' || #{cate} || '%' and pb_name like '%' || #{brand} || '%')
 	</select>
 	
 	<select id="selectSearchedList" resultType="HashMap" parameterType="HashMap">
@@ -34,7 +37,7 @@
 		select p.*, pca.pca_category, pb.pb_name from product p 
 		inner join productcategory pca on pca.pca_no = p.pca_no
 		inner join productbrand pb on pb.pb_no = p.pb_no
-		where p_name like '%' || #{word} || '%'
+		where p_name like '%' || #{word} || '%' and pca_category like '%' || #{cate} || '%' and pb_name like '%' || #{brand} || '%'
 		order by p_no desc
 		) B	order by rnum
 		) R	where rnum between #{startNo} and #{endNo}
@@ -53,6 +56,44 @@
 		order by p_no desc
 		) B	order by rnum
 		) R	where rnum between #{startNo} and #{endNo}
+	</select>
+	
+	<select id="selectpcaList" resultType="HashMap" >
+		select * from productCategory
+	</select>
+	
+	<select id="selectpbList" resultType="HashMap">
+		select * from productbrand
+	</select>
+	
+	<select id="selectpcList" resultType="HashMap">
+		select * from productcolor
+	</select>
+	
+	<select id="selectpoList" resultType="HashMap">
+		select * from productoccasion
+	</select>
+
+	<select id="selectppList" resultType="HashMap">
+		select * from productpattern
+	</select>
+	
+	<select id="selectpsList" resultType="HashMap">
+		select * from productstyle
+	</select>	
+	
+	<insert id="insertProduct" parameterType="HashMap">
+		insert into product(p_no, p_gender, p_price, p_name, fu_no, pca_no, pco_no, pb_no, po_no, ps_no, pp_no, p_url)
+		values(product_seq.nextval, #{p_gender}, #{p_price}, #{p_name}, #{no}, #{category},	#{pcolor}, #{brand}, #{poccasion}, #{pstyle}, #{ppattern}, #{p_url})
+	</insert>
+  	
+	<insert id="fileUploadInsert" parameterType="HashMap" >
+		insert into fileupload(fu_no, fu_storedname, fu_date, fut_no) values(fileupload_seq.nextval, #{stored_name }, sysdate, 4) 
+	</insert>
+	
+	<select id="fileUploadNo" parameterType="HashMap" resultType="int">
+		select fu_no from fileupload
+		where fu_storedname=#{stored_name}
 	</select>
   	
   </mapper>

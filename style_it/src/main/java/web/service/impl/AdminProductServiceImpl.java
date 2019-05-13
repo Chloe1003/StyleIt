@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import web.dao.face.AdminProductDao;
 import web.dto.Product;
+import web.dto.ProductCategory;
 import web.service.face.AdminProductService;
 import web.util.Paging;
 
@@ -55,8 +56,14 @@ public class AdminProductServiceImpl implements AdminProductService {
 	}
 
 	@Override
-	public void addProduct(Product p) {
-		// TODO Auto-generated method stub
+	public void addProduct(HashMap<String, Object> map) {
+		logger.info("map : " + map);
+		logger.info("map.get : "+ map.get("stored_name"));
+		apd.fileUploadInsert(map);
+		int no = apd.fileUploadNo(map);
+		map.put("no", no);
+		logger.info("mapInsert : "+map);
+		apd.insertProduct(map);
 		
 	}
 
@@ -109,14 +116,46 @@ public class AdminProductServiceImpl implements AdminProductService {
 	}
 
 	@Override
-	public int getSearchCount(String word) {
-		return apd.selectSearchCount(word);
+	public int getSearchCount(HashMap<String, Object> map) {
+		logger.info("map : "+map);
+		if( map.get("word")==null) {
+			map.put("word", "");
+			return apd.selectSearchCount(map);
+		} else {
+		return apd.selectSearchCount(map);
+		}
 	}
 
-//	@Override
-//	public List<> getpcaList(HashMap<String, String> map) {
-//		return apd.selectpcaList(map);
-//	}
+	@Override
+	public List<HashMap> getpcaList() {
+		return apd.selectpcaList();
+	}
+	
+	@Override
+	public List<HashMap> getpbList() {
+		return apd.selectpbList();
+	}
+
+	@Override
+	public List<HashMap> getpcList() {
+		return apd.selectpcList();
+	}
+
+	@Override
+	public List<HashMap> getpoList() {
+		return apd.selectpoList();
+	}
+
+	@Override
+	public List<HashMap> getppList() {
+		return apd.selectppList();
+	}
+
+	@Override
+	public List<HashMap> getpsList() {
+		return apd.selectpsList();
+	}
+
 	
 
 }
