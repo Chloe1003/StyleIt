@@ -46,27 +46,70 @@
 
 }
 .section-type-button{
-	height: 44px;
+	height: 30px;
     min-width: 125px;
-    margin: 10px 3px;
-    border: 2px solid rgba(231,214,207,.66);
+    margin: 10px 3px 30px 3px;
+    border: none; 
     font-size: 14px;
     line-height: 18px;
-    color: #4a3a3a;
+    color: whitesmoke;
     letter-spacing: .09px;
+    background: #E89994;
+    
 }
+.shop-search {
+	display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    font-family: Quicksand-Medium,sans-serif;
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: 700;
+    color: #4a3a3a;
+    letter-spacing: 2px;
+}
+.shop-search-input{
+	height: 100%;
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.search-input{
+	height: 40px;
+    max-width: 80vw;
+    padding: 0 50px;
+    width: 800px;
+    border: 1px solid #f7f7f7;
+    border-radius: 100px;
+    background-color: #fff;
+    -webkit-box-shadow: inset 0 1px 2px 0 rgba(80,80,80,.24);
+    box-shadow: inset 0 1px 2px 0 rgba(80,80,80,.24);
+    font-family: Quicksand-Regular,sans-serif;
+    font-size: 16px;
+    line-height: 16px;
+    color: #9b9b9b;
+    letter-spacing: 1.74px;
+}
+
 
 </style>
 <!-- <div class="wrap-loading display-none"> -->
 <!-- 	<div><img src="/image/shop/loading.gif"/></div> -->
 <!-- </div> -->
 
-<div class="shop-section">
-	<div class="section">
-<!-- 		<span class="section-cate">상황별</span> -->
-<!-- 		<span class="section-cate">스타일별</span> -->
-	</div>
-	
+<div class="shop-search">
+  <div class="shop-search-input">
+    <input placeholder="Search" type="text" class="search-input" id="search">
+  </div>
+</div>
+
+<div class="shop-section">	
 	<div class="section-type">
 		<c:forEach items="${psList }" var="ps" begin="0" end="${psList.size()-1 }">
 			<button class="section-type-button" type="button" onclick="sortByStyle(${ps.ps_no })"><span>${ps.ps_name }</span></button>
@@ -79,20 +122,72 @@
 </div>
 
 <br><br>
-
+<input type="hidden" id="style">
+<input type="hidden" id="searchWord">
 
 <script type="text/javascript">
 $(document.body).css("background-color", "#eff6f6");
 $(document.body).find(".navbar").css("background-color", "#ffffff");
 
+$("#search").keydown(function(e){
+	if(window.event.keyCode == 13){
+		
+		console.log("검색어 입력");
+		
+		var search = $("#search").val();
+		$("#searchWord").val(search);
+		
+	    var ps_no = $("#style").val();	
+	     
+	  	$.ajax({
+			type : "get",
+			url : "/shop/listloading",
+			data : {"curPage": 1, 
+					"ps_no": ps_no,
+					"search" : search },
+			dataType : "html",
+			success : function(res){
+				console.log("검색 성공");			
+//	 			$("#page").append(res);
+				$(".frame").html(res);
+				
+			},
+			error : function(e){
+				console.log("실패");
+			}			
+		});
+		
+	}
+});
+	
 function productView(p_no){
 	location.href="/shop/view?p_no="+p_no;
 }
 
 function sortByStyle(ps_no){
-	location.href="/shop/list?ps_no="+ps_no;
-}
+		
+	$("#style").val(ps_no);
+	
+  	$.ajax({
+		type : "get",
+		url : "/shop/listloading",
+		data : {"curPage": 1, 
+				"ps_no": ps_no,
+				"search" : search },
+		dataType : "html",
+		success : function(res){
+			console.log("카테고리 선택 성공");			
+// 			$("#page").append(res);
+			$(".frame").html(res);
+			
+		},
+		error : function(e){
+			console.log("실패");
+		}			
+	});
 
+	
+}
 
 $(document).ready(function(){
 	
@@ -143,7 +238,7 @@ $(document).ready(function(){
 	
 	});
 	
-	getList(1);
+	getList(1, 0);
 		
 	
 });	
@@ -159,16 +254,22 @@ $(window).scroll(function() {
     if ($(window).scrollTop() == $(document).height() - $(window).height()) {
       console.log("스크롤 발생");
       console.log(page);
-      getList(page);
+      var ps_no = $("#style").val();
+      var search = $("#searchWord").val();
+      getList(page, ps_no, search);
       page++
     }
 });
-function getList(page){
+
+
+function getList(page, ps_no, search){
 	
   	$.ajax({
 		type : "get",
 		url : "/shop/listloading",
-		data : {"curPage": page },
+		data : {"curPage": page, 
+				"ps_no": ps_no,
+				"search" : search },
 		dataType : "html",
 		success : function(res){
 			console.log("스크롤 로딩 성공");			

@@ -30,8 +30,17 @@
 				ON p.fu_no = f.fu_no
 		        JOIN productbrand b
 		        ON p.pb_no = b.pb_no
-		        <if test="ps_no>0">
-		        WHERE p.ps_no = #{ps_no }
+		        <if test="ps_no>0 and search != null">
+		        	<!-- 카테고리 조건 & 검색어 둘 다 있을 때 -->		        	
+		       		WHERE p.ps_no = #{ps_no } AND p.p_name like '%'||#{search }||'%'
+		        </if>
+		        <if test="ps_no>0 and search == null">
+		       		<!-- 카테고리 조건만 있을 때 -->
+		       		WHERE p.ps_no = #{ps_no } 
+		        </if>
+		        <if test="ps_no==0 and search != null">
+		        	<!-- 검색어만 있을 때  -->
+		        	WHERE p.p_name like '%'||#{search }||'%'
 		        </if>
 		        )M
 	  		)R

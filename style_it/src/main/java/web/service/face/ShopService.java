@@ -21,9 +21,6 @@ public interface ShopService {
 //	로그인시 제품 리스트 얻어오기
 	public List<Product> getProductList(HashMap<String, Object> map);
 	
-//	비 로그인시 제품 리스트 얻어오기
-	public List<Product> getProductNoLogin(imgPaging paging);
-	
 //	제품 좋아요  업데이트
 	public void pLikeUpdate(HashMap<String, Object> like);
 

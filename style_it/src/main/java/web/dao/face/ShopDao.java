@@ -19,9 +19,6 @@ public interface ShopDao {
 //	로그인시 제품 리스트 얻어오기
 	public List<Product> selectProductList(HashMap<String, Object> map);
 	
-//	비로그인시 제품 리스트 얻어오기
-	public List<Product> selectProductListNoLogin(imgPaging paging);
-
 //	좋아요 여부 확인
 	public int plikeCheck(HashMap<String, Object> like);
 

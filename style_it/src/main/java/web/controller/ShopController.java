@@ -32,19 +32,18 @@ public class ShopController {
 	
 	//SHOP 화면 리스트 출력
 	@RequestMapping(value="/shop/list", method=RequestMethod.GET)
-	public void shopList(HttpSession session, HttpServletRequest req, 
-			@RequestParam HashMap<String, Object> map, Model model) {
+	public void shopList(HttpSession session, HttpServletRequest req,
+			@RequestParam(defaultValue="0") int curPage, Model model) {
 		
+		HashMap<String, Object> map = new HashMap<>();
 		logger.info("shopList 페이지");
 		
-		int curPage = shopService.getCurPage(req);
 		logger.info("curPage :"+curPage);
 		imgPaging paging;
 		
 		
 		boolean login = false;
 		boolean filter = false;
-		int ps_no=0;
 		
 		List<ProductStyle> psList = shopService.getProductStyle();
 		
@@ -52,25 +51,18 @@ public class ShopController {
 			if(session.getAttribute("login") != null) {
 				login = (boolean) session.getAttribute("login");
 			}
-			if(req.getAttribute("ps_no") != null){
-				ps_no = (int) req.getAttribute("ps_no");
-				logger.info("ps_no : "+ps_no);
-				filter = true;
-			}
+
 		} catch (Exception e) {}
 		
 		int totalCount = shopService.getTotalCount();
 		paging = new imgPaging (totalCount, curPage);
 		List<Product> pList;
 				
-		logger.info("login true");
-
 		int m_no = 0; 
 		if(login==true) {
 			m_no = (int) session.getAttribute("m_no");
 		}
 	
-		map.put("ps_no", ps_no);	
 		map.put("m_no", m_no);
 		map.put("paging", paging);
 		map.put("login", login);
@@ -161,49 +153,63 @@ public class ShopController {
 	}
 	
 	@RequestMapping(value="/shop/listloading")
-	public String listloading(HttpSession session, HttpServletRequest req, 
-			@RequestParam HashMap<String, Object> map, Model model) {
+	public String listloading(HttpSession session, HttpServletRequest req, @RequestParam(defaultValue="0") int ps_no,
+			@RequestParam(defaultValue="0") int curPage, @RequestParam(defaultValue="") String search, Model model) {
+		
 		logger.info("shopList 추가로딩 페이지");
 		
-		int curPage = shopService.getCurPage(req);
-		logger.info("curPage :"+curPage);
+		HashMap<String, Object> map = new HashMap<>();
 		
+//		int curPage = shopService.getCurPage(req);
+		logger.info("curPage :"+curPage);
 		imgPaging paging;
 		
+		
 		boolean login = false;
+		boolean filter;
+		boolean searching = false;
+		
+		if(ps_no>0) {
+			filter=true;
+		} else {
+			filter=false;
+		}
+		
+		List<ProductStyle> psList = shopService.getProductStyle();
 		
 		try {
-			
 			if(session.getAttribute("login") != null) {
 				login = (boolean) session.getAttribute("login");
 			}
-			
-		} catch (Exception e) {
-			
-		}
+		} catch (Exception e) {}
+		
+		logger.info("ps_no : "+ps_no);
 		
 		int totalCount = shopService.getTotalCount();
 		paging = new imgPaging (totalCount, curPage);
 		List<Product> pList;
-		
-		if (login==true) { // 로그인 되어 있을 때
 			
-			logger.info("login true");
-			
-			int m_no = (int) session.getAttribute("m_no");
-			map.put("m_no", m_no);
-			map.put("paging", paging);
-			pList = shopService.getProductList(map);
-			
-			model.addAttribute("productList", pList);	
-			model.addAttribute("paging", paging);
-		} else { // 로그인 안되어 있을 때
-			logger.info("login false");
-			
-			pList = shopService.getProductNoLogin(paging);
-			model.addAttribute("productList", pList);
-			model.addAttribute("paging", paging);
+		int m_no = 0; 
+		if(login==true) {
+			m_no = (int) session.getAttribute("m_no");
 		}
+	
+		map.put("ps_no", ps_no);	
+		map.put("m_no", m_no);
+		map.put("paging", paging);
+		map.put("login", login);
+//		map.put("filter", filter);
+		if(search!=null) {
+			searching = true;
+//			map.put("searching", searching);
+			map.put("search", search);			
+		}
+		
+		pList = shopService.getProductList(map);
+		
+		model.addAttribute("psList", psList);
+		model.addAttribute("productList", pList);	
+		model.addAttribute("paging", paging);
 		
 		return "shop/listloading";
 	}

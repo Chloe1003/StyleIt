@@ -42,11 +42,6 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 	@Override
-	public List<Product> getProductNoLogin(imgPaging paging) {
-		return shopDao.selectProductListNoLogin(paging);
-	}
-
-	@Override
 	public void pLikeUpdate(HashMap<String, Object> like) {
 		if(shopDao.plikeCheck(like)>0) {
 			shopDao.plikeDelete(like);
