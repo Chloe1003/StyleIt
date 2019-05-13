@@ -32,7 +32,7 @@
 		        ON p.pb_no = b.pb_no
 		        <if test="ps_no>0 and search != null">
 		        	<!-- 카테고리 조건 & 검색어 둘 다 있을 때 -->		        	
-		       		WHERE p.ps_no = #{ps_no } AND p.p_name like '%'||#{search }||'%'
+		       		WHERE p.ps_no = #{ps_no } AND (p.p_name like '%'||#{search }||'%' OR b.pb_name like '%'||#{search }||'%')
 		        </if>
 		        <if test="ps_no>0 and search == null">
 		       		<!-- 카테고리 조건만 있을 때 -->
@@ -40,7 +40,7 @@
 		        </if>
 		        <if test="ps_no==0 and search != null">
 		        	<!-- 검색어만 있을 때  -->
-		        	WHERE p.p_name like '%'||#{search }||'%'
+		        	WHERE p.p_name like '%'||#{search }||'%' OR b.pb_name like '%'||#{search }||'%'
 		        </if>
 		        )M
 	  		)R
@@ -70,7 +70,7 @@
 	<select id="selectProductView" parameterType="HashMap" resultType="web.dto.Product">
         SELECT p.p_no, p.p_price, p.p_name, f.fu_storedname, b.pb_name, p.p_url,
             (select count(*) from productlike l where p.p_no = l.p_no) cntplike
-            <if test="login=true">
+            <if test="login">
             ,(select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck
             </if>
         FROM product p
@@ -84,7 +84,7 @@
 	<select id="selectStylingByProduct" parameterType="HashMap" resultType="web.dto.Styling">
         SELECT s.s_no, s.m_no, s.s_name, s.s_content, s.fu_no, f.fu_storedname, s.st_no, s.s_date
    			, ( select count(*) from stylinglike l where s.s_no = l.s_no ) cntslike
-    		<if test="login=true">
+    		<if test="login">
     		, ( select count(*) from stylinglike l where s.s_no = l.s_no and m_no = #{m_no } ) slikecheck
     		</if>
         FROM styling s
@@ -96,21 +96,19 @@
 	</select>
 	
   	<select id="selectSimilarProduct" parameterType="HashMap" resultType="web.dto.Product">
-  	<![CDATA[
   		SELECT * FROM (
 			WITH ratings AS(
     			SELECT 
 			        p.p_no, p.p_price, p.p_name, f.fu_storedname, b.pb_name,
                     (select count(*) from productlike l where p.p_no = l.p_no) cntplike
-                    <if test="#{login }">
+                    <if test="login">
                     ,(select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck
                     </if>
 			        ,0.7*(CASE WHEN p.po_no= #{products.po_no }    THEN 1 ELSE 0 END)
 			        + 0.1*(CASE WHEN p.pb_no= #{products.pb_no }   THEN 1 ELSE 0 END)
 			        + 0.8*(CASE WHEN p.ps_no= #{products.ps_no }  THEN 1 ELSE 0 END)
 			        + 0.7*(CASE WHEN p.pco_no= #{products.pco_no } THEN 1 ELSE 0 END)
-			        + 0.3*(CASE WHEN p.pp_no= #{products.pp_no } THEN 1 ELSE 0 END)
-			        AS score
+			        + 0.3*(CASE WHEN p.pp_no= #{products.pp_no } THEN 1 ELSE 0 END) AS score
 			    FROM product p
 			    JOIN fileupload f
 		        ON p.fu_no = f.fu_no
@@ -120,8 +118,9 @@
 			) 
 			    SELECT * FROM ratings 
 			    ORDER BY score DESC
+	  	<![CDATA[
 			) WHERE ROWNUM <= 5
-			]]>  	
+		]]>  	
   	</select>	
   	
   	<select id="selectProductOccasion" resultType="web.dto.ProductOccasion">

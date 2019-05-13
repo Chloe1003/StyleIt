@@ -47,8 +47,8 @@
 }
 .section-type-button{
 	height: 30px;
-    min-width: 125px;
-    margin: 10px 3px 30px 3px;
+    min-width: 112px;
+    margin: 20px 3px 30px 3px;
     border: none; 
     font-size: 14px;
     line-height: 18px;
@@ -111,6 +111,7 @@
 
 <div class="shop-section">	
 	<div class="section-type">
+			<button class="section-type-button" type="button" onclick="sortByStyle(0)"><span>ALL</span></button>
 		<c:forEach items="${psList }" var="ps" begin="0" end="${psList.size()-1 }">
 			<button class="section-type-button" type="button" onclick="sortByStyle(${ps.ps_no })"><span>${ps.ps_name }</span></button>
 		</c:forEach>
@@ -167,6 +168,8 @@ function productView(p_no){
 function sortByStyle(ps_no){
 		
 	$("#style").val(ps_no);
+	
+	var search = $("#searchWord").val();
 	
   	$.ajax({
 		type : "get",

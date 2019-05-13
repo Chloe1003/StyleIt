@@ -31,23 +31,14 @@ public interface ShopDao {
 //	해당 제품의 좋아요 수 반환
 	public int plikeCnt(int p_no);
 
-//	로그인시 제품 상세보기	
+//	제품 상세보기	
 	public Product selectProductView(HashMap<String, Integer> map);
 	
-//	비로그인시 제품 상세보기	
-	public Product selectProductViewNoLogin(int p_no);
-
-//	로그인시 제품별 스타일링 정보 얻어오기
+//	제품별 스타일링 정보 얻어오기
 	public List<Styling> selectStylingByProduct(HashMap<String, Integer> map);
 
-//	비로그인시 제품별 스타일링 정보 얻어오기
-	public List<Styling> selectStylingByProductNoLogin(int p_no);
-	
-//	로그인시 유사한 제품 정보 얻어오기(5개)
+//	유사한 제품 정보 얻어오기(5개)
 	public List<Product> selectSimilarProduct(HashMap<String, Object> map);
-
-//	비로그인시 유사한 제품 정보 얻어오기(5개)
-	public List<Product> selectSimilarProductNoLogin(Product p);
 
 //	총 제품 수 반환
 	public int totalCnt();

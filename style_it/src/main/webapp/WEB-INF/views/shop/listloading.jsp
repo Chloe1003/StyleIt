@@ -94,7 +94,10 @@ object-fit: contain;
 }
 </style>
 
-
+<c:if test="${productList.size() eq 0 }">
+<div style="text-align:center; margin-top:100px;">해당하는 제품이 없습니다</div>
+</c:if>
+<c:if test="${productList.size()>0 }">
 <c:forEach items="${productList }" var="p" begin="0" end="${productList.size()-1 }">
 <div id="block">
 	<div class="img-wrapper img" onclick="productView(${p.p_no })" data-pno="${p.p_no }">
@@ -115,6 +118,7 @@ object-fit: contain;
 	</div>
 </div>
 </c:forEach>
+</c:if>
 
 <script type="text/javascript">
 function productView(p_no){

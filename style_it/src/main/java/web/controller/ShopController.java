@@ -78,9 +78,9 @@ public class ShopController {
 	
 	//SHOP 상세 페이지
 	@RequestMapping(value="/shop/view", method=RequestMethod.GET)
-	public void shopView(HttpSession session, Model model, @RequestParam HashMap<String, Integer> map, 
-			@RequestParam HashMap<String, Object> view, int p_no){
-		
+	public void shopView(HttpSession session, Model model, @RequestParam int p_no){
+		HashMap<String, Integer> map = new HashMap<>();
+		HashMap<String, Object> view = new HashMap<>();
 		logger.info("제품 상세 페이지");
 		
 		boolean login = false;
@@ -104,6 +104,7 @@ public class ShopController {
 		Product selected = shopService.getProduct(p_no);
 			
 		view.put("m_no", m_no);
+		view.put("login", login);
 		view.put("products", selected);
 			
 		List<Product> pList = shopService.getSimilarProduct(view);
@@ -114,12 +115,6 @@ public class ShopController {
 		model.addAttribute("view", p);		
 	}
 	
-	//필터 선택 시 작동
-	@RequestMapping(value="/shop/select", method=RequestMethod.POST)
-	public String shopSelect(Product product){ 
-		
-		return null;
-	}
 	
 //	제품 좋아요
 	@RequestMapping(value = "/shop/like", method = RequestMethod.GET)
