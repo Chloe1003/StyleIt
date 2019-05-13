@@ -37,10 +37,14 @@ public interface MypageDao {
 	public int getCoCollection(Member member);
 //	체크한 모든 좋아요 숫자
 	public int getCoLike(Member member);
-	
-	
 //	팔로우 리스트
-	public List getFollowList();
+	public List<Member> getFollowList(int m_no);
+//	팔로잉 리스트
+	public List<Member> getFollowingList(int m_no);
+	
+	
+	
+	
 //	팔로잉 리스트
 	public List getFollowingList();
 //	본인이 좋아요한 스타일 리스트
@@ -93,6 +97,9 @@ public interface MypageDao {
 	
 //	멤버 번호로 스타일링 퀴즈 가져오기
 	public List<MemberQuiz> selectMemberQuiz(int m_no);
+	
+	
+	
 	
 
 }

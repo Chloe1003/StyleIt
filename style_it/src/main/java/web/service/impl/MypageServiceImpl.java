@@ -89,15 +89,20 @@ public class MypageServiceImpl implements MypageService{
 	public int getCoLike(Member member) {
 		return mypageDao.getCoLike(member);
 	}
-	
-	
-	
-	
-	
+//	팔로우 리스트
 	@Override
-	public List getFollowList() {
-		return mypageDao.getFollowList();
+	public List<Member> getFollowList(int m_no) {
+		return mypageDao.getFollowList(m_no);
 	}
+//	팔로잉 리스트
+	@Override
+	public List<Member> getFollowingList(int m_no) {
+		return mypageDao.getFollowingList(m_no);
+	}
+
+	
+	
+	
 	
 	@Override
 	public List getFollowingList() {

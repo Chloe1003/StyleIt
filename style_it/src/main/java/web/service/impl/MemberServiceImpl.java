@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import web.dao.face.MemberDao;
+import web.dto.Follow;
 import web.dto.Member;
 import web.service.face.MemberService;
 
@@ -42,40 +43,26 @@ public class MemberServiceImpl implements MemberService{
 		}
 	}
 	
-	
-	public List<Member> getLoginList() {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public boolean folCheck(Follow f) {
+
+		if(memberDao.folCheck(f) == 1) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
-	@Override
-	public List<Member> getLogoutList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
-	public void memberUpdate(int m_no) {
-		// TODO Auto-generated method stub
+	public void followInsert(Follow f) {
+		memberDao.followInsert(f);
 		
 	}
 
 	@Override
-	public void memberinfoUpdate(int m_no) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void followInsert(int f_no) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void followDelete(int f_no) {
-		// TODO Auto-generated method stub
-		
+	public void followDelete(Follow f) {
+		memberDao.followDelete(f);
 	}
 
 	@Override
@@ -104,6 +91,7 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.selectMemberByMno(m_no);
 	}
 
+	
 
 
 }

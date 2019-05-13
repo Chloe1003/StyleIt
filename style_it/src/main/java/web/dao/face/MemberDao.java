@@ -2,6 +2,7 @@ package web.dao.face;
 
 import java.util.List;
 
+import web.dto.Follow;
 import web.dto.Member;
 
 public interface MemberDao {
@@ -15,19 +16,15 @@ public interface MemberDao {
 	
 	// 멤버 정보 가져오기
 	public Member selectMember(Member member);
-
 	
-	// 맴버 탈퇴 업데이트
-	public void memberUpdate(int m_no);
-	
-	// 맴버 정보 수정 업데이트
-	public void memberinfoUpdate(int m_no);
+	// 팔로우 체크
+	public int folCheck(Follow f);
 	
 	// 팔로우 추가
-	public void followInsert(int f_no);
+	public void followInsert(Follow f);
 	
 	// 팔로우 취소
-	public void followDelete(int f_no);
+	public void followDelete(Follow f);
 	
 	// 스타일링퀴즈 추가
 	public void stylingquizInsert(int qq_no);
@@ -40,6 +37,10 @@ public interface MemberDao {
 
 	// m_no로 멤버 정보 가져오기
 	public Member selectMemberByMno(int m_no);
+
+	
+
+	
 
 	
 	

@@ -116,6 +116,24 @@
 		WHERE m_no = #{m_no }
 	</select>
 	
+	<select id="getFollowList" parameterType="int" resultType="web.dto.Member">
+	
+	  select f.followee_no, m.m_no, m.m_nick, fu.fu_no, fu.fu_storedname from member m, Follow f, fileupload fu
+      where f.followee_no  = m.m_no
+      and m.fu_no= fu.fu_no
+      and f.follower_no= #{m_no }
+	
+	</select>
+	
+	<select id="getFollowingList" parameterType="int" resultType="web.dto.Member">
+	
+	  select f.follower_no, m.m_no, m.m_nick, fu.fu_no, fu.fu_storedname,f.followee_no from member m, Follow f, fileupload fu
+      where f.follower_no = m.m_no 
+      and m.fu_no= fu.fu_no
+      and f.followee_no= #{m_no }
+	
+	</select>
+	
   
   	<select id="recommendProduct" parameterType="web.dto.MemberQuizSet" resultType="web.dto.Product">
   	<![CDATA[

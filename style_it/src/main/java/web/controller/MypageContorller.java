@@ -4,11 +4,11 @@ package web.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
-
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import web.dto.FileUpload;
+import web.dto.Follow;
 import web.dto.Member;
 import web.service.face.MypageService;
 
@@ -38,7 +38,6 @@ public class MypageContorller {
 		
 //		회원정보 뿌리기
 		model.addAttribute("mypage", mypageService.getUserInfo(member));
-		
 //		팔로우 숫자 뿌리기
 		int countFollower = mypageService.getFollower(member);
 		model.addAttribute("countFollower", countFollower);
@@ -51,7 +50,7 @@ public class MypageContorller {
 //		본인이 만든 컬렉션 숫자 뿌리기
 		int countCollection = mypageService.getCoCollection(member);
 		model.addAttribute("countCollection", countCollection);
-//		본인이 체크한 모든 좋아요 숫자 뿌리기
+//		본인이 체크한 모든 좋아요 숫자 뿌리기 -> 이건 문제있음 체크해야함
 		int countLike = mypageService.getCoLike(member);
 		model.addAttribute("countLike", countLike);
 		
@@ -115,8 +114,6 @@ public class MypageContorller {
 		}
 		fu.setFu_storedName(fu_storedName);
 		
-		
-		
 		logger.info(fu.toString());
 //		다음번호 미리 가져와기
 		int fu_no = mypageService.dualNo();
@@ -132,7 +129,6 @@ public class MypageContorller {
 		
 //		먼저 인서트하고 그다음에 유저 fu_no를 업데이트 해준다!
 	}
-	
 //	회원탈퇴
 	@RequestMapping(value = "/mypage/deleteUser", method = RequestMethod.POST)
 	public String deleteUser(Member member, HttpSession session) {
@@ -144,20 +140,37 @@ public class MypageContorller {
 		return "redirect:/home";
 		
 	}
-	
 //	팔로우 리스트 
-	@RequestMapping(value = "/mypage/followlist")
-	public void FollowList(Model model) {
+	@RequestMapping(value = "/mypage/followlist", method = RequestMethod.GET)
+	public String FollowList(Model model, int m_no, Member member) {
+		List<Member> followList = mypageService.getFollowList(m_no);
+		int countFollower = mypageService.getFollower(member);
 		
+		Map map = new HashMap();
+		map.put("followList", followList);
+		map.put("countFollower", countFollower);
+		model.addAllAttributes(map); 
 		
-		
-		
+		return "jsonView";
 	}
 //	팔로잉 리스트
-	@RequestMapping(value = "/mypage/followinglist")
-	public String FollowingList(Model model) {
-		return null;
+	@RequestMapping(value = "/mypage/followinglist", method = RequestMethod.GET )
+	public String FollowingList(Model model,  HttpSession session, Member member) {
+		
+		int m_no = (int) session.getAttribute("m_no");
+		List<Member> followingList = mypageService.getFollowingList(m_no);
+		int countFollowee = mypageService.getFollowee(member);
+		
+			Map map = new HashMap();
+			map.put("followingList", followingList);
+			map.put("countFollowee", countFollowee);
+			model.addAllAttributes(map); 
+		
+		return "jsonView";
 	}
+	
+	
+	
 //	마이페이지에서 보는 본인이 체크한 모든 좋아요 리스트
 	@RequestMapping(value = "/mypage/alllikelist")
 	public void AllLikeList(Model model) {

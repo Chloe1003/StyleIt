@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<style>
+<style type="text/css">
+a:link { color: white; text-decoration: none;}
+a:visited { color: white; text-decoration: none;}
+a:hover { color: white; text-decoration: none;}
+a:active {text-decoration: none; color: white;}
+
 .mypageLine{
 
 	width: 100%;
@@ -61,6 +67,43 @@
 	height: 100%;
 	display: none;
 }    
+.follow_display {
+	position: fixed; width:365px; display:none; font-family:nanum; border-radius: 27px; 
+	margin-left: auto; margin-right: auto; background : white;
+	top : 50%;
+   	left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    z-index:9999;
+}
+.bg_follow {
+	background: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+}    
+.userImg{
+	border-radius: 150px;
+    width: 93px;
+    height: 93px;
+   /*  margin-left: 50px;
+    margin-right: inherit; */
+}
+.follow_display{
+	width: 1200px;
+	height: auto;
+	
+}
+.followeeUser{
+	height: 400px;
+    width: 100%;
+  
+	
+}
 /* X표시  */
 .close {
 	position: absolute;
@@ -70,14 +113,127 @@
 	width: 23px;
 	height: 23px;
 }
-    
+
+
     
     
 </style>
 <script type="text/javascript">
+
+
 function showSetting() {
 	document.getElementById("set_display").style.display="block";
 	document.getElementById("bg_set").style.display="block";//배경 어둡게 하는 것
+}
+	
+	function  a(follower_no){
+		
+
+		$.ajax({
+			type : "post"
+			,url : "/member/follow"
+			,data : { "follower_no" : follower_no }
+			,dataType : "json"
+			,success : function( res ) {
+				console.log("성공");
+				console.log(res);
+				console.log(res.follower_no);
+				/* $("#clic").toggleClass("btn-danger"); */
+				showFollowingList();
+				
+			}
+			,error : function(e) {
+				console.log("실패");
+				console.log(e);
+			}
+		});
+			
+		}
+	
+
+
+
+function showFollowingList() {
+	
+ 	document.getElementById("follow_display").style.display="block";
+	document.getElementById("bg_follow").style.display="block";//배경 어둡게 하는 것 
+		var m_no = $('#m_no').val();		
+		
+		$.ajax({
+		type : "get"
+		,url : "/mypage/followinglist"
+		,data : { "m_no" : m_no }	
+		,dataType :  "json"
+		,success : function( data ) {
+		    console.log("성공");
+		    console.log(data);
+		    console.log(data.followingList);
+		  console.log(JSON.stringify(data));
+
+		   	    var html = ""
+		   	    var count= ""
+		   	    	count += '<h3>'+data.countFollowee+'</h3>' + "팔로잉"
+		   	    	
+			   	    $.each(data.followingList, function(index, item) {
+		   	    	
+		   	    	html += '<div style="text-align: center; margin-top: 10px; margin-left: 1%; width:11.5%; float:left;">'
+		   	    	html += '<a href="/member/memberPage?m_no='+item.m_no+'"><img class="userImg" src="/upload/'+item.fu_storedName+'"/></a>'
+		   	 		html +='<br>'
+		   	    	html += item.m_nick	
+		   	    	html +='<br>'
+		   	    	html += '<a onclick="a('+item.follower_no+')"><button type="button">언팔로우</button></a>'
+		   	    	html += '</div>'
+		   	    		
+			});  
+				$('#header').html(count);
+				$('#followeeUser').html(html);
+		}
+		,error : function(e) {
+			console.log("전송안됨");
+			console.log(e);
+		}
+		}); 
+}
+
+function showFollowList() {
+	
+ 	document.getElementById("follow_display").style.display="block";
+	document.getElementById("bg_follow").style.display="block";//배경 어둡게 하는 것 
+		var m_no = $('#m_no').val();		
+		
+		$.ajax({
+		type : "get"
+		,url : "/mypage/followlist"
+		,data : { "m_no" : m_no }	
+		,dataType :  "json"
+		,success : function( data ) {
+		    console.log("성공");
+		    console.log(data);
+		    console.log(data.followList);
+		  console.log(JSON.stringify(data));
+
+		   	    var html = ""
+		   	    var count= ""
+		   	    	count += '<h3>'+ data.countFollower+'</h3>' + "팔로워"
+		   	    	
+			   	    $.each(data.followList, function(index, item) {
+		   	    	
+		   	    	html += '<div style="text-align: center; margin-top: 10px; margin-left: 1%; width:11.5%; float:left;">'
+		   	    	html += '<a href="/member/memberPage?m_no='+item.m_no+'"><img class="userImg" src="/upload/'+item.fu_storedName+'"/></a>'
+		   	    	html += item.m_nick	
+		   	    	html +='<br>'
+		   	    	html += '<a onclick="a('+item.followee_no+')"><button type="button">팔로우 취소 아직 구현안함</button></a>'
+		   	    	html += '</div>'
+		   	    		
+			});  
+				$('#header').html(count);
+				$('#followeeUser').html(html);
+		}
+		,error : function(e) {
+			console.log("전송안됨");
+			console.log(e);
+		}
+		}); 
 }
 
 //비밀번호 정규식
@@ -177,6 +333,10 @@ $(document).ready(function() {
 			document.getElementById("set_display4").style.display = "none"; 
 			document.getElementById("bg_set4").style.display = "none";
 		});
+		$("#followCancel").click(function() {
+			document.getElementById("follow_display").style.display = "none"; 
+			document.getElementById("bg_follow").style.display = "none";
+		})
 		// 여기까지 x표시꺼 ( 위와 동일한 기능 )
 		
 		// 비밀번호 입력 후 각자 표시창에서 넘어갈때마다 각 창 블락 및 논 처리 하는 것
@@ -238,17 +398,16 @@ $(document).ready(function() {
 				});
 					
 			});
+		
 });
 
 </script>
-
-
-	
+				
 	<div class="mypageLine">
 		<div class="mypageNick">안녕,&nbsp;&nbsp;&nbsp;&nbsp;<span style="text-transform: capitalize; text-decoration: underline; font-size: 18px;">${mypage.m_nick }</span>  
 			<img class="mail" src="/resources/image/mypage/mail.png"/>
 			<img class="sQuiz" src="/resources/image/mypage/clipboard.png"/>
-			<a href="javascript:void(0);" onclick="showSetting()"><img class="mySet" src="/resources/image/mypage/settings.png"/></a>
+			<a style="cursor: pointer;" onclick="showSetting()"><img class="mySet" src="/resources/image/mypage/settings.png"/></a>
 		</div>
 		<!-- 프로필 사진 -->
 		<div class="img_placeholder">
@@ -256,9 +415,11 @@ $(document).ready(function() {
 		</div>
 		<!-- 팔로잉, 팔로워 숫자 -->
 		<div class="follow">
-			<span style="position: relative; left: 476px; bottom: 100px;">${countFollower }&nbsp;&nbsp;팔로워</span>  	
-			<span style="position: relative; left: 700px; bottom: 100px;">${countFollower }&nbsp;&nbsp;팔로잉</span>		
-		
+			<span style="position: relative; left: 476px; bottom: 100px;">
+			<a style="cursor: pointer;" onclick="showFollowList()">${countFollower }&nbsp;&nbsp;팔로워</a></span>  	
+			<span style="position: relative; left: 700px; bottom: 100px;">
+				<input type="hidden" id="m_no" name="m_no" value="${mypage.m_no }">
+			<a style="cursor: pointer;" onclick="showFollowingList()">${countFollowee }&nbsp;&nbsp;팔로잉</a></span>		
 		</div>
 	</div>
 	
@@ -406,8 +567,15 @@ $(document).ready(function() {
 				</form>
 			</div>
 			
-		
-		
-	
+					 <div class="bg_follow" id="bg_follow"></div>
+						<div class="follow_display" id="follow_display">
+								<button type="button" class="close" id="followCancel" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							 <div class="header" id="header" style="margin-bottom: 10px; margin-top: 13px; margin-left: 40px;"></div>
+								<div style="width:100%; height:50%;">
+									<div class="followeeUser" id="followeeUser" style="overflow: auto;"></div>
+								</div>
+						</div> 
 	
 	
