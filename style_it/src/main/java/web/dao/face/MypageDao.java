@@ -3,7 +3,13 @@ package web.dao.face;
 import java.util.List;
 
 import web.dto.MemberQuiz;
-import web.dto.ProductLike;
+import web.dto.ProductBrand;
+import web.dto.ProductCategory;
+import web.dto.ProductColor;
+import web.dto.ProductOccasion;
+import web.dto.ProductPattern;
+import web.dto.ProductStyle;
+import web.dto.QuizQuestion;
 
 public interface MypageDao {
 //	팔로우 리스트
@@ -44,8 +50,19 @@ public interface MypageDao {
 //	제품 좋아요 리스트 가져오기
 	public String selectProductLike(int m_no);
 	
-//	멤버 번호로 스타일링 퀴즈 가져오기
+//	멤버 번호로 작성된 스타일링 퀴즈 가져오기
 	public List<MemberQuiz> selectMemberQuiz(int m_no);
+	
+//	스타일링 퀴즈 가져오기
+	public List<QuizQuestion> selectStylingQuiz();
+	
+//	스타일링 퀴즈 답변 가져오기
+	public List<ProductBrand> selectBrand();		
+	public List<ProductCategory> selectCategory();
+	public List<ProductColor> selectColor();
+	public List<ProductOccasion> selectOccasion();
+	public List<ProductPattern> selectPattern();
+	public List<ProductStyle> selectStyle();	
 	
 
 }

@@ -16,7 +16,41 @@
 		SELECT 	* FROM memberquiz
 		WHERE m_no = #{m_no }
 	</select>
-	
+  	
+  	<select id="selectStylingQuiz" resultType="web.dto.QuizQuestion">
+  		SELECT * FROM quizquestion
+  		ORDER BY qq_no
+  	</select>
+  	
+  	<select id="selectBrand">
+  		SELECT b.*, 3 as order FROM productbrand b
+  		ORDER BY pb_no
+  	</select>
+
+  	<select id="selectCategory">
+  		SELECT ca.*, 6 as order FROM productcategory ca
+  		ORDER BY pca_no
+  	</select>
+  
+  	<select id="selectColor">
+  		SELECT co.*, 7 as order FROM productcolor co
+  		ORDER BY pco_no
+  	</select>
+ 
+  	<select id="selectOccasion">
+  		SELECT o.*, 2 as order FROM productoccasion o
+  		ORDER BY po_no
+  	</select>
+  	
+  	<select id="selectPattern">
+  		SELECT p.*, 8 as order FROM productpattern p
+  		ORDER BY pp_no
+  	</select>
+  	
+  	<select id="selectStyle">
+  		SELECT s.*, 4 as order FROM productstyle s
+  		ORDER BY ps_no
+  	</select>  	
   
   	<select id="recommendProduct" parameterType="web.dto.MemberQuizSet" resultType="web.dto.Product">
   	<![CDATA[

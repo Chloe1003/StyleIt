@@ -1,6 +1,7 @@
 package web.service.impl;
 
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,13 @@ import org.springframework.stereotype.Service;
 import web.dao.face.MypageDao;
 import web.dto.MemberQuiz;
 import web.dto.Product;
+import web.dto.ProductBrand;
+import web.dto.ProductCategory;
+import web.dto.ProductColor;
+import web.dto.ProductOccasion;
+import web.dto.ProductPattern;
+import web.dto.ProductStyle;
+import web.dto.QuizQuestion;
 import web.service.face.MypageService;
 
 @Service
@@ -104,6 +112,37 @@ public class MypageServiceImpl implements MypageService{
 		
 		
 		return null;
+	}
+
+	@Override
+	public List<MemberQuiz> getMemberQuiz(int m_no) {
+		return null;
+	}
+
+	@Override
+	public List<QuizQuestion> getStylingQuiz() {
+		return mypageDao.selectStylingQuiz();
+	}
+
+	@Override
+	public HashMap<String, Object> getStylingQuizAnswer() {
+		HashMap<String, Object> answer = new HashMap<>();
+		
+		List<ProductBrand> brand = mypageDao.selectBrand();
+		List<ProductCategory> category = mypageDao.selectCategory();
+ 		List<ProductColor> color = mypageDao.selectColor();
+		List<ProductOccasion> occasion = mypageDao.selectOccasion();
+		List<ProductPattern> pattern = mypageDao.selectPattern();
+		List<ProductStyle> style = mypageDao.selectStyle();
+		
+		answer.put("brand", brand);
+		answer.put("category", category);
+		answer.put("color", color);
+		answer.put("occasion", occasion);
+		answer.put("pattern", pattern);
+		answer.put("style", style);
+		
+		return answer;
 	}
 
 }

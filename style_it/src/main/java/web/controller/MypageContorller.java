@@ -1,6 +1,7 @@
 package web.controller;
 
-
+import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
+import web.dto.MemberQuiz;
+import web.dto.Product;
+import web.dto.QuizQuestion;
 import web.service.face.MypageService;
 
 @Controller
@@ -55,12 +58,27 @@ public class MypageContorller {
 	
 //	추천받은 제품 리스트
 	@RequestMapping(value = "/mypage/recommend")
-	public void RecommendProduct(HttpSession session, Model model) {
+	public void recommendProduct(HttpSession session, Model model) {
 		int m_no = (int) session.getAttribute("m_no");
 
+//		스타일링 퀴즈 답변 가져오기
+		List<MemberQuiz> answer = mypageService.getMemberQuiz(m_no);
 		
+		List<Product> rList = mypageService.getRecommendProduct(m_no);
 		
+	}
+	
+	@RequestMapping(value="/mypage/quiz")
+	public void stylingQuiz(HttpSession session, Model model) {
 		
+		List<QuizQuestion> quiz = mypageService.getStylingQuiz();
+		
+		HashMap<String, Object> map = new HashMap<>();
+		
+		map = mypageService.getStylingQuizAnswer();	
+		
+		model.addAttribute("qSet", quiz);
+		model.addAttribute("aSet", map);
 	}
 	
 	

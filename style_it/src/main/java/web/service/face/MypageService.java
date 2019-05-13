@@ -1,8 +1,11 @@
 package web.service.face;
 
+import java.util.HashMap;
 import java.util.List;
 
+import web.dto.MemberQuiz;
 import web.dto.Product;
+import web.dto.QuizQuestion;
 
 public interface MypageService {
 	
@@ -46,6 +49,15 @@ public interface MypageService {
 	
 //	추천받은 상품 리스트
 	public List<Product> getRecommendProduct(int m_no);
+	
+//	작성된 스타일링 퀴즈 가져오기 
+	public List<MemberQuiz> getMemberQuiz(int m_no);
+	
+//	스타일링 퀴즈 가져오기
+	public List<QuizQuestion> getStylingQuiz();
+	
+//	스타일링 퀴즈 답변 가져오기
+	public HashMap<String, Object> getStylingQuizAnswer();
 	
 	
 	
