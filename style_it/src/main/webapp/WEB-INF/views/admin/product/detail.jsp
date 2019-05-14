@@ -16,6 +16,10 @@ $(document).ready(function(){
 	$("#btnUpdate").click(function(){
 		$(location).attr("href", "/admin/product/update?p_no=${list.P_NO }");
 	});
+	
+	$("#btnCancel").click(function(){
+		history.go(-1);
+	});
 });
 
 
@@ -42,7 +46,7 @@ th, td {
 	<div class="form-group">
 		<label for="category" class="col-sm-3 col-sm-offset-1 control-label">카테고리</label>
 		<div class="col-sm-5">
-			${list.PCA_NO }
+			${list.PCA_CATEGORY }
 		</div>
 	</div>
 	
@@ -103,9 +107,9 @@ th, td {
 	<div class="col-sm-3 col-sm-offset-1"></div>
 	<div class="col-sm-3">
 		<button type="button" id="btnUpdate" class="btn btn-primary btn-lg btn-block">수정</button>
-	</div>
+	</div> 
 	<div class="col-sm-2">
-		<button type="button" id="btnCancel" class="btn btn-lg btn-block">취소</button>
+		<button type="button" id="btnCancel" class="btn btn-lg btn-block">뒤로 가기</button>
 	</div>
 </form>
 </div>

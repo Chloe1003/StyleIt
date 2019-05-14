@@ -81,5 +81,25 @@
         ON p.pb_no = b.pb_no
   		WHERE s.s_no = #{s_no }
   	</select>
+  	
+  	<select id="selectProductCategory" resultType="web.dto.ProductCategory">
+  		select * from productcategory
+  	</select>
+  	
+  	<select id="selectProduct" resultType="HashMap" parameterType="HashMap">
+  		select * from ( 
+  		select rownum rnum, B.* from(
+  		select p.fu_no, f.fu_storedname from product p
+		inner join fileupload f on f.fu_no = p.fu_no
+  		where pca_no=#{pca_no}
+  		) B	order by rnum) R where rnum between #{startNo} and #{endNo}
+  	</select>
+  	
+  	<select id="selectSearchCount" resultType="int" parameterType="HashMap">
+  		select count(*) from (
+		select p.fu_no, f.fu_storedname from product p
+		inner join fileupload f on f.fu_no = p.fu_no
+		where pca_no=#{pca_no})
+  	</select>
   
 </mapper>

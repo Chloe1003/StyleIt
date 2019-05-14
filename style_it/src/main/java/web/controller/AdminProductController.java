@@ -2,6 +2,7 @@ package web.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -98,21 +99,88 @@ public class AdminProductController {
 	}
 	
 	// 제품 상세 보기
-	@RequestMapping(value="/admin/product/detail")
-	public void productPage(Product product, HashMap<String, Object> map) {
+	@RequestMapping(value="/admin/product/detail", method=RequestMethod.GET)
+	public void productPage(Product product, HashMap<String, Object> map, Model model) {
 		logger.info("PRODUCT  "+product);
+		map = aps.getProduct(product);
+		
+		logger.info("list : "+map);
+		
+		model.addAttribute("list", map);
 	}
 	
 	// 제품 정보 수정 폼 반환
 	@RequestMapping(value="/admin/product/update", method=RequestMethod.GET)
-	public void productUpdateForm(int p_no, Model model) {
-	
+	public void productUpdateForm(Product product, Model model, @RequestParam HashMap<String, Object> map) {
+		logger.info("제품 수정하기... ");
+		logger.info("PRODUCT  "+product);
+		map = aps.getProduct(product);
+		logger.info("MAP : "+map);
+		model.addAttribute("list", map);
+		
+		//카테고리 리스트
+		List<HashMap> pcaList = aps.getpcaList();
+		model.addAttribute("pcaList", pcaList);
+		
+		//브랜드 리스트
+		List<HashMap> pbList = aps.getpbList();
+		model.addAttribute("pbList", pbList);
+		//색 리스트
+		List<HashMap> pcList = aps.getpcList();
+		model.addAttribute("pcList", pcList);
+		//태그리스트
+		List<HashMap> poList = aps.getpoList();
+		List<HashMap> ppList = aps.getppList();
+		List<HashMap> psList = aps.getpsList();
+		model.addAttribute("poList", poList);
+		model.addAttribute("ppList", ppList);
+		model.addAttribute("psList", psList);
 	}
 	
 	// 제품 정보 수정
 	@RequestMapping(value="/admin/product/update", method=RequestMethod.POST)
-	public String productUpdate(Product product) {
-		return null;
+	public String productUpdate(@RequestParam HashMap<String, Object> map, MultipartFile file, FileUpload upFile, Model model) {
+		
+		logger.info("파일업로드");        
+		logger.info("PRODUCT : "+map);
+		logger.info("Title : "+map.get("st_name"));
+		logger.info("file : "+map.get("fu_storedname"));
+		logger.info(file.toString());
+		logger.info(file.getOriginalFilename());
+		logger.info(String.valueOf(file.getSize()));
+		logger.info(file.getContentType());
+		logger.info(String.valueOf(file.isEmpty()));
+		
+		//저장될 파일 이름
+		String stored_name = null;
+		stored_name = file.getOriginalFilename();
+		
+		//파일 저장 경로
+		String path = context.getRealPath("upload/image");
+		
+		//저장될 파일
+		File dest = new File(path, stored_name);
+		
+		//파일 업로드
+		try {
+			file.transferTo(dest);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		upFile.setFu_storedname(file.getOriginalFilename());
+		
+		logger.info(upFile.toString());
+		
+		map.put("stored_name", upFile.getFu_storedname());
+		
+		logger.info("제품 : "+map);
+		aps.updateProduct(map);
+		
+		return "redirect:/admin/product/list";
+		
 	}
 	
 	// 제품 추가 
@@ -187,9 +255,11 @@ public class AdminProductController {
 	
 	// 제품 삭제
 	@RequestMapping(value="/admin/product/delete")
-	public String productDelete(int p_no) {
+	public String productDelete(int[] p_no) {
 
-		return null;
+		logger.info("삭제 : "+Arrays.toString(p_no));
+		aps.deleteProduct(p_no);
+		return "redirect:/admin/product/list";    
 	}
 	
 	// 제품 속성 리스트 반환

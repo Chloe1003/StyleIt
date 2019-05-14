@@ -13,6 +13,28 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
+	$("#btnDelete").click(function(){
+		var checked = "";
+		//선택된 라디오박스 val 담는 변수
+		
+		$( "input[name='check']:checked" ).each (function (){
+		   checked = checked + $(this).val()+"," ;
+		   //var checked에 라디오박스 val 담기
+		});
+		
+		checked = checked.substring(0,checked.lastIndexOf( ","))
+		   //맨뒤의 ,(컴마) 지우기
+		console.log(checked)
+		
+		if(checked == ''){
+		   alert('삭제할 대상을 선택하세요')
+		   return false
+		}
+		
+		$(location).attr("href", "/admin/product/delete?p_no="+checked); 
+		
+	});
+	
 	$("#word").click(function(){
 		 filter();
 	});
@@ -78,7 +100,7 @@ th, td {
 	<tbody>
 	<c:forEach items="${productList }" var="i">
 	<tr>
-	<td><input type="checkbox" value="${i.P_NO }"></td>
+	<td><input type="checkbox" name="check" value="${i.P_NO }"></td>
 	<td>${i.PCA_CATEGORY }</td>
 	<td>${i.PB_NAME }</td>
 	<td>${i.P_NAME }</td>

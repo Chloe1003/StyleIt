@@ -27,16 +27,16 @@ public interface AdminProductService{
 	public List<HashMap> getSearchedList(HashMap<String, Object> map);
 	
 	// 제품 상세 정보 반환
-	public Product getProduct(int p_no);
+	public HashMap<String, Object> getProduct(Product product);
 	
 	// 제품 추가
 	public void addProduct(HashMap<String, Object> map);
 	
 	// 제품 정보 수정
-	public void updateProduct(Product p);
+	public void updateProduct(HashMap<String, Object> map);
 	
 	// 제품 삭제
-	public void deleteProduct(int p_no);
+	public void deleteProduct(int[] p_no);
 	
 	// 페이징 처리된 선택 제품 속성 리스트 반환
 	public List getProductAttributeList(HashMap<String, Object> map);

@@ -3,6 +3,7 @@ package web.controller;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,12 +15,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import web.dto.Member;
+import web.dto.Product;
+import web.dto.ProductCategory;
 import web.dto.Styling;
 import web.dto.StylingLike;
 import web.service.face.MemberService;
 import web.service.face.StylingService;
+import web.util.Paging;
 
 @Controller
 public class StylingController {
@@ -30,8 +35,40 @@ public class StylingController {
 	
 	//스타일링 작성 페이지
 	@RequestMapping(value="/styling/create", method=RequestMethod.GET)
-	public void styling() {
+	public void styling(Model model) {
+		logger.info("CREATE 페이지");
+//		HashMap<String, Object> map = sServ.getProductCategory();
+		List<ProductCategory> pc = sServ.getProductCategory();
+		logger.info("MAP  :"+ pc);
+		model.addAttribute("list", pc);
 		
+	}
+	
+	//스타일링 작성 AJAX
+	@RequestMapping(value="/styling/create/ajax", method=RequestMethod.GET)
+	public @ResponseBody List<HashMap> ajax(@RequestParam HashMap<String, Object> map,
+			@RequestParam(defaultValue="0") int curPage) {
+		
+		logger.info("PRO  : "+map);
+		Paging paging;
+		
+		//총 게시글 수 얻기
+		int totalCount = sServ.getSearchCount(map);  
+		logger.info("총 수 : " + totalCount);
+			
+		//페이지 객체 생성
+		paging = new Paging(totalCount, curPage);
+		logger.info("페이징 : "+ paging);
+		
+		//업로드된 파일 전체 조회
+		map.put("startNo", paging.getStartNo());
+		map.put("endNo", paging.getEndNo());
+		
+		List<HashMap> pc = sServ.getProduct(map); 
+		logger.info("PC : "+pc);
+		
+		
+		return pc;
 	}
 	
 	// 스타일링 태그 리스트 페이지

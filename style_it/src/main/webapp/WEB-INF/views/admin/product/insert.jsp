@@ -16,6 +16,10 @@ $(document).ready(function(){
 	$("#btnInsert").click(function(){
 		$(this).parents("form").submit();
 	});
+	
+	$("#btnCancel").click(function(){
+		history.go(-1);
+	});
 });
 
 </script>

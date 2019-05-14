@@ -50,9 +50,8 @@ public class AdminProductServiceImpl implements AdminProductService {
 	}
 
 	@Override
-	public Product getProduct(int p_no) {
-		// TODO Auto-generated method stub
-		return null;
+	public HashMap<String, Object> getProduct(Product product) {
+		return apd.selectProduct(product);
 	}
 
 	@Override
@@ -68,14 +67,23 @@ public class AdminProductServiceImpl implements AdminProductService {
 	}
 
 	@Override
-	public void updateProduct(Product p) {
-		// TODO Auto-generated method stub
+	public void updateProduct(HashMap<String, Object> map) {
+		logger.info("map : " + map);
+		logger.info("map.get : "+ map.get("stored_name"));
+		apd.fileUploadInsert(map);
+		int no = apd.fileUploadNo(map);
+		map.put("no", no);
+		logger.info("mapInsert : "+map);
+		apd.updateProduct(map);
 		
 	}
 
 	@Override
-	public void deleteProduct(int p_no) {
-		// TODO Auto-generated method stub
+	public void deleteProduct(int[] p_no) {
+		for (int i=0; i<p_no.length; i++) {
+			int p = p_no[i];
+			apd.deleteProduct(p);
+		}
 		
 	}
 

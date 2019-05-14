@@ -95,5 +95,28 @@
 		select fu_no from fileupload
 		where fu_storedname=#{stored_name}
 	</select>
+	
+	<select id="selectProduct" parameterType="web.dto.Product" resultType="HashMap">
+		select p.*, fu.fu_storedname, pca.pca_category, pco.pco_name, pb.pb_name, po.po_name, ps.ps_name, pp.pp_name 
+		from product p
+		inner join fileupload fu on p.fu_no = fu.fu_no
+		inner join productcategory pca on p.pca_no = pca.pca_no
+		inner join productcolor pco on pco.pco_no = p.pco_no
+		inner join productbrand pb on pb.pb_no = p.pb_no
+		inner join productoccasion po on po.po_no = p.po_no
+		inner join productstyle ps on ps.ps_no = p.ps_no
+		inner join productpattern pp on pp.pp_no = p.pp_no
+		where p_no=#{p_no}
+	</select>
+	
+	<update id="updateProduct" parameterType="HashMap">
+		update product set p_gender=#{p_gender}, p_price=#{p_price}, p_name=#{p_name}, fu_no=#{no}, pca_no=#{category}, 
+		pco_no=#{pcolor}, pb_no=#{brand}, po_no=#{poccasion}, ps_no=#{pstyle}, pp_no=#{ppattern}, p_url=#{p_url}
+		where p_no=#{p_no}
+	</update>
+	
+	<delete id="deleteProduct" parameterType="int">
+		delete product where p_no=#{value}
+	</delete>
   	
   </mapper>

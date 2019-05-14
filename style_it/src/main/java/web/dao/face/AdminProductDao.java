@@ -19,7 +19,7 @@ public interface AdminProductDao {
 	public List<HashMap> selectSearchedList(HashMap<String, Object> map);
 	
 	// 제품 상세 정보 반환
-	public Product selectProduct(int p_no);
+	public HashMap<String, Object> selectProduct(Product product);
 	
 	//스타일링 태그 파일 추가
 	public void fileUploadInsert(HashMap<String, Object> map);
@@ -31,7 +31,7 @@ public interface AdminProductDao {
 	public void insertProduct(HashMap<String, Object> map);
 	
 	// 제품 정보 수정
-	public void updateProduct(Product p);
+	public void updateProduct(HashMap<String, Object> map);
 	
 	// 제품 삭제
 	public void deleteProduct(int p_no);
