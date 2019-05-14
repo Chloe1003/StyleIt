@@ -166,7 +166,9 @@ function productView(p_no){
 }
 
 function sortByStyle(ps_no){
-		
+	
+// 	$(this).button('toggle');
+	
 	$("#style").val(ps_no);
 	
 	var search = $("#searchWord").val();

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import web.dao.face.MypageDao;
 import web.dto.MemberQuiz;
+import web.dto.MemberQuizSet;
 import web.dto.Product;
 import web.dto.ProductBrand;
 import web.dto.ProductCategory;
@@ -125,24 +126,76 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public HashMap<String, Object> getStylingQuizAnswer() {
-		HashMap<String, Object> answer = new HashMap<>();
+	public List<ProductBrand> getBrand() {
+		return mypageDao.selectBrand();
+	}
+
+	@Override
+	public List<ProductCategory> getCategory() {
+		return mypageDao.selectCategory();
+	}
+
+	@Override
+	public List<ProductColor> getColor() {
+		return mypageDao.selectColor();
+	}
+
+	@Override
+	public List<ProductOccasion> getOccasion() {
+		return mypageDao.selectOccasion();
+	}
+
+	@Override
+	public List<ProductPattern> getPattern() {
+		return mypageDao.selectPattern();
+	}
+
+	@Override
+	public List<ProductStyle> getStyle() {
+		return mypageDao.selectStyle();
+	}
+
+	@Override
+	public void saveMemberQuiz(MemberQuizSet mq) {
+//		mypageDao.insertMemberQuiz(mq);
 		
-		List<ProductBrand> brand = mypageDao.selectBrand();
-		List<ProductCategory> category = mypageDao.selectCategory();
- 		List<ProductColor> color = mypageDao.selectColor();
-		List<ProductOccasion> occasion = mypageDao.selectOccasion();
-		List<ProductPattern> pattern = mypageDao.selectPattern();
-		List<ProductStyle> style = mypageDao.selectStyle();
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("m_no", mq.getM_no());
 		
-		answer.put("brand", brand);
-		answer.put("category", category);
-		answer.put("color", color);
-		answer.put("occasion", occasion);
-		answer.put("pattern", pattern);
-		answer.put("style", style);
+		mypageDao.insertMemberQuizGender(mq);
 		
-		return answer;
+		for(int pca_no : mq.getPca_no()) {
+			map.put("pca_no", pca_no);	
+			mypageDao.insertMemberQuizCategory(map);
+		}
+		
+		for(int pco_no : mq.getPco_no()) {
+			map.put("pco_no", pco_no);
+			mypageDao.insertMemberQuizColor(map);		
+		}
+		
+		for(int pb_no : mq.getPb_no()) {
+			map.put("pb_no", pb_no);
+			mypageDao.insertMemberQuizBrand(map);
+		}
+		
+		for(int po_no : mq.getPo_no()) {
+			map.put("po_no", po_no);
+			mypageDao.insertMemberQuizOccasion(map);
+		}
+		
+		for(int ps_no : mq.getPs_no()) {
+			map.put("ps_no", ps_no);
+			mypageDao.insertMemberQuizStyle(map);			
+		}
+		
+		for(int pp_no : mq.getPp_no()) {
+			map.put("pp_no", pp_no);
+			mypageDao.insertMemberQuizPattern(map);
+		}
+		
+		mypageDao.insertMemberQuizLprice(mq);
+		mypageDao.insertMemberQuizHprice(mq);
 	}
 
 }

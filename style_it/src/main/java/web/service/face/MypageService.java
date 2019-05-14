@@ -4,7 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import web.dto.MemberQuiz;
+import web.dto.MemberQuizSet;
 import web.dto.Product;
+import web.dto.ProductBrand;
+import web.dto.ProductCategory;
+import web.dto.ProductColor;
+import web.dto.ProductOccasion;
+import web.dto.ProductPattern;
+import web.dto.ProductStyle;
 import web.dto.QuizQuestion;
 
 public interface MypageService {
@@ -53,11 +60,20 @@ public interface MypageService {
 //	작성된 스타일링 퀴즈 가져오기 
 	public List<MemberQuiz> getMemberQuiz(int m_no);
 	
-//	스타일링 퀴즈 가져오기
-	public List<QuizQuestion> getStylingQuiz();
-	
 //	스타일링 퀴즈 답변 가져오기
-	public HashMap<String, Object> getStylingQuizAnswer();
+	public List<QuizQuestion> getStylingQuiz();
+	public List<ProductBrand> getBrand();
+	public List<ProductCategory> getCategory();
+	public List<ProductColor> getColor();
+	public List<ProductOccasion> getOccasion();
+	public List<ProductPattern> getPattern();
+	public List<ProductStyle> getStyle();
+	
+//	작성한 스타일링 퀴즈 저장하기
+	public void saveMemberQuiz(MemberQuizSet mq);
+	
+
+
 	
 	
 	

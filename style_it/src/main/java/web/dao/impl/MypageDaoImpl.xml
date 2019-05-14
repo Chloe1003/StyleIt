@@ -22,65 +22,128 @@
   		ORDER BY qq_no
   	</select>
   	
-  	<select id="selectBrand">
-  		SELECT b.*, 3 as order FROM productbrand b
+  	<select id="selectBrand" resultType="web.dto.ProductBrand">
+  		SELECT * FROM productbrand 
   		ORDER BY pb_no
   	</select>
 
-  	<select id="selectCategory">
-  		SELECT ca.*, 6 as order FROM productcategory ca
+  	<select id="selectCategory" resultType="web.dto.ProductCategory">
+  		SELECT * FROM productcategory
   		ORDER BY pca_no
   	</select>
   
-  	<select id="selectColor">
-  		SELECT co.*, 7 as order FROM productcolor co
+  	<select id="selectColor" resultType="web.dto.ProductColor">
+  		SELECT * FROM productcolor
   		ORDER BY pco_no
   	</select>
  
-  	<select id="selectOccasion">
-  		SELECT o.*, 2 as order FROM productoccasion o
+  	<select id="selectOccasion" resultType="web.dto.ProductOccasion">
+  		SELECT * FROM productoccasion 
   		ORDER BY po_no
   	</select>
   	
-  	<select id="selectPattern">
-  		SELECT p.*, 8 as order FROM productpattern p
+  	<select id="selectPattern" resultType="web.dto.ProductPattern">
+  		SELECT * FROM productpattern 
   		ORDER BY pp_no
   	</select>
   	
-  	<select id="selectStyle">
-  		SELECT s.*, 4 as order FROM productstyle s
+  	<select id="selectStyle" resultType="web.dto.ProductStyle">
+  		SELECT * FROM productstyle 
   		ORDER BY ps_no
   	</select>  	
   
-  	<select id="recommendProduct" parameterType="web.dto.MemberQuizSet" resultType="web.dto.Product">
-  	<![CDATA[
-  		SELECT * FROM (
-			WITH ratings AS(
-    			SELECT 
-			        p.p_no,
-			        p.p_gender,
-			        p.p_price,
-			        p.p_name,
-			        p.pca_no,
-			        p.pb_no,
-			        p.po_no,
-			        p.ps_no,
-			        p.pp_no, 
-			        0.8*(CASE WHEN p.po_no= #{po_no }    THEN 1 ELSE 0 END)
-			        + 0.2*(CASE WHEN p.pb_no= #{pb_no }   THEN 1 ELSE 0 END)
-			        + 0.5*(CASE WHEN p.ps_no= #{ps_no }  THEN 1 ELSE 0 END)
-			        + 0.9*(CASE WHEN p.pca_no= #{pca_no } THEN 1 ELSE 0 END)
-			        + 0.5*(CASE WHEN p.p_price BETWEEN #{p_lowprice } AND #{p_highprice } THEN 1 ELSE 0 END)
-			        AS score
-			    FROM product p
-			    WHERE  p.p_gender= #{p_gender } AND p.pco_no!= #{pco_no } AND p.pp_no!= #{pp_no }
-			    GROUP BY  p.p_no, p.p_gender, p.p_price, p.p_name, p.pca_no, p.pb_no, p.po_no, p.ps_no, p.pp_no
-			) 
-			    SELECT * FROM ratings 
-			    ORDER BY score DESC
-			) WHERE ROWNUM <= 10
-			]]>  	
-  	</select>
+  	<insert id="insertMemberQuizGender" parameterType="web.dto.MemberQuizSet">
+  		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 1, #{p_gender });	
+  	</insert>
+  	<insert id="insertMemberQuizOccasion" parameterType="HashMap">
+  		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 2, #{po_no });	
+  	</insert>
+  	<insert id="insertMemberQuizBrand" parameterType="HashMap">
+  		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 3, #{pb_no });	
+  	</insert>
+  	<insert id="insertMemberQuizStyle" parameterType="HashMap">
+  		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 4, #{ps_no });	
+  	</insert>
+  	<insert id="insertMemberQuizCategory" parameterType="HashMap">
+  		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 5, #{pca_no });	
+  	</insert>
+  	<insert id="insertMemberQuizColor" parameterType="HashMap">
+  		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 6, #{pco_no });	
+  	</insert>
+  	<insert id="insertMemberQuizPattern" parameterType="HashMap">
+  		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 7, #{pp_no });	
+  	</insert>
+  	<insert id="insertMemberQuizLprice" parameterType="web.dto.MemberQuizSet">
+  		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 8, #{lprice });	
+  	</insert>
+  	<insert id="insertMemberQuizHprice" parameterType="web.dto.MemberQuizSet">
+  		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 8, #{hprice });	
+  	</insert>	
+  	
+<!--   	<insert id="insertMemberQuiz" parameterType="web.dto.MemberQuizSet"> -->
+<!-- 		INSERT ALL -->
+<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 1, #{p_gender }) -->
+<!-- 		<foreach collection="po_no" item="data" > -->
+<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 2, #{data }) -->
+<!-- 		</foreach> -->
+<!-- 		<foreach collection="pb_no" item="data" > -->
+<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 3, #{data }) -->
+<!-- 		</foreach> -->
+<!-- 		<foreach collection="ps_no" item="data" > -->
+<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 4, #{data }) -->
+<!-- 		</foreach> -->
+<!-- 		<foreach collection="pca_no" item="data" > -->
+<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 5, #{data }) -->
+<!-- 		</foreach> -->
+<!-- 		<foreach collection="pco_no" item="data" > -->
+<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 6, #{data }) -->
+<!-- 		</foreach> -->
+<!-- 		<foreach collection="pp_no" item="data" > -->
+<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 7, #{data }) -->
+<!-- 		</foreach> -->
+<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 8, #{lprice }) -->
+<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 8, #{hprice }) -->
+<!-- 		SELECT 1 FROM dual -->
+<!--   	</insert> -->
+  	
+<!--   	<select id="recommendProduct" parameterType="web.dto.MemberQuizSet" resultType="web.dto.Product"> -->
+<!--   	<![CDATA[ -->
+<!--   		SELECT * FROM ( -->
+<!-- 			WITH ratings AS( -->
+<!--     			SELECT  -->
+<!-- 			        p.p_no, -->
+<!-- 			        p.p_gender, -->
+<!-- 			        p.p_price, -->
+<!-- 			        p.p_name, -->
+<!-- 			        p.pca_no, -->
+<!-- 			        p.pb_no, -->
+<!-- 			        p.po_no, -->
+<!-- 			        p.ps_no, -->
+<!-- 			        p.pp_no,  -->
+<!-- 			        0.8*(CASE WHEN p.po_no= #{po_no }    THEN 1 ELSE 0 END) -->
+<!-- 			        + 0.2*(CASE WHEN p.pb_no= #{pb_no }   THEN 1 ELSE 0 END) -->
+<!-- 			        + 0.5*(CASE WHEN p.ps_no= #{ps_no }  THEN 1 ELSE 0 END) -->
+<!-- 			        + 0.9*(CASE WHEN p.pca_no= #{pca_no } THEN 1 ELSE 0 END) -->
+<!-- 			        + 0.5*(CASE WHEN p.p_price BETWEEN #{p_lowprice } AND #{p_highprice } THEN 1 ELSE 0 END) -->
+<!-- 			        AS score -->
+<!-- 			    FROM product p -->
+<!-- 			    WHERE  p.p_gender= #{p_gender } AND p.pco_no!= #{pco_no } AND p.pp_no!= #{pp_no } -->
+<!-- 			    GROUP BY  p.p_no, p.p_gender, p.p_price, p.p_name, p.pca_no, p.pb_no, p.po_no, p.ps_no, p.pp_no -->
+<!-- 			)  -->
+<!-- 			    SELECT * FROM ratings  -->
+<!-- 			    ORDER BY score DESC -->
+<!-- 			) WHERE ROWNUM <= 10 -->
+<!-- 			]]>  	 -->
+<!--   	</select> -->
 
   
   

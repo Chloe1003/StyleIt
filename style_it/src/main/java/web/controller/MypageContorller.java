@@ -1,6 +1,5 @@
 package web.controller;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -9,9 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import web.dto.MemberQuiz;
+import web.dto.MemberQuizSet;
 import web.dto.Product;
+import web.dto.ProductBrand;
+import web.dto.ProductCategory;
+import web.dto.ProductColor;
+import web.dto.ProductOccasion;
+import web.dto.ProductPattern;
+import web.dto.ProductStyle;
 import web.dto.QuizQuestion;
 import web.service.face.MypageService;
 
@@ -68,19 +75,38 @@ public class MypageContorller {
 		
 	}
 	
-	@RequestMapping(value="/mypage/quiz")
-	public void stylingQuiz(HttpSession session, Model model) {
+	@RequestMapping(value="/mypage/quiz", method=RequestMethod.GET)
+	public void stylingQuizForm(Model model) {
 		
 		List<QuizQuestion> quiz = mypageService.getStylingQuiz();
 		
-		HashMap<String, Object> map = new HashMap<>();
-		
-		map = mypageService.getStylingQuizAnswer();	
+		List<ProductBrand> brand = mypageService.getBrand();
+		List<ProductCategory> category = mypageService.getCategory();
+ 		List<ProductColor> color = mypageService.getColor();
+		List<ProductOccasion> occasion = mypageService.getOccasion();
+		List<ProductPattern> pattern = mypageService.getPattern();
+		List<ProductStyle> style = mypageService.getStyle();
 		
 		model.addAttribute("qSet", quiz);
-		model.addAttribute("aSet", map);
+		model.addAttribute("brand", brand);
+		model.addAttribute("category", category);
+		model.addAttribute("color", color);
+		model.addAttribute("occasion", occasion);
+		model.addAttribute("pattern", pattern);
+		model.addAttribute("style", style);
+		
 	}
 	
+	@RequestMapping(value="/mypage/quiz", method=RequestMethod.POST)
+	public String stylingQuizSubmit(MemberQuizSet mq, HttpSession session) {
+		int m_no = (int) session.getAttribute("m_no");
+		mq.setM_no(m_no);
+		
+		mypageService.saveMemberQuiz(mq);
+		
+		
+		return "redirect:/mypage";
+	}
 	
 	
 	

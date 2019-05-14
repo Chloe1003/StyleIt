@@ -1,8 +1,10 @@
 package web.dao.face;
 
+import java.util.HashMap;
 import java.util.List;
 
 import web.dto.MemberQuiz;
+import web.dto.MemberQuizSet;
 import web.dto.ProductBrand;
 import web.dto.ProductCategory;
 import web.dto.ProductColor;
@@ -62,7 +64,20 @@ public interface MypageDao {
 	public List<ProductColor> selectColor();
 	public List<ProductOccasion> selectOccasion();
 	public List<ProductPattern> selectPattern();
-	public List<ProductStyle> selectStyle();	
+	public List<ProductStyle> selectStyle();
 	
+//	작성한 스타일링 퀴즈 내역 삽입
+//	public void insertMemberQuiz(MemberQuizSet mq);
+	
+	public void insertMemberQuizGender(MemberQuizSet mq);
+	public void insertMemberQuizCategory(HashMap<String, Integer> map);
+	public void insertMemberQuizColor(HashMap<String, Integer> map);
+	public void insertMemberQuizBrand(HashMap<String, Integer> map);
+	public void insertMemberQuizOccasion(HashMap<String, Integer> map);
+	public void insertMemberQuizStyle(HashMap<String, Integer> map);
+	public void insertMemberQuizPattern(HashMap<String, Integer> map);
+	public void insertMemberQuizLprice(MemberQuizSet mq);
+	public void insertMemberQuizHprice(MemberQuizSet mq);
+
 
 }
