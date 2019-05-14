@@ -5,8 +5,7 @@ import java.util.Arrays;
 public class MemberQuizSet {
 
 	int m_no;
-	private String p_gender;
-	
+	private int p_gender;
 	private int lprice;
 	private int hprice;
 	private int[] pca_no;
@@ -23,10 +22,11 @@ public class MemberQuizSet {
 	public void setM_no(int m_no) {
 		this.m_no = m_no;
 	}
-	public String getP_gender() {
+
+	public int getP_gender() {
 		return p_gender;
 	}
-	public void setP_gender(String p_gender) {
+	public void setP_gender(int p_gender) {
 		this.p_gender = p_gender;
 	}
 	public int getLprice() {

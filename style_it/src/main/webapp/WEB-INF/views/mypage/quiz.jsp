@@ -56,8 +56,8 @@
 <!-- 				  <button type="button" class="btn btn-default" name="p_gender" value="m">남자</button> -->
 <!-- 				</div> -->
 			
-				<span class="item"><input type="checkbox" name="p_gender" value="f">여자</span>
-				<span class="item"><input type="checkbox" name="p_gender" value="m">남자</span>
+				<span class="item"><input type="checkbox" name="p_gender" value="1">여자</span>
+				<span class="item"><input type="checkbox" name="p_gender" value="2">남자</span>
 			</c:when>
 			<c:when test="${q.qq_no eq 2 }">
 				<c:forEach items="${occasion }" var="a" begin="0" end="${occasion.size()-1 }">
