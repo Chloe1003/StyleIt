@@ -1,10 +1,13 @@
 package web.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import java.sql.Blob;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -16,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import web.dto.FileUpload;
 import web.dto.Member;
 import web.dto.Product;
 import web.dto.ProductCategory;
@@ -32,6 +37,7 @@ public class StylingController {
 
 	@Autowired StylingService sServ;
 	@Autowired MemberService mServ;
+	@Autowired ServletContext context;
 	
 	//스타일링 작성 페이지
 	@RequestMapping(value="/styling/create", method=RequestMethod.GET)
@@ -69,6 +75,56 @@ public class StylingController {
 		
 		
 		return pc;
+	}
+	
+	// 스타일링 캔버스
+	@RequestMapping(value="/styling/canvas", method=RequestMethod.GET)
+	public void canvas() {
+	}
+	
+	// 스타일링 캔버스
+	@RequestMapping(value="/styling/canvas/ajax", method=RequestMethod.POST)
+	public @ResponseBody String canvas_ajax(MultipartFile data, FileUpload upFile, @RequestParam HashMap<String, Object> map) {
+			
+			logger.info("파일업로드");        
+			logger.info("ST : "+map);
+			logger.info("Title : "+map.get("s_name")+".png");
+			logger.info(data.toString());
+			logger.info(String.valueOf(data.getSize()));
+			logger.info(data.getContentType());
+			logger.info(String.valueOf(data.isEmpty()));
+			
+			//저장될 파일 이름
+			String stored_name = null;
+			stored_name = map.get("s_name")+".png";
+			logger.info("stored_name : "+stored_name);
+			
+			//파일 저장 경로
+			String path = context.getRealPath("upload/image");
+			
+			//저장될 파일
+			File dest = new File(path, stored_name);
+			
+			//파일 업로드
+			try {
+				data.transferTo(dest);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			upFile.setFu_storedname(data.getOriginalFilename());
+			
+			logger.info(upFile.toString());
+			
+			map.put("stored_name", upFile.getFu_storedname());
+			
+			logger.info("ST : "+map);
+//			asts.stylingTagInsert(map);
+			
+			String a = "a";
+		return a;
 	}
 	
 	// 스타일링 태그 리스트 페이지

@@ -4,8 +4,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!-- jQuery 2.2.4 -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+<!-- Canvas -->
+<script type="text/javascript" src="/resources/js/html2canvas.js"></script>
+<script type="text/javascript" src="/resources/js/jquery.plugin.html2canvas.js"></script>
 <!-- UI형식으로 드래그 앤 드롭 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script type="text/javascript">
 function proc(result){
 	$("#product").html("");
@@ -39,7 +43,7 @@ function filter(){
 		$.ajax ({
 		type: "get"
 			, url: "/styling/create/ajax?pca_no="+data
-			, data: { "curPage": 1, 
+			, data: { 
 	            "search" : search } //요청파라미터
 			, dataType: "json"
 			, success: function( res ){
@@ -108,10 +112,47 @@ $(document).ready(function() {
 		return cnt
 	});
 });
+
+
+function SAVE() {   
+	console.log("ajax?")
+var s_name = $("#s_name").val();
+var background = document.getElementById('createStyle').style.background;
+if(background == "") {
+    document.getElementById('createStyle').style.background = "#fff"; 
+}
+
+html2canvas(document.getElementById('createStyle'), {
+    useCORS: true, // 다른사이트의리소스가있을때활성화(그러나...Access-Control-Allow-Origin 필요)
+    onrendered: function(canvas) {
+        canvas.toBlob(function(blob) {
+        	console.log(s_name);
+        	console.log(blob);
+        	
+        	var fd = new FormData();
+        	fd.append('data', blob);
+        	
+        	$.ajax({
+        	    type: 'POST'
+    			, url: "/styling/canvas/ajax?s_name="+s_name
+        	    , data: fd
+        	    , processData: false
+        	    , contentType: false
+        	    , dataType: "json"
+				, success: function( res ){
+					console.log("성공");
+				}
+        		, error: function( e ) {
+        			console.log("실패");
+        		}
+        	});
+        });
+    }
+});
+}
 </script>
 <style type="text/css">
 #createStyle {
-	border : 3px solid gray;
 	display : inline-block;
 	min-height : 500px;
 	margin : 5px;
@@ -135,6 +176,7 @@ $(document).ready(function() {
 <div class="contain" style="padding-bottom: 100px; padding-left: 100px; padding-right: 120px;">
 <h3 align="center">스타일링 만들기</h3>  
 <hr>
+
 <div>    
 	<div id="stylingContainer" style="display: flex; padding-bottom: 20px;">
 		<div style="border: 1px solid #ffffff; flex: 7;" >
@@ -156,7 +198,7 @@ $(document).ready(function() {
 						<c:forEach items="${list }" var="i">
 								<option id="ajax" value="${i.pca_no }">${i.pca_category }</option>
 						</c:forEach>
-					</select>
+					</select>   
 				</div>
 				<hr>
 				<div id="tb">
@@ -165,7 +207,6 @@ $(document).ready(function() {
 					</div>
 				</div>
 				<div id="paging">
-					<jsp:include page="./paging.jsp" />	
 				</div>
 			</div>
 		</div>  
@@ -176,8 +217,8 @@ $(document).ready(function() {
 	<br>
 	<div class="col-sm-3 col-sm-offset-1"></div>
 	<div class="col-sm-2">
-		<button type="button" id="btnUpdate" class="btn btn-primary btn-lg btn-block">수정</button>
-	</div> 
+		<button type="button" id="btnSave" class="btn btn-primary btn-lg btn-block" onclick="SAVE()">저장</button>
+	</div>   
 	<div class="col-sm-2">
 		<button type="button" id="btnCancel" class="btn btn-lg btn-block">뒤로 가기</button>
 	</div>
