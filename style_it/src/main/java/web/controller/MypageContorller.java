@@ -1,9 +1,12 @@
 package web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +27,8 @@ import web.service.face.MypageService;
 
 @Controller
 public class MypageContorller {
+	
+	private final Logger logger = LoggerFactory.getLogger(MypageContorller.class);
 	@Autowired MypageService mypageService;	
 	
 //	팔로우 리스트
@@ -71,7 +76,19 @@ public class MypageContorller {
 //		스타일링 퀴즈 답변 가져오기
 		List<MemberQuiz> answer = mypageService.getMemberQuiz(m_no);
 		
-		List<Product> rList = mypageService.getRecommendProduct(m_no);
+		List<Product> rList = new ArrayList<>();
+		
+		if(answer!=null) {
+			
+			MemberQuizSet mqs = mypageService.transferToMemberQuizSet(answer);
+			mqs.setM_no(m_no);
+			
+			logger.info(mqs.toString());		
+			
+			rList = mypageService.getRecommendProduct(mqs);
+		}
+		
+		model.addAttribute("rList", rList);
 		
 	}
 	
@@ -79,7 +96,6 @@ public class MypageContorller {
 	public void stylingQuizForm(Model model) {
 		
 		List<QuizQuestion> quiz = mypageService.getStylingQuiz();
-		
 		List<ProductBrand> brand = mypageService.getBrand();
 		List<ProductCategory> category = mypageService.getCategory();
  		List<ProductColor> color = mypageService.getColor();
@@ -105,7 +121,7 @@ public class MypageContorller {
 		mypageService.saveMemberQuiz(mq);
 		
 		
-		return "redirect:/mypage";
+		return "redirect:/mypage/quiz";
 	}
 	
 	

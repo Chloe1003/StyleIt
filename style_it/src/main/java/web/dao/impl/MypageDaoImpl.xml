@@ -13,7 +13,7 @@
 	</select>
 	
 	<select id="selectMemberQuiz" parameterType="int" resultType="web.dto.MemberQuiz">
-		SELECT 	* FROM memberquiz
+		SELECT * FROM memberquiz
 		WHERE m_no = #{m_no }
 	</select>
   	
@@ -54,39 +54,39 @@
   
   	<insert id="insertMemberQuizGender" parameterType="web.dto.MemberQuizSet">
   		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
-  		VALUES (memberquiz_seq.nextval, #{m_no }, 1, #{p_gender });	
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 1, #{p_gender })
   	</insert>
   	<insert id="insertMemberQuizOccasion" parameterType="HashMap">
   		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
-  		VALUES (memberquiz_seq.nextval, #{m_no }, 2, #{po_no });	
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 2, #{po_no })
   	</insert>
   	<insert id="insertMemberQuizBrand" parameterType="HashMap">
   		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
-  		VALUES (memberquiz_seq.nextval, #{m_no }, 3, #{pb_no });	
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 3, #{pb_no })
   	</insert>
   	<insert id="insertMemberQuizStyle" parameterType="HashMap">
   		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
-  		VALUES (memberquiz_seq.nextval, #{m_no }, 4, #{ps_no });	
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 4, #{ps_no })	
   	</insert>
   	<insert id="insertMemberQuizCategory" parameterType="HashMap">
   		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
-  		VALUES (memberquiz_seq.nextval, #{m_no }, 5, #{pca_no });	
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 5, #{pca_no })
   	</insert>
   	<insert id="insertMemberQuizColor" parameterType="HashMap">
   		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
-  		VALUES (memberquiz_seq.nextval, #{m_no }, 6, #{pco_no });	
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 6, #{pco_no })
   	</insert>
   	<insert id="insertMemberQuizPattern" parameterType="HashMap">
   		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
-  		VALUES (memberquiz_seq.nextval, #{m_no }, 7, #{pp_no });	
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 7, #{pp_no })	
   	</insert>
   	<insert id="insertMemberQuizLprice" parameterType="web.dto.MemberQuizSet">
   		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
-  		VALUES (memberquiz_seq.nextval, #{m_no }, 8, #{lprice });	
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 8, #{lprice })
   	</insert>
   	<insert id="insertMemberQuizHprice" parameterType="web.dto.MemberQuizSet">
   		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
-  		VALUES (memberquiz_seq.nextval, #{m_no }, 8, #{hprice });	
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 8, #{hprice })	
   	</insert>	
   	
 <!--   	<insert id="insertMemberQuiz" parameterType="web.dto.MemberQuizSet"> -->
@@ -115,38 +115,72 @@
 <!-- 		SELECT 1 FROM dual -->
 <!--   	</insert> -->
   	
-<!--   	<select id="recommendProduct" parameterType="web.dto.MemberQuizSet" resultType="web.dto.Product"> -->
-<!--   	<![CDATA[ -->
-<!--   		SELECT * FROM ( -->
-<!-- 			WITH ratings AS( -->
-<!--     			SELECT  -->
-<!-- 			        p.p_no, -->
-<!-- 			        p.p_gender, -->
-<!-- 			        p.p_price, -->
-<!-- 			        p.p_name, -->
-<!-- 			        p.pca_no, -->
-<!-- 			        p.pb_no, -->
-<!-- 			        p.po_no, -->
-<!-- 			        p.ps_no, -->
-<!-- 			        p.pp_no,  -->
-<!-- 			        0.8*(CASE WHEN p.po_no= #{po_no }    THEN 1 ELSE 0 END) -->
-<!-- 			        + 0.2*(CASE WHEN p.pb_no= #{pb_no }   THEN 1 ELSE 0 END) -->
-<!-- 			        + 0.5*(CASE WHEN p.ps_no= #{ps_no }  THEN 1 ELSE 0 END) -->
-<!-- 			        + 0.9*(CASE WHEN p.pca_no= #{pca_no } THEN 1 ELSE 0 END) -->
-<!-- 			        + 0.5*(CASE WHEN p.p_price BETWEEN #{p_lowprice } AND #{p_highprice } THEN 1 ELSE 0 END) -->
-<!-- 			        AS score -->
-<!-- 			    FROM product p -->
-<!-- 			    WHERE  p.p_gender= #{p_gender } AND p.pco_no!= #{pco_no } AND p.pp_no!= #{pp_no } -->
-<!-- 			    GROUP BY  p.p_no, p.p_gender, p.p_price, p.p_name, p.pca_no, p.pb_no, p.po_no, p.ps_no, p.pp_no -->
-<!-- 			)  -->
-<!-- 			    SELECT * FROM ratings  -->
-<!-- 			    ORDER BY score DESC -->
-<!-- 			) WHERE ROWNUM <= 10 -->
-<!-- 			]]>  	 -->
-<!--   	</select> -->
-
-  
-  
+  	<select id="selectRecommendProduct" parameterType="web.dto.MemberQuizSet" resultType="web.dto.Product">
+  		SELECT * FROM (
+			WITH ratings AS(
+    			SELECT 
+			        p.p_no, p.p_price, p.p_name, f.fu_storedname, b.pb_name,
+			        (select count(*) from productlike l where p.p_no = l.p_no) cntplike,
+			        (select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck,
+			        <foreach collection="po_no" open="0.8*(CASE WHEN" close="THEN 1 ELSE 0 END)" item="p">
+				        <trim prefixOverrides="OR">
+				        	OR p.po_no= #{p } 
+				        </trim>
+			        </foreach>
+			        <foreach collection="pb_no" open="+ 0.2*(CASE WHEN" close="THEN 1 ELSE 0 END)" item="p">
+			        	<trim prefixOverrides="OR">
+			        		OR p.pb_no= #{p }
+			        	</trim>
+			        </foreach>
+			        <foreach collection="ps_no" open="+ 0.5*(CASE WHEN" close="THEN 1 ELSE 0 END)" item="p">
+			        	<trim prefixOverrides="OR">
+			        		OR p.ps_no= #{p }
+			        	</trim>
+			        </foreach>
+			        <foreach collection="pca_no" open="+ 0.9*(CASE WHEN" close="THEN 1 ELSE 0 END)" item="p">
+			        	<trim prefixOverrides="OR">
+			        		OR p.pca_no= #{p }
+			        	</trim>			        	
+			        </foreach>
+			        + 0.8*(CASE WHEN p.p_price BETWEEN #{p_lowprice } AND #{p_highprice } THEN 1 ELSE 0 END)
+			        AS score
+			    FROM product p
+		        JOIN fileupload f
+				ON p.fu_no = f.fu_no
+		        JOIN productbrand b
+		        ON p.pb_no = b.pb_no
+		        <if test="p_gender==1">
+			        <foreach collection="pco_no" open="WHERE p.p_gender= 'f'" item="p">
+			        	<trim prefixOverrides="AND">
+			        		AND p.pco_no != #{p }
+			        	</trim>			        	
+			        </foreach>
+			        <foreach collection="pp_no" item="p">
+			        	<trim prefixOverrides="AND">
+			        		AND p.pp_no != #{p }
+			        	</trim>			        	
+			        </foreach>			        
+		        </if>
+		        <if test="p_gender==2">
+			        <foreach collection="pco_no" open="WHERE p.p_gender= 'm'" item="p">
+			        	<trim prefixOverrides="AND">
+			        		AND p.pco_no != #{p }
+			        	</trim>			        	
+			        </foreach>
+			        <foreach collection="pp_no" item="p">
+			        	<trim prefixOverrides="AND">
+			        		AND p.pp_no != #{p }
+			        	</trim>			        	
+			        </foreach>	
+		        </if>
+			) 
+  			<![CDATA[
+			    SELECT * FROM ratings 
+			    WHERE plikecheck=0
+			    ORDER BY score DESC
+			) WHERE ROWNUM <= 10
+			]]>  	  
+  	</select>
   
   
   

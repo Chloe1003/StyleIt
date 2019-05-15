@@ -1,6 +1,7 @@
 package web.service.impl;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -106,18 +107,13 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public List<Product> getRecommendProduct(int m_no) {
-		
-		List<MemberQuiz> mq = mypageDao.selectMemberQuiz(m_no);
-		
-		
-		
-		return null;
+	public List<Product> getRecommendProduct(MemberQuizSet mq) {				
+		return mypageDao.selectRecommendProduct(mq);
 	}
 
 	@Override
 	public List<MemberQuiz> getMemberQuiz(int m_no) {
-		return null;
+		return mypageDao.selectMemberQuiz(m_no);
 	}
 
 	@Override
@@ -196,6 +192,48 @@ public class MypageServiceImpl implements MypageService{
 		
 		mypageDao.insertMemberQuizLprice(mq);
 		mypageDao.insertMemberQuizHprice(mq);
+	}
+
+	@Override
+	public MemberQuizSet transferToMemberQuizSet(List<MemberQuiz> answer) {
+		MemberQuizSet mqs = new MemberQuizSet();
+		MemberQuiz mq = new MemberQuiz();
+		
+		for(int i=0; i<answer.size(); i++) {
+			mq= answer.get(i);
+			if(mq.getQq_no()==1) {
+				mqs.setP_gender(mq.getMq_answer());
+			} else if(mq.getQq_no()==2) {
+				mqs.getPo_no().add(mq.getMq_answer());
+			} else if(mq.getQq_no()==3) {
+				mqs.getPb_no().add(mq.getMq_answer());
+			} else if(mq.getQq_no()==4) {
+				mqs.getPs_no().add(mq.getMq_answer());
+			} else if(mq.getQq_no()==5) {
+				mqs.getPca_no().add(mq.getMq_answer());
+			} else if(mq.getQq_no()==6) {
+				mqs.getPco_no().add(mq.getMq_answer());
+			} else if(mq.getQq_no()==7) {
+				mqs.getPp_no().add(mq.getMq_answer());
+			} else if(mq.getQq_no()==8) {
+				mqs.getPrice().add(mq.getMq_answer());
+			}
+		}
+		
+		
+		
+		int p1 = mqs.getPrice().get(0);
+		int p2 = mqs.getPrice().get(1);
+		
+		if(p2>p1) {
+			mqs.setP_lowprice(p1);
+			mqs.setP_highprice(p2);
+		} else {
+			mqs.setP_lowprice(p2);
+			mqs.setP_highprice(p1);
+		}
+		
+		return mqs;		
 	}
 
 }

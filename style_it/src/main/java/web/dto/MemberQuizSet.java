@@ -1,89 +1,96 @@
 package web.dto;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MemberQuizSet {
 
 	int m_no;
 	private int p_gender;
-	private int lprice;
-	private int hprice;
-	private int[] pca_no;
-	private int[] pco_no;
-	private int[] pb_no;
-	private int[] po_no;
-	private int[] ps_no;
-	private int[] pp_no;
-
+	private int p_lowprice;
+	private int p_highprice;
+	private List<Integer> pca_no = new ArrayList<>();
+	private List<Integer> pco_no = new ArrayList<>();
+	private List<Integer> pb_no = new ArrayList<>();
+	private List<Integer> po_no = new ArrayList<>();
+	private List<Integer> ps_no = new ArrayList<>();
+	private List<Integer> pp_no = new ArrayList<>();
+	private List<Integer> price = new ArrayList<>();
 	
+	
+	public List<Integer> getPrice() {
+		return price;
+	}
+	public void setPrice(List<Integer> price) {
+		this.price = price;
+	}
 	public int getM_no() {
 		return m_no;
 	}
 	public void setM_no(int m_no) {
 		this.m_no = m_no;
 	}
-
 	public int getP_gender() {
 		return p_gender;
 	}
 	public void setP_gender(int p_gender) {
 		this.p_gender = p_gender;
 	}
-	public int getLprice() {
-		return lprice;
+	public int getP_lowprice() {
+		return p_lowprice;
 	}
-	public void setLprice(int lprice) {
-		this.lprice = lprice;
+	public void setP_lowprice(int p_lowprice) {
+		this.p_lowprice = p_lowprice;
 	}
-	public int getHprice() {
-		return hprice;
+	public int getP_highprice() {
+		return p_highprice;
 	}
-	public void setHprice(int hprice) {
-		this.hprice = hprice;
+	public void setP_highprice(int p_highprice) {
+		this.p_highprice = p_highprice;
 	}
-	public int[] getPca_no() {
+	public List<Integer> getPca_no() {
 		return pca_no;
 	}
-	public void setPca_no(int[] pca_no) {
+	public void setPca_no(List<Integer> pca_no) {
 		this.pca_no = pca_no;
 	}
-	public int[] getPco_no() {
+	public List<Integer> getPco_no() {
 		return pco_no;
 	}
-	public void setPco_no(int[] pco_no) {
+	public void setPco_no(List<Integer> pco_no) {
 		this.pco_no = pco_no;
 	}
-	public int[] getPb_no() {
+	public List<Integer> getPb_no() {
 		return pb_no;
 	}
-	public void setPb_no(int[] pb_no) {
+	public void setPb_no(List<Integer> pb_no) {
 		this.pb_no = pb_no;
 	}
-	public int[] getPo_no() {
+	public List<Integer> getPo_no() {
 		return po_no;
 	}
-	public void setPo_no(int[] po_no) {
+	public void setPo_no(List<Integer> po_no) {
 		this.po_no = po_no;
 	}
-	public int[] getPs_no() {
+	public List<Integer> getPs_no() {
 		return ps_no;
 	}
-	public void setPs_no(int[] ps_no) {
+	public void setPs_no(List<Integer> ps_no) {
 		this.ps_no = ps_no;
 	}
-	public int[] getPp_no() {
+	public List<Integer> getPp_no() {
 		return pp_no;
 	}
-	public void setPp_no(int[] pp_no) {
+	public void setPp_no(List<Integer> pp_no) {
 		this.pp_no = pp_no;
 	}
-
 	@Override
 	public String toString() {
-		return "MemberQuizSet [m_no=" + m_no + ", p_gender=" + p_gender + ", lprice=" + lprice + ", hprice=" + hprice
-				+ ", pca_no=" + Arrays.toString(pca_no) + ", pco_no=" + Arrays.toString(pco_no) + ", pb_no="
-				+ Arrays.toString(pb_no) + ", po_no=" + Arrays.toString(po_no) + ", ps_no=" + Arrays.toString(ps_no)
-				+ ", pp_no=" + Arrays.toString(pp_no) + "]";
+		return "MemberQuizSet [m_no=" + m_no + ", p_gender=" + p_gender + ", p_lowprice=" + p_lowprice
+				+ ", p_highprice=" + p_highprice + ", pca_no=" + pca_no + ", pco_no=" + pco_no + ", pb_no=" + pb_no
+				+ ", po_no=" + po_no + ", ps_no=" + ps_no + ", pp_no=" + pp_no + ", price=" + price + "]";
 	}
+		
 	
+
 }

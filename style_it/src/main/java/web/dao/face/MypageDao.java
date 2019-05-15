@@ -5,6 +5,7 @@ import java.util.List;
 
 import web.dto.MemberQuiz;
 import web.dto.MemberQuizSet;
+import web.dto.Product;
 import web.dto.ProductBrand;
 import web.dto.ProductCategory;
 import web.dto.ProductColor;
@@ -46,8 +47,7 @@ public interface MypageDao {
 	public void updateCollection();
 //	컬렉션 삭제
 	public void deleteCollection();
-//	추천받은 상품 리스트
-	public List getRecommendProduct();
+
 	
 //	제품 좋아요 리스트 가져오기
 	public String selectProductLike(int m_no);
@@ -78,6 +78,9 @@ public interface MypageDao {
 	public void insertMemberQuizPattern(HashMap<String, Integer> map);
 	public void insertMemberQuizLprice(MemberQuizSet mq);
 	public void insertMemberQuizHprice(MemberQuizSet mq);
+
+//	추천 상품 리스트 가져오기
+	public List<Product> selectRecommendProduct(MemberQuizSet mq);
 
 
 }

@@ -55,7 +55,7 @@ public interface MypageService {
 	public void deleteCollection();
 	
 //	추천받은 상품 리스트
-	public List<Product> getRecommendProduct(int m_no);
+	public List<Product> getRecommendProduct(MemberQuizSet mq);
 	
 //	작성된 스타일링 퀴즈 가져오기 
 	public List<MemberQuiz> getMemberQuiz(int m_no);
@@ -71,6 +71,9 @@ public interface MypageService {
 	
 //	작성한 스타일링 퀴즈 저장하기
 	public void saveMemberQuiz(MemberQuizSet mq);
+	
+//	멤버퀴즈 리스트를 멤버퀴즈셋 형태로 변경
+	public MemberQuizSet transferToMemberQuizSet(List<MemberQuiz> answer);
 	
 
 
