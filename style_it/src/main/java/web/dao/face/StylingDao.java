@@ -39,9 +39,11 @@ public interface StylingDao {
 //	비 로그인시 스타일링 상세보기
 	public Styling getStylingViewNoLogin(int s_no);
 	
-//	스타일링별 제품 정보 가져오기
-	public List<Product> selectProductByStyling(int s_no);
-	
+//	로그인시 스타일링별 제품 정보 가져오기
+	public List<Product> selectProductByStyling(HashMap<String, Integer> map);
+
+//	비로그인시 스타일링별 제품 정보 가져오기
+	public List<Product> selectProductByStylingNoLogin(int s_no);
 	
 //	콜렉션 추가
 	void CollectionInsert(int cs_no);

@@ -67,36 +67,53 @@
 	function showlogin(){
 		document.getElementById("login_display").style.display="block";
 		document.getElementById("bg").style.display="block";//배경 어둡게 하는 것
+		document.getElementById("join_display").style.display = "none"; //회원가입창 감추기
+		document.getElementById("bg1").style.display = "none";
 	}
 //숨겨둔 회원가입창	
 	function showjoin() {
 		document.getElementById("join_display").style.display = "block";
 		document.getElementById("bg1").style.display = "block";//배경 어둡게 하는 것
+		document.getElementById("login_display").style.display = "none";
+		document.getElementById("bg").style.display = "none";
 	}
 	
 	function logout() {
+		alert("로그아웃 되었습니다.");
 		location.href = "/member/logout";
 	}
+	function mypage(){
+		location.href="/mypage/mypage?m_no=${m_no }";
+	}
+	
 </script>
+
 <script type="text/javascript">
+
+	/* 회원가입 정규식 */
+	var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	// 비밀번호 정규식
+	var regex = /^[A-Za-z0-9]{6,12}$/;
+	// 중복체크 했느냐
+	var Chk = false;
+	
 	$(document).ready(function() {
 		
 		/* 회원가입 */
 		$("input").eq(0).focus();
 		
-		$("#btnJoin").click(function() {
-			
-		     if(m_pw.value=="") {
-		         alert("비밀번호를 입력해 주시오");
-		         m_pw.focus();
-		         return false;
-		     }
-		     if(m_nick.value=="") {
-		         alert("nick을 입력해세요");
-		         m_nick.focus();
-		         return false;
-		     }
-			});
+		$("#m_pw").keyup(function() {
+			if(!regex.test($("#m_pw").val())) {
+				$("#pwChk").html("숫자와 문자 포함 형태의 6~12자리 이내의 암호");
+				$("#pwChk").css("color","red");
+			}
+			if(regex.test($("#m_pw").val())) {
+				$("#pwChk").html("사용 가능한 비밀번호 입니다");
+				$("#pwChk").css("color","blue");
+			}
+		});
+		
+		
 			
 			$(this).parents("form").submit();
 						$("#joinCancel").click(function() {
@@ -107,24 +124,36 @@
 							document.getElementById("login_display").style.display = "none";
 							document.getElementById("bg").style.display = "none";
 						});
-			});		
+			
+			$("#btnlogin").click(function() {
+				
+				$.ajax({
+					type : "post"
+					,url : "/member/login"
+					,data : { "m_email" : $("#m_emaillogin").val()
+							  ,"m_pw" : $("#m_pwlogin").val()	
+							  }
+					,dataType : "json"
+					,success : function (data) {
+							console.log(data.login);
+							if(data.login==true){
+							console.log("성공");
+							alert("로그인 성공");
+							location.href = "/home";
+							}else{
+							console.log("실패");
+							 $("#loginChk").html("로그인 실패");
+							 $("#loginChk").css("color","red");
+							}
+						}
+						,error : function(e) {
+							console.log("실패");
+						}
+					});
+						
+				});
 
-			/* 위의 check */
-			function check(re, what, message) {
-			 if(re.test(what.value)) {
-				return true;
-				 }
-				 alert(message);
-				 what.value = "";
-				 what.focus();
-				 //return false;
-			}
-			//아이디 중복체크
-			$(document).ready(function() {
-				/* 회원가입 정규식 */
-				 var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-				 
-				$("#check").click(function() {
+			$("#check").click(function() {
 
 					$.ajax({
 						type : "post"
@@ -135,36 +164,74 @@
 							console.log("성공");
 							console.log(data);
 							console.log(data.hashMap.check);
-							
-							 if(m_email.value=="") {
-						         alert("이메일을 입력해 주세요");
+									
+						   if(m_email.value=="") {
+						   $("#idChk").html("이메일을 입력해 주세요");
+						   $("#idChk").css("color","red");
+								        
 						         m_email.focus();
-						         return false;
-						     }
+						        return false;
+						   }
 
-						     if(!check(re2, m_email, "적합하지 않은 이메일 형식입니다.")) {
+						   if(!check(re2, m_email, "적합하지 않은 이메일 형식입니다.")) {
 						         return false;
-						     }
-							
-							if(data.hashMap.check==0){
-								alert("사용 불가한 아이디입니다.") 
+						    }
+									
+						    if(data.hashMap.check==1){
+							$("#idChk").html("사용 가능한 아이디입니다.");
+							$("#idChk").css("color","blue");
+							Chk = true;
+						    }else{
+						 		console.log("중복된아이디");
+							$("#idChk").html("사용 불가한 아이디입니다.");
+							$("#idChk").css("color","red");
 								$('#m_email').val('');
 								 m_email.focus();
-							}else{
-								alert("사용 가능한 아이디입니다.")
 							}
 						}
 						,error : function(e) {
 							console.log("실패");
 							console.log(e);
 						}
+						});
+							
 					});
-					
-				});
-			});
+						
+			});		
 
-			
-			
+	function joinAllChk() {
+		
+		if(Chk == false){
+			$("#idChk").html("아이디 중복검사가 필요합니다");
+			$("#idChk").css("color","red");
+			m_email.focus();
+     	   return false;
+        }
+		if(m_pw.value=="") {
+			$("#pwChk").html("비밀번호를 입력해 주시오");
+			$("#pwChk").css("color","red");
+            m_pw.focus();
+            return false;
+	   
+         }
+		 if(m_nick.value=="") {
+             $("#nickChk").html("nick을 입력해세요");
+ 			   $("#nickChk").css("color","red");
+             m_nick.focus();
+             return false;
+         }
+		
+	};
+	function check(re, what, message) {
+		 if(re.test(what.value)) {
+			return true;
+			 }
+			$("#idChk").html(message);
+			$("#idChk").css("color","red");
+			 what.value = "";
+			 what.focus();
+			 //return false;
+		}
 			
 </script>
 
@@ -213,8 +280,11 @@
 					<li><a href="javascript:void(0)" id="create">CREATE+&nbsp;<span><img alt="faq"
 								src="/resources/image/main/hanger.png" style="width: 20px;"></span></a></li>
 
+
 					<c:if test="${!empty login }">
 						<li><a href="#">MYPAGE</a></li>      
+					<c:if test="${login eq true }">
+						<li><a href="javascript:void(0);" onclick="mypage();">MYPAGE</a></li>
 						<li><a href="javascript:void(0);" onclick="logout();">LOGOUT</a></li>
 					</c:if>
 					<c:if test="${empty login }">
@@ -250,19 +320,19 @@
 
 			<!-- 로그인 입력 창 -->
 			<div class="form-group">
-				<input type="text" class="form-control" name="m_email" placeholder="이메일 주소">
+				<input type="text" class="form-control" name="m_email" id="m_emaillogin" placeholder="이메일 주소">
 			</div>
 			<div style="text-align: center; color: red;" id="LoginUseremailBlankChk"></div>
 			<!-- 비밀번호 입력 창 -->
 			<div class="form-group">
-				<input type="password" class="form-control" name="m_pw" placeholder="비밀번호">
+				<input type="password" class="form-control" name="m_pw" id="m_pwlogin" placeholder="비밀번호">
 			</div>
 			<!-- 로그인폼의 로그인, 회원가입 버튼 -->
 			<div class="form-group">
-				<button id="btnlogin" class="btn btn-default"
+				<button type="button" id="btnlogin" class="btn btn-default"
 				style="width: 285.83px; margin-left: 38px; background: #009994; color: white;">로그인</button>
-<!-- 				<button type="button" onclick="showjoin()" id="btnJoin" name="btnJoin" class="btn btn-default btn-lg" style="width: 170px;">회원가입</button>
- -->			</div>
+				<div id="loginChk" style="text-align: center;"></div>
+			</div>
 
 		</div>
 	</form>
@@ -280,28 +350,34 @@
 	<hr>
 
 
-	<form action="/member/join" method="post" class="form-horizontal">
+	<form action="/member/join" method="post" class="form-horizontal" onsubmit="return joinAllChk()">
 		<div style="padding: 20px;">
 			<div class="form-group form-inline">
 				<label for="m_email" class="col-sm-3 control-label ">이메일주소</label>
 				<div class="col-sm-7" style="padding: 0;">
 					<input type="text" id="m_email"name="m_email" class="form-control"	style="width: 285.83px;"/>
+						<div id="idChk"></div>
 				</div>
-				<button type="button" id="check">중복체크</button>
+				<button type="button" id="check" style="height: 33px; color: white; background-color: #009994;">중복검사</button>
 			</div>
+		
+			
 			
 			
 							
 			<div class="form-group">
 				<label for="m_pw" class="col-sm-3 control-label">패스워드</label>
 				<div class="col-sm-7" style="padding: 0;">
-					<input type="text" id="m_pw" name="m_pw" class="form-control"/>
+					<input type="password" id="m_pw" name="m_pw" class="form-control"/>
+						<div id="pwChk"></div>
 				</div>
 			</div>
+		
 			<div class="form-group">
 				<label for="m_nick" class="col-sm-3 control-label">nick</label>
 				<div class="col-sm-7" style="padding: 0;">
 					<input type="text" id="m_nick" name="m_nick" class="form-control" />
+						<div id="nickChk"></div>
 				</div>
 			</div>
 

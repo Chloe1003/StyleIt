@@ -72,8 +72,11 @@
 		WHERE s.s_no= #{s_no }	
 	</select>
 	
-	<select id="selectProductByStyling" parameterType="int" resultType="web.dto.Product">
-		SELECT s.s_no, s.p_no, p.p_name, p.p_price, b.pb_name, f.fu_storedname FROM stylingproduct s
+	<select id="selectProductByStyling" parameterType="HashMap" resultType="web.dto.Product">
+		SELECT s.s_no, s.p_no, p.p_name, p.p_price, b.pb_name, f.fu_storedname,
+        		( select count(*) from productlike l where s.p_no = l.p_no ) cntplike,
+    			( select count(*) from productlike l where s.p_no = l.p_no and m_no = #{m_no }) plikecheck
+        FROM stylingproduct s
   		JOIN product p
   		ON s.p_no = p.p_no 
         JOIN fileupload f
@@ -82,6 +85,7 @@
         ON p.pb_no = b.pb_no
   		WHERE s.s_no = #{s_no }
   	</select>
+
   	
   	<select id="selectProductCategory" resultType="web.dto.ProductCategory">
   		select * from productcategory
@@ -118,4 +122,20 @@
   		values(styling_seq.nextval, #{m_no}, #{s_name}, #{s_content}, #{no}, #{st_no}, sysdate)
   	</insert>
   	
+
+
+
+	<select id="selectProductByStylingNoLogin" parameterType="int" resultType="web.dto.Product">
+		SELECT s.s_no, s.p_no, p.p_name, p.p_price, b.pb_name, f.fu_storedname, 
+               ( select count(*) from productlike l where s.p_no = l.p_no ) cntplike
+        FROM stylingproduct s
+  		JOIN product p
+  		ON s.p_no = p.p_no 
+        JOIN fileupload f
+        ON p.fu_no = f.fu_no
+        JOIN productbrand b
+        ON p.pb_no = b.pb_no
+  		WHERE s.s_no = #{s_no }	
+	</select>
+
 </mapper>

@@ -25,7 +25,10 @@ import org.springframework.web.servlet.ModelAndView;
 import web.dto.FileUpload;
 import web.dto.Member;
 import web.dto.Product;
+
 import web.dto.ProductCategory;
+
+
 import web.dto.Styling;
 import web.dto.StylingLike;
 import web.dto.StylingTag;
@@ -261,9 +264,11 @@ public class StylingController {
 			int make = s.getM_no();
 			Member maker = mServ.getMemberByMno(make);			
 			
+			List<Product> pList = sServ.getProductByStyling(map);
+
 			model.addAttribute("styling", s);	
 			model.addAttribute("maker", maker);
-			model.addAttribute("product", sServ.getProductByStyling(s_no));
+			model.addAttribute("product", pList);
 			
 		} else { // 로그인 안되어 있을 때
 			logger.info("login false");
@@ -274,7 +279,7 @@ public class StylingController {
 			
 			model.addAttribute("styling", s);
 			model.addAttribute("maker", maker);
-			model.addAttribute("product", sServ.getProductByStyling(s_no));
+			model.addAttribute("product", sServ.getProductByStylingNoLogin(s_no));
 
 		}
 

@@ -6,15 +6,12 @@
 
 .frame{
 /* margin: 50px 0; */
-
 	height: 680px;
     width: 100%;
     display: flex;
     justify-content: space-around;
     padding: 20px;
     background-color: #fff;
-
-
 }
 
 .img-wrapper{
@@ -90,10 +87,10 @@ margin-bottom: 20px;
   cursor: pointer;
 }
 
-.like.red {
+.like.red, .plike.red {
 	background-image: url(/resources/image/styling/redheart.png)
 }
-.like.empty {
+.like.empty, .plike.empty {
 	background-image: url(/resources/image/styling/emptyheart.png)
 }
 .comment {
@@ -240,6 +237,25 @@ object-fit: contain;
 /*   transform:scale(1); */
 }
 
+.plike{
+  position:absolute;
+  top:20px;
+  right:20px;
+  width:22px;
+  height:22px;
+  z-index:999;
+  cursor:pointer;
+  background-size: contain;
+}
+
+.plikecnt{
+  position:absolute;
+  top:20px;
+  right:40px;
+  width:22px;
+  height:22px;
+  z-index:999;
+}
 
 </style> 
     
@@ -292,14 +308,14 @@ object-fit: contain;
 		<div class="product-img">
 			<img src="/upload/${p.fu_storedname }" alt="product">
 			
-<%-- 			<div class="likecnt" id="likecnt">${p.cntplike }</div> --%>
+			<div class="plikecnt" id="plikecnt">${p.cntplike }</div>
 			
-<%-- 			<c:if test="${p.plikecheck eq 0 }"> --%>
-<!-- 				<div class="like empty"></div> -->
-<%-- 			</c:if> --%>
-<%-- 			<c:if test="${p.plikecheck eq 1 }"> --%>
-<!-- 				<div class="like red"></div> -->
-<%-- 			</c:if>			 --%>
+			<c:if test="${p.plikecheck eq 0 }">
+				<div class="plike empty"></div>
+			</c:if>
+			<c:if test="${p.plikecheck eq 1 }">
+				<div class="plike red"></div>
+			</c:if>			
 			
 			<div class="darkness"></div>
      		<div class="product-info"><div style="font-size:1.1em; color:#181818;">KRW ${p.p_price }</div>
@@ -324,13 +340,18 @@ $(document.body).css("background-color", "#eff6f6");
 $(document.body).find(".navbar").css("background-color", "#ffffff");
 
 function productView(p_no){
-	location.href="/product/view?p_no="+p_no;
+	location.href="/shop/view?p_no="+p_no;
 }
 
 $(document).ready(function(){
+	var login = false;
 	
-	$(".like").click(function(){
-		
+	$(".like").click(function(){		
+	if(${login ne true}){
+//	 		console.log("비로그인");
+			showlogin();
+			
+	}	else {		
 		
 	var s_no = ${styling.s_no }
 	console.log("s_no: "+s_no);
@@ -361,13 +382,49 @@ $(document).ready(function(){
 		}			
 	});
 	 
+	}
     //jQuery 이벤트의 경우,
     //return false는 event.stopPropagation()과 event.preventDefault() 를
     //모두 수행한 것과 같은 결과를 보인다.
     return false;
-    
-	
 	});
+	
+	$(".plike").click(function(){
+		
+		if(${login ne true}){
+//	 		console.log("비로그인");
+			showlogin();
+		}	else {	
+			
+		var p_no = $(this).parent().parent().attr("data-pno");
+		console.log(p_no);
+		
+		$.ajax({
+			type : "get",
+			url : "/shop/like",
+			data : {"p_no": p_no },
+			dataType : "json",
+			success : function(res){
+				console.log("성공");
+				
+//	 			console.log($("[data-sno='"+s_no+"']").find(".likecnt"))
+				$("[data-pno='"+p_no+"']").find(".plikecnt").html(res.cnt);				
+				$like = $("[data-pno='"+p_no+"']").find(".plike");
+				if($like.hasClass("red")) {
+					$like.removeClass("red");
+					$like.addClass("empty");
+				} else {
+					$like.addClass("red");
+					$like.removeClass("empty");
+				}				
+			},
+			error : function(e){
+				console.log("실패");
+			}			
+		});
+		}
+	    return false;
+		});	
 		
 	
 });	

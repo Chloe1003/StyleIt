@@ -100,10 +100,11 @@ object-fit: contain;
 .like.empty {
 	background-image: url(/resources/image/styling/emptyheart.png)
 }
+
 </style>
 
 
-<div class="frame">
+<div class="frame" id="frame">
 <c:forEach items="${productList }" var="p" begin="0" end="${productList.size()-1 }">
 <div id="block">
 	<div class="img-wrapper img" onclick="productView(${p.p_no })" data-pno="${p.p_no }">
@@ -125,6 +126,8 @@ object-fit: contain;
 </div>
 </c:forEach>
 </div>
+<br><br>
+
 
 <script type="text/javascript">
 $(document.body).css("background-color", "#eff6f6");
@@ -139,7 +142,14 @@ $(document).ready(function(){
 	
 	$(".like").click(function(){
 		
+	var login = false;	
+	
+	if(${login ne true}){
+// 		console.log("비로그인");
+		showlogin();
 		
+	}	else {	
+	
 	var p_no = $(this).parent().attr("data-pno");
 	
 	$.ajax({
@@ -168,6 +178,8 @@ $(document).ready(function(){
 		}			
 	});
 	 
+	}
+	
     return false;
     
 	
@@ -181,4 +193,36 @@ function comment(s_no){
 	
 }
 
+var page = 2;
+
+$(window).scroll(function() {
+    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+      console.log("스크롤 발생");
+      console.log(page);
+      getList(page);
+      page++
+    }
+});
+function getList(page){
+	
+  	$.ajax({
+		type : "get",
+		url : "/shop/list",
+		data : {"curPage": page },
+		dataType : "html",
+		success : function(res){
+			console.log("스크롤 로딩 성공");			
+			$("#page").append(res);
+			
+		},
+		error : function(e){
+			console.log("실패");
+		}			
+	});
+      
+}      
+
+
+
+</script>
 </script> 

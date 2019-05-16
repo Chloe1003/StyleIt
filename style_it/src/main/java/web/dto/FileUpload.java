@@ -8,22 +8,22 @@ public class FileUpload {
 //	----- 기존 테이블 컬럼 -------------
 
 	private int fu_no;
-	private String fu_storedname;
+	private String fu_storedName;
 	private Date fu_date;
 	private int fut_no;
-
-//	-------------------------------
+	
+	
 	public int getFu_no() {
 		return fu_no;
 	}
 	public void setFu_no(int fu_no) {
 		this.fu_no = fu_no;
 	}
-	public String getFu_storedname() {
-		return fu_storedname;
+	public String getFu_storedName() {
+		return fu_storedName;
 	}
-	public void setFu_storedname(String fu_storedname) {
-		this.fu_storedname = fu_storedname;
+	public void setFu_storedName(String fu_storedName) {
+		this.fu_storedName = fu_storedName;
 	}
 	public Date getFu_date() {
 		return fu_date;
@@ -39,9 +39,10 @@ public class FileUpload {
 	}
 	@Override
 	public String toString() {
-		return "FileUpload [fu_no=" + fu_no + ", fu_storedname=" + fu_storedname + ", fu_date=" + fu_date + ", fut_no="
+		return "FileUpload [fu_no=" + fu_no + ", fu_storedName=" + fu_storedName + ", fu_date=" + fu_date + ", fut_no="
 				+ fut_no + "]";
 	}
+
 	
 	
 	
