@@ -117,7 +117,6 @@ object-fit: contain;
   cursor:pointer;
   background-size: contain;
 }
-
 .plikecnt{
   position:absolute;
   top:20px;
@@ -125,6 +124,12 @@ object-fit: contain;
   width:22px;
   height:22px;
   z-index:999;
+}
+.plike.red {
+	background-image: url(/resources/image/styling/redheart.png)
+}
+.plike.empty {
+	background-image: url(/resources/image/styling/emptyheart.png)
 }
 </style>
 
@@ -160,3 +165,50 @@ object-fit: contain;
 	</c:if>
 	</div>
 </div>
+<br><br><br><br>
+
+<script type="text/javascript">
+function productView(p_no){
+	location.href="/shop/view?p_no="+p_no;
+}
+
+$(document).ready(function(){
+	
+	$(".plike").click(function(){
+		
+	var p_no = $(this).parent().parent().attr("data-pno");
+	
+	$.ajax({
+		type : "get",
+		url : "/shop/like",
+		data : {"p_no": p_no },
+		dataType : "json",
+		success : function(res){
+			console.log("성공");
+			
+// 			console.log($("[data-sno='"+s_no+"']").find(".likecnt"))
+			$("[data-pno='"+p_no+"']").find(".plikecnt").html(res.cnt);
+			
+			$like = $("[data-pno='"+p_no+"']").find(".plike");
+			if($like.hasClass("red")) {
+				$like.removeClass("red");
+				$like.addClass("empty");
+			} else {
+				$like.addClass("red");
+				$like.removeClass("empty");
+			}
+			
+		},
+		error : function(e){
+			console.log("실패");
+		}			
+	});
+	
+    return false;
+	});
+	
+		
+	
+});	
+
+</script>

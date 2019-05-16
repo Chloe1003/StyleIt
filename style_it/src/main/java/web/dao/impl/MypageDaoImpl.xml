@@ -122,25 +122,17 @@
 			        p.p_no, p.p_price, p.p_name, f.fu_storedname, b.pb_name,
 			        (select count(*) from productlike l where p.p_no = l.p_no) cntplike,
 			        (select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck,
-			        <foreach collection="po_no" open="0.8*(CASE WHEN" close="THEN 1 ELSE 0 END)" item="p">
-				        <trim prefixOverrides="OR">
-				        	OR p.po_no= #{p } 
-				        </trim>
+			        <foreach collection="po_no" open="0.8*(CASE WHEN p.po_no= 0" close="THEN 1 ELSE 0 END)" item="p">
+				        OR p.po_no= #{p } 
 			        </foreach>
-			        <foreach collection="pb_no" open="+ 0.2*(CASE WHEN" close="THEN 1 ELSE 0 END)" item="p">
-			        	<trim prefixOverrides="OR">
-			        		OR p.pb_no= #{p }
-			        	</trim>
+			        <foreach collection="pb_no" open="+ 0.2*(CASE WHEN p.pb_no= 0" close="THEN 1 ELSE 0 END)" item="p">
+			        	OR p.pb_no= #{p }
 			        </foreach>
-			        <foreach collection="ps_no" open="+ 0.5*(CASE WHEN" close="THEN 1 ELSE 0 END)" item="p">
-			        	<trim prefixOverrides="OR">
-			        		OR p.ps_no= #{p }
-			        	</trim>
+			        <foreach collection="ps_no" open="+ 0.5*(CASE WHEN p.ps_no= 0" close="THEN 1 ELSE 0 END)" item="p">
+			        	OR p.ps_no= #{p }
 			        </foreach>
-			        <foreach collection="pca_no" open="+ 0.9*(CASE WHEN" close="THEN 1 ELSE 0 END)" item="p">
-			        	<trim prefixOverrides="OR">
-			        		OR p.pca_no= #{p }
-			        	</trim>			        	
+			        <foreach collection="pca_no" open="+ 0.9*(CASE WHEN p.pca_no= 0" close="THEN 1 ELSE 0 END)" item="p">
+			        	OR p.pca_no= #{p }
 			        </foreach>
 			        + 0.8*(CASE WHEN p.p_price BETWEEN #{p_lowprice } AND #{p_highprice } THEN 1 ELSE 0 END)
 			        AS score
@@ -151,26 +143,18 @@
 		        ON p.pb_no = b.pb_no
 		        <if test="p_gender==1">
 			        <foreach collection="pco_no" open="WHERE p.p_gender= 'f'" item="p">
-			        	<trim prefixOverrides="AND">
-			        		AND p.pco_no != #{p }
-			        	</trim>			        	
+			        	AND p.pco_no != #{p }
 			        </foreach>
 			        <foreach collection="pp_no" item="p">
-			        	<trim prefixOverrides="AND">
-			        		AND p.pp_no != #{p }
-			        	</trim>			        	
+			        	AND p.pp_no != #{p }
 			        </foreach>			        
 		        </if>
 		        <if test="p_gender==2">
 			        <foreach collection="pco_no" open="WHERE p.p_gender= 'm'" item="p">
-			        	<trim prefixOverrides="AND">
-			        		AND p.pco_no != #{p }
-			        	</trim>			        	
+			        	AND p.pco_no != #{p }
 			        </foreach>
 			        <foreach collection="pp_no" item="p">
-			        	<trim prefixOverrides="AND">
-			        		AND p.pp_no != #{p }
-			        	</trim>			        	
+			        	AND p.pp_no != #{p }
 			        </foreach>	
 		        </if>
 			) 
