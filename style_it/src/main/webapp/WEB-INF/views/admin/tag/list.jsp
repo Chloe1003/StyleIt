@@ -142,7 +142,7 @@ th, td {
 					</div>
 					<!-- 태그 이미지 추가 -->
 					<div class="form-group">
-						<label>첨부파일 : <input type="file" name="file" id="file" /></label>
+						<label>첨부파일 : <input type="file" name="file" id="file" accept='image/jpeg,image/gif,image/png' /></label>
 					</div> 
 					<!-- 확인  -->
 					<div class="form-group">

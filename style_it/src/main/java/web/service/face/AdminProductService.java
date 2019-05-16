@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import web.dto.Product;
+import web.dto.ProductCategory;
 import web.util.Paging;
 
 public interface AdminProductService{
@@ -26,16 +27,16 @@ public interface AdminProductService{
 	public List<HashMap> getSearchedList(HashMap<String, Object> map);
 	
 	// 제품 상세 정보 반환
-	public Product getProduct(int p_no);
+	public HashMap<String, Object> getProduct(Product product);
 	
 	// 제품 추가
-	public void addProduct(Product p);
+	public void addProduct(HashMap<String, Object> map);
 	
 	// 제품 정보 수정
-	public void updateProduct(Product p);
+	public void updateProduct(HashMap<String, Object> map);
 	
 	// 제품 삭제
-	public void deleteProduct(int p_no);
+	public void deleteProduct(int[] p_no);
 	
 	// 페이징 처리된 선택 제품 속성 리스트 반환
 	public List getProductAttributeList(HashMap<String, Object> map);
@@ -56,10 +57,21 @@ public interface AdminProductService{
 	public int cntProductByProductAttribute(HashMap<String, String> map);
 	
 	// 검색된 제품 수 반환
-	public int getSearchCount(String word);
+	public int getSearchCount(HashMap<String, Object> map);
 	
 	// 제품 카테고리 검색
-//	public List<HashMap> getpcaList(HashMap<String, String> map);
+	public List<HashMap> getpcaList();
+	
+	// 제품 브랜드 검색
+	public List<HashMap> getpbList();
+	
+	// 제품 색 리스트
+	public List<HashMap> getpcList();
+	
+	//제품 태그 리스트
+	public List<HashMap> getpoList();
+	public List<HashMap> getppList();
+	public List<HashMap> getpsList();
 
 }
 	
