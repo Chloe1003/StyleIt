@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import web.dto.FileUpload;
 import web.dto.Member;
@@ -27,9 +28,11 @@ import web.dto.Product;
 import web.dto.ProductCategory;
 import web.dto.Styling;
 import web.dto.StylingLike;
+import web.dto.StylingTag;
 import web.service.face.MemberService;
 import web.service.face.StylingService;
 import web.util.Paging;
+import web.util.StylingPaging;
 
 @Controller
 public class StylingController {
@@ -41,42 +44,104 @@ public class StylingController {
 	
 	//스타일링 작성 페이지
 	@RequestMapping(value="/styling/create", method=RequestMethod.GET)
-	public void styling(Model model) {
-		logger.info("CREATE 페이지");
-//		HashMap<String, Object> map = sServ.getProductCategory();
-		List<ProductCategory> pc = sServ.getProductCategory();
-		logger.info("MAP  :"+ pc);
-		model.addAttribute("list", pc);
+	public String styling(Model model, HttpSession session,@RequestParam HashMap<String, Integer> map) {
 		
+		boolean login = false;
+		
+		try {
+			
+			if(session.getAttribute("login") != null) {
+				login = (boolean) session.getAttribute("login");
+			}
+			
+		} catch (Exception e) {
+			
+		}
+		
+		logger.info("login : "+login);
+		
+		
+		if (login==true) { // 로그인 되어 있을 때
+			
+			logger.info("login true");
+			
+			int m_no = (int) session.getAttribute("m_no");
+						
+			map.put("m_no", m_no);
+		
+			logger.info("CREATE 페이지");
+//			HashMap<String, Object> map = sServ.getProductCategory();
+			List<ProductCategory> pc = sServ.getProductCategory();
+			List<StylingTag> st = sServ.getStylingTag();
+			logger.info("MAP  :"+ pc +", ST : "+st);
+			model.addAttribute("list", pc);
+			model.addAttribute("stList", st);
+			
+		}  else {
+			
+			return "redirect:/main";
+		}
+		
+		return "styling/create";
 	}
 	
 	//스타일링 작성 AJAX
 	@RequestMapping(value="/styling/create/ajax", method=RequestMethod.GET)
-	public @ResponseBody List<HashMap> ajax(@RequestParam HashMap<String, Object> map,
-			@RequestParam(defaultValue="0") int curPage) {
+	public ModelAndView ajax(@RequestParam HashMap<String, Object> map,
+			@RequestParam(defaultValue="0") int curPage, ModelAndView mav) {
 		
 		logger.info("PRO  : "+map);
-		Paging paging;
+		StylingPaging paging;
 		
 		//총 게시글 수 얻기
 		int totalCount = sServ.getSearchCount(map);  
 		logger.info("총 수 : " + totalCount);
 			
 		//페이지 객체 생성
-		paging = new Paging(totalCount, curPage);
+		paging = new StylingPaging(totalCount, curPage, 9, 5);
 		logger.info("페이징 : "+ paging);
 		
-		//업로드된 파일 전체 조회
-		map.put("startNo", paging.getStartNo());
-		map.put("endNo", paging.getEndNo());
+		map.put("paging", paging);
 		
 		List<HashMap> pc = sServ.getProduct(map); 
 		logger.info("PC : "+pc);
 		
+		mav.addObject("pc", pc);
+		mav.addObject("paging", paging);
+
+		mav.setViewName("styling/create/ajax");
 		
-		return pc;
+		return mav;
 	}
 	
+	//스타일링 작성 AJAX
+//	@RequestMapping(value="/styling/create/ajax", method=RequestMethod.GET)
+//	public @ResponseBody List<HashMap> ajax(@RequestParam HashMap<String, Object> map,
+//			@RequestParam(defaultValue="0") int curPage) {
+//		
+//		logger.info("PRO  : "+map);
+//		StylingPaging paging;
+//		
+//		//총 게시글 수 얻기
+//		int totalCount = sServ.getSearchCount(map);  
+//		logger.info("총 수 : " + totalCount);
+//			
+//		//페이지 객체 생성
+//		paging = new StylingPaging(totalCount, curPage, 9, 5);
+//		logger.info("페이징 : "+ paging);
+//		
+//		//업로드된 파일 전체 조회
+////		map.put("startNo", paging.getStartNo());
+////		map.put("endNo", paging.getEndNo());
+//
+//		map.put("paging", paging);
+//		
+//		List<HashMap> pc = sServ.getProduct(map); 
+//		logger.info("PC : "+pc);
+//		
+//		
+//		return pc;
+//	}
 	// 스타일링 캔버스
 	@RequestMapping(value="/styling/canvas", method=RequestMethod.GET)
 	public void canvas() {
@@ -84,7 +149,7 @@ public class StylingController {
 	
 	// 스타일링 캔버스
 	@RequestMapping(value="/styling/canvas/ajax", method=RequestMethod.POST)
-	public @ResponseBody String canvas_ajax(MultipartFile data, FileUpload upFile, @RequestParam HashMap<String, Object> map) {
+	public @ResponseBody HashMap<String, Object> canvas_ajax(MultipartFile data, FileUpload upFile, @RequestParam HashMap<String, Object> map, HttpSession session) {
 			
 			logger.info("파일업로드");        
 			logger.info("ST : "+map);
@@ -114,17 +179,15 @@ public class StylingController {
 				e.printStackTrace();
 			}
 			
-			upFile.setFu_storedname(data.getOriginalFilename());
+			int m_no = (int) session.getAttribute("m_no");
 			
-			logger.info(upFile.toString());
+			map.put("stored_name", stored_name);
+			map.put("m_no", m_no);
+			logger.info("MAP  : " + map);
 			
-			map.put("stored_name", upFile.getFu_storedname());
+			sServ.stylingInsert(map);
 			
-			logger.info("ST : "+map);
-//			asts.stylingTagInsert(map);
-			
-			String a = "a";
-		return a;
+		return map;
 	}
 	
 	// 스타일링 태그 리스트 페이지

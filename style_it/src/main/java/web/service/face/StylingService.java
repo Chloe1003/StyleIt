@@ -58,6 +58,9 @@ public interface StylingService {
 	// 스타일링 제품 수
 	public int getSearchCount(HashMap<String, Object> map);
 	
+	// 스타일링 저장
+	public void stylingInsert(HashMap<String, Object> map);
+	
 	
 	
 	

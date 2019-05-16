@@ -112,4 +112,14 @@ public class StylingServiceImpl implements StylingService{
 	public int getSearchCount(HashMap<String, Object> map) {
 		return sDao.selectSearchCount(map);
 	}
+
+	@Override
+	public void stylingInsert(HashMap<String, Object> map) {
+		sDao.fileUploadInsert(map);
+		int no = sDao.fileUploadNo(map);
+		map.put("no", no);
+		logger.info("impe MAP : "+map);
+		
+		sDao.selectStylingInsert(map);
+	}
 }

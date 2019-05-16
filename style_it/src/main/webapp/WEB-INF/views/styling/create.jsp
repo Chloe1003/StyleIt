@@ -10,11 +10,16 @@
 <!-- UI형식으로 드래그 앤 드롭 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+
+
 <script type="text/javascript">
+
 function proc(result){
 	$("#product").html("");
-     
-	
+	    	
 	$.each(result, function (index, item) {
             //div에 출력  
 		$("#product").append('<div id="Clone'+index+'" style="background-size : 100% 100%; float:left; margin: 10px;'
@@ -33,23 +38,24 @@ function proc(result){
 	});
 }
 
-function filter(){
+function filter(curPage){
 	var data = $("#pca_category").val();
 	var search = $("#search").val()
 	console.log(data);
 	console.log(search);
 	
-	
+	if(!curPage)	curPage=0;
 		$.ajax ({
 		type: "get"
-			, url: "/styling/create/ajax?pca_no="+data
-			, data: { 
-	            "search" : search } //요청파라미터
-			, dataType: "json"
+			, url: "/styling/create/ajax?pca_no="+data+"&search="+search+"&curPage="+curPage
+			, data: { } //요청파라미터
+			, dataType: "html"
 			, success: function( res ){
 				console.log("성공");
-				console.log(res);
-				proc(res);
+				
+				$("#product").html(res);
+				
+// 				proc(res);
 			}
 			, error: function( e ) {
 				console.log("실패");
@@ -117,6 +123,9 @@ $(document).ready(function() {
 function SAVE() {   
 	console.log("ajax?")
 var s_name = $("#s_name").val();
+var s_content = $("#s_content").val();
+var st_no = $("#st_no").val();
+console.log("st_no : "+ st_no);
 var background = document.getElementById('createStyle').style.background;
 if(background == "") {
     document.getElementById('createStyle').style.background = "#fff"; 
@@ -134,16 +143,18 @@ html2canvas(document.getElementById('createStyle'), {
         	
         	$.ajax({
         	    type: 'POST'
-    			, url: "/styling/canvas/ajax?s_name="+s_name
+    			, url: "/styling/canvas/ajax?s_name="+s_name+"&s_content="+s_content+"&st_no="+st_no
         	    , data: fd
         	    , processData: false
         	    , contentType: false
         	    , dataType: "json"
 				, success: function( res ){
-					console.log("성공");
+					alert("저장되었습니다.");
+					location.href = "/main";
 				}
         		, error: function( e ) {
-        			console.log("실패");
+        			console.log(e)
+        			alert("실패되었습니다.");
         		}
         	});
         });
@@ -173,7 +184,7 @@ html2canvas(document.getElementById('createStyle'), {
 
 </style>
 
-<div class="contain" style="padding-bottom: 100px; padding-left: 100px; padding-right: 120px;">
+<div class="contain" style="padding-bottom: 120px; padding-left: 100px; padding-right: 120px;">
 <h3 align="center">스타일링 만들기</h3>  
 <hr>
 
@@ -181,8 +192,15 @@ html2canvas(document.getElementById('createStyle'), {
 	<div id="stylingContainer" style="display: flex; padding-bottom: 20px;">
 		<div style="border: 1px solid #ffffff; flex: 7;" >
 			<input type="text" id="s_name" name="s_name" placeholder="Title" style="width: 90%;"/>
+			<input type="text" id="s_content" name="s_content" placeholder="Description" style="width: 90%;"/>
+			<select id="st_no" name="st_no"> 
+				<option value="">태그 선택</option>
+				<c:forEach items="${stList }" var="s">	
+					<option value="${s.st_no }">${s.st_name }</option>
+				</c:forEach>
+			</select>
 			<div id="createStyle"></div> <br>
-			<button id="Reset" onclick="Reset()">초기화</button>  
+			<button id="Reset" onclick="Reset()">초기화</button> 
 		</div>
 		
 		<div style="border: 1px solid #ffffff; flex: 4;">
@@ -206,7 +224,8 @@ html2canvas(document.getElementById('createStyle'), {
 					제품선택
 					</div>
 				</div>
-				<div id="paging">
+				<div id="paging" style="visibility: hidden;">
+					<jsp:include page="./paging.jsp" />
 				</div>
 			</div>
 		</div>  

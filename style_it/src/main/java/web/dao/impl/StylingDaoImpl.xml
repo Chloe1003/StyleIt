@@ -8,9 +8,10 @@
 <!-- 매퍼 설정 -->  
 <mapper namespace="web.dao.face.StylingDao">
 	<select id="selectStylingTag" resultType="web.dto.StylingTag">
-		SELECT s.st_no, s.st_name, s.st_date, s.fu_no, f.fu_storedname FROM stylingtag s
+		SELECT s.st_no, s.st_name, s.st_date, s.fu_no, s.st_able, f.fu_storedname FROM stylingtag s
 		JOIN fileupload f
 		ON s.fu_no = f.fu_no
+		WHERE  st_able = 'y'
 	</select>
 
 	<select id="selectStylingList" parameterType="HashMap" resultType="web.dto.Styling">
@@ -92,7 +93,7 @@
   		select p.fu_no, f.fu_storedname from product p
 		inner join fileupload f on f.fu_no = p.fu_no
   		where pca_no=#{pca_no}
-  		) B	order by rnum) R where rnum between #{startNo} and #{endNo}
+  		) B	order by rnum) R where rnum between #{paging.startNo} and #{paging.endNo}
   	</select>
   	
   	<select id="selectSearchCount" resultType="int" parameterType="HashMap">
@@ -101,5 +102,20 @@
 		inner join fileupload f on f.fu_no = p.fu_no
 		where pca_no=#{pca_no})
   	</select>
-  
+  	
+  	<insert id="fileUploadInsert" parameterType="HashMap">
+  		insert into fileupload(fu_no, fu_storedname, fu_date, fut_no) 
+  		values(fileupload_seq.nextval, #{stored_name }, sysdate, 2)
+  	</insert>
+  	
+  	<select id="fileUploadNo" parameterType="HashMap" resultType="int">
+  		select fu_no from fileupload
+		where fu_storedname=#{stored_name}
+  	</select>
+  	
+  	<insert id="selectStylingInsert" parameterType="HashMap">
+  		insert into styling(s_no, m_no, s_name, s_content, fu_no, st_no, s_date)
+  		values(styling_seq.nextval, #{m_no}, #{s_name}, #{s_content}, #{no}, #{st_no}, sysdate)
+  	</insert>
+  	
 </mapper>

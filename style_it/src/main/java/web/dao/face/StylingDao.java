@@ -62,6 +62,14 @@ public interface StylingDao {
 	
 	// 스타일링 제품 수
 	public int selectSearchCount(HashMap<String, Object> map);
+	
+	// 스타일링 이미지 저장
+	public void fileUploadInsert(HashMap<String, Object> map);
+	
+	// 파일 번호 구하기
+	public int fileUploadNo(HashMap<String, Object> map);
+	
+	public void selectStylingInsert(HashMap<String, Object> map);
 
 	
 }
