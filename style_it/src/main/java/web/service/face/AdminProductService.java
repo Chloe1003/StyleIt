@@ -11,7 +11,7 @@ import web.util.Paging;
 public interface AdminProductService{
 	
 	// 페이징 처리된 제품 리스트 반환
-	public List<Product> getProductList(Paging paging);
+	public List<HashMap> getProductList(Paging paging);
 	
 	// 현재페이지 반환
 	public int getCurPage(HttpServletRequest req);
@@ -20,10 +20,10 @@ public interface AdminProductService{
 	public int getTotalCount();
 	
 	// 페이징 처리된 제품 카테고리, 브랜드 필터링 리스트 반환
-	public List<Product> getFilteredList(HashMap<String, Integer> map);
+	public List<HashMap> getFilteredList(HashMap<String, Integer> map);
 	
 	// 페이징 처리된 검색 제품 리스트 반환
-	public List<Product> getSearchedList(HashMap<String, Object> map);
+	public List<HashMap> getSearchedList(HashMap<String, Object> map);
 	
 	// 제품 상세 정보 반환
 	public Product getProduct(int p_no);
@@ -54,6 +54,12 @@ public interface AdminProductService{
 	
 	// 검색된 선택 제품 속성 갯수 반환
 	public int cntProductByProductAttribute(HashMap<String, String> map);
+	
+	// 검색된 제품 수 반환
+	public int getSearchCount(String word);
+	
+	// 제품 카테고리 검색
+//	public List<HashMap> getpcaList(HashMap<String, String> map);
 
 }
 	

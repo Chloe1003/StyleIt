@@ -18,26 +18,18 @@ public class AdminFaqServiceImpl implements AdminFaqService {
 	@Autowired AdminFaqDao fd;
 
 	@Override
-	public List<HashMap> getFaqList() {
-		return fd.selectAll();
-	}
-
-	@Override
-	public int getCurPage(HttpServletRequest req) {
-		// TODO Auto-generated method stub
-		return 0;
+	public List<HashMap> getPagingFaqList(Paging paging) {
+		return fd.selectPagingList(paging);
 	}
 
 	@Override
 	public int getTotalCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return fd.selectCntFaq();
 	}
 
 	@Override
-	public Faq view(int faq_no) {
-		// TODO Auto-generated method stub
-		return null;
+	public Faq fal(Faq faq) {
+		return fd.fal(faq);
 	}
 
 	@Override
@@ -47,15 +39,26 @@ public class AdminFaqServiceImpl implements AdminFaqService {
 
 	@Override
 	public void update(Faq faq) {
-		// TODO Auto-generated method stub
+		fd.update(faq);
 		
 	}
 
 	@Override
 	public void delete(Faq faq) {
-		// TODO Auto-generated method stub
+		fd.delete(faq);
 		
 	}
+
+	@Override
+	public List<HashMap> getSearchPagingList(HashMap<String, Object> map) {
+		return fd.selectSearchPagingList(map);
+	}
+
+	@Override
+	public int getSearchCount(String word) {
+		return fd.selectCntSearchFaq(word);
+	}
+
 
 	
 

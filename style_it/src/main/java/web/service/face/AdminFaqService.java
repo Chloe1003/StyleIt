@@ -11,16 +11,13 @@ import web.util.Paging;
 public interface AdminFaqService {
 	
 	// FAQ 전체 리스트
-	public List<HashMap> getFaqList();
-	
-	// 현재 페이지 얻기
-	public int getCurPage(HttpServletRequest req);
+	public List<HashMap> getPagingFaqList(Paging paging);
 	
 	// 총 게시물 수 얻기
 	public int getTotalCount();
 	
-	// 게시글 상세보기
-	public Faq view(int faq_no);
+	// 게시글 본문 찾기
+	public Faq fal(Faq faq);
 	
 	// 게시글 추가
 	public void insert(Faq faq);
@@ -31,4 +28,10 @@ public interface AdminFaqService {
 	// 게시글 삭제
 	public void delete(Faq faq);
 
+	// 검색 페이징 처리
+	public List<HashMap> getSearchPagingList(HashMap<String, Object> map);
+	
+	// 검색 게시물 수 얻기
+	public int getSearchCount(String word);
+	
 }

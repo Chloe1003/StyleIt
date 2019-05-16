@@ -16,48 +16,65 @@ function showAddTag(){
 	document.getElementById("addTag_display").style.display="block";
 	document.getElementById("bg").style.display="block";//배경 어둡게 하는 것
 }
-var filesize = 0;
-function sizeCheck(){
-	var size = document.getElementById("file").files[0].size;
-	
-	filesize = size;
-}
 
 $(document).ready(function(){
 	//태그 제목 미입력시 반환처리
 	$("#btnInsert").click(function(){
 		if(st_name.value=="") {
 			alert("태그를 입력해주세요");
+			console.log($("input[type='file']").val());
 			return false;
 		}
-		if(filesize == 0){
-			alert("파일을 넣어주세요");
+		if($("input[type='file']").val()==""){
+			alert("파일을 선택해주세요")
 			return false;
 		}
-	
 	});
+	
+	$("#btnInsert2").click(function(){
+		if(st_name.value=="") {
+			alert("태그를 입력해주세요");
+			return false;
+		}
+	});
+	
+	$("input:file[name='file']").change(function () {
+		var str = $(this).val();  
+		var fileName = str.split('\\').pop().toLowerCase();;
+		checkFileName(fileName);
+	});
+	
+	function checkFileName(str){
+		//1. 확장자명 체크
+		var ext =  str.split('.').pop().toLowerCase();
+		if($.inArray(ext, ['jpg', 'jpeg', 'bmp', 'gif','png']) == -1) {
+			alert(ext+'파일은 업로드 하실 수 없습니다.');
+			return false;
+		}else {
+		}
+		//2. 파일명에 특수문자 체크
+		var pattern =   /[\{\}\/?,;:|*~`!^\+<>@\#$%&\\\=\'\"]/gi;
+		
+		if(pattern.test(str) ){
+			//alert("파일명에 허용된 특수문자는 '-', '_', '(', ')', '[', ']', '.' 입니다.");
+			alert('파일명에 특수문자를 제거해주세요.');
+			return false;
+		}else {
+			alert("success");
+		}
+	}
 	
 	$(this).parents("form").submit();
 	
 	$(".tagUpdate").click(function() {
-		var title = $(this).parents("tr").children("td").eq(1).html();
 		var no = $(this).parents("tr").children("td").eq(0).html()
+		var title = $(this).parents("tr").children("td").eq(1).html();
 		var able = $(this).parents("tr").children("td").eq(3).html()
-		$("input[name='st_name']").val(title);
 		$("input[name='st_no']").val(no);
+		$("input[name='st_name']").val(title);
 		$("input[name='st_able'][value='"+able+"']").attr("checked", true);
 	});
 	
-	$(".tagDelete").click(function() {
-		var no = $(this).parents("tr").children("td").eq(0).html()
-		result = confirm('삭제 하시겠습니까');
-		if(result == true){
-			$(location).attr("href","/admin/tag/delete?st_no="+no);
-		}else{
-			return false;
-		}
-// 		$("input[name='st_no']").val(no);
-	});
 });
 
   
@@ -90,8 +107,6 @@ th, td {
 <div class="container">
 
 <div class="row row-offcanvas row-offcanvas-right">
-
-<%-- <jsp:include page="/WEB-INF/views/layout/admin_sidebar.jsp" /> --%>
 
 <div style="text-align: right; padding-bottom: 100px;" class="container">
 	<div id="stylingContainer" style="display: flex;">
@@ -170,7 +185,7 @@ th, td {
 					</div> 
 					<!-- 확인  -->
 					<div class="form-group">
-						<button id="btnInsert" class="btn btn-default" style="width: 285.83px; margin-left: 38px; background: #009994; color: white;">확인</button>
+						<button id="btnInsert2" class="btn btn-default" style="width: 285.83px; margin-left: 38px; background: #009994; color: white;">확인</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal" onclick='$("input[name=\"st_name\"]").val("")'>닫기</button>
 					</div>
 				</div>
@@ -197,17 +212,17 @@ th, td {
 	<td>${i.st_name }</td>
 	<td><fmt:formatDate value="${i.st_date }" pattern="yyyy-MM-dd"/></td>
 	<td>${i.st_able }</td>
-	<td><button class="tagUpdate" style="background-color: transparent; border-color: transparent;" data-target="#updateTag_display" data-toggle="modal" onclick="update()">수정</button> / 
-	<button class="tagDelete" style="background-color: transparent; border-color: transparent;" onclick="delete()">삭제</button></td>
+	<td><button class="tagUpdate" style="background-color: transparent; border-color: transparent;" data-target="#updateTag_display" data-toggle="modal" onclick="update()">수정</button>
 	</tr>
 	</c:forEach>
 	</tbody>
 
 	</table>
+	
+<jsp:include page="./paging.jsp" />
 
 </div>
 
-<%-- <jsp:include page="./paging.jsp" /> --%>
 
 </div>
 
