@@ -4,14 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!-- jQuery 2.2.4 -->
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
-
-<!-- 부트스트랩 3.3.2 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
 <script type="text/javascript">
 //숨겨둔 로그인창처리
 function showfaq(){
@@ -27,9 +19,6 @@ function show2(){
     //modal을 띄워준다.  
     $("#myModal").modal('show');
 
-
-
-출처: https://carami.tistory.com/61 [carami's story]
 }
 
 $(document).ready(function(){
@@ -43,7 +32,7 @@ $(document).ready(function(){
 		var row = $(this).parent().parent().parent();
 		var tr = row.children();
 		
-		var 
+		 
 	});
 	
 // 	$(this).parents("form").submit();

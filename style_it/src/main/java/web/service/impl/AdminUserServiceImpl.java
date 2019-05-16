@@ -53,4 +53,9 @@ public class AdminUserServiceImpl implements AdminUserService {
 		return uDao.memberCnt();
 	}
 
+	@Override
+	public void disableMember(int m_no) {
+		uDao.disableMember(m_no);
+	}
+
 }

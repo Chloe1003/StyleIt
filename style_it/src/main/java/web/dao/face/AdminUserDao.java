@@ -12,7 +12,7 @@ public interface AdminUserDao {
 	public Member userUpdate();
 	
 	//회원관리 비활성화
-	public Member userDisable();
+	public void disableMember(int m_no);
 
 	
 	// 총 멤버 수 반환

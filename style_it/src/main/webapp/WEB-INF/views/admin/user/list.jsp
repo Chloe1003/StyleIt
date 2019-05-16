@@ -19,7 +19,7 @@ text-align:center;
 		   	<button class="btn btn-default" type="button" id="search">검색</button>
 		   </span>
 	</div><!-- /input-group --><br><hr>
-   <form action="/admin/user/listDelete" id="listDelete" method="post">     
+   <form action="/admin/user/disable" id="listDelete" method="post">     
 	   <table class="table table-hover table-condensed">
 	   <thead>
 		   <tr>
@@ -41,7 +41,7 @@ text-align:center;
 			   <td><fmt:formatDate value="${m.m_date }" pattern="yyyy-MM-dd"/></td>
 			   <td><c:if test="${m.m_valid eq 'y'}">활성</c:if>
 			   <c:if test="${m.m_valid eq 'n'}">비활성</c:if></td>
-			   <td><button class="memUpdate" style="background-color: transparent; border-color: transparent;" data-target="#updateTag_display" data-toggle="modal" onclick="update()"> 정보 수정</button></td>
+			   <td><button style="background-color: transparent; border-color: transparent;" data-target="#updateTag_display" data-toggle="modal">정보 수정</button></td>
 		   </tr>
 	   </c:forEach>
 	   </c:if>
@@ -61,7 +61,22 @@ text-align:center;
 </div>
 <br><br><br>
 
-
+<div id="#updateTag_display">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="member_title">
+					<p style="padding: 20px 0px 0px 20px; font-size: 19px; font-weight: bold;">회원 정보 수정</p>
+					<button type="reset" class="close" id="faqCancel" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="member_form">
+				<form>
+				</form>
+				</div>
+			</div>
+		</div>
+</div>
 
 
 
@@ -100,6 +115,7 @@ $(document).ready(function(){
 			
 
 		});
+		
 // 		function checkedListSubmit(){
 // 			var checkedList = []; // 배열 초기화
 // 			$("input[name='selectedList']:checked").each(function(i){
@@ -107,15 +123,16 @@ $(document).ready(function(){
 // 			});
 			
 // 			console.log(checkedList);
-// 			console.log();
 			
 // 			$.ajax({
 // 				type : "post",
-// 				url : "/board/listDelete",
+// 				url : "/admin/user/disable",
 // 				data : {"checkedList": JSON.stringify(checkedList) },
 // 				dataType : "text"
 // 			});
 // 		};
+		
+		
 });
 
 </script>
