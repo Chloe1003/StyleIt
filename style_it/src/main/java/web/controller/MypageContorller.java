@@ -265,7 +265,7 @@ public class MypageContorller {
 		mypageService.saveMemberQuiz(mq);
 		
 		
-		return "redirect:/mypage/quiz";
+		return "redirect:/mypage/recommend";
 	}
 	
 	

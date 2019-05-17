@@ -24,11 +24,10 @@ text-align:center;
 	   <thead>
 		   <tr>
 			   <th width="5%"><input type="checkbox" id="checkAll"></th>
-			   <th width="15%">닉네임</th>
-			   <th width="30%">이메일</th>
+			   <th width="20%">닉네임</th>
+			   <th width="40%">이메일</th>
 			   <th width="20%">가입일</th>
-			   <th width="10%">활성여부</th>
-			   <th width="20%">관리</th>
+			   <th width="15%">관리</th>
 		   </tr>
 	   </thead>
 	   <tbody>
@@ -39,9 +38,7 @@ text-align:center;
 			   <td>${m.m_nick }</td>
 			   <td>${m.m_email }</td>
 			   <td><fmt:formatDate value="${m.m_date }" pattern="yyyy-MM-dd"/></td>
-			   <td><c:if test="${m.m_valid eq 'y'}">활성</c:if>
-			   <c:if test="${m.m_valid eq 'n'}">비활성</c:if></td>
-			   <td><button style="background-color: transparent; border-color: transparent;" data-target="#updateTag_display" data-toggle="modal">정보 수정</button></td>
+			   <td><div class="update_button" onclick="member_update(${m.m_no })" style="cursor:pointer;">정보 수정</div></td>
 		   </tr>
 	   </c:forEach>
 	   </c:if>
@@ -61,18 +58,48 @@ text-align:center;
 </div>
 <br><br><br>
 
-<div id="#updateTag_display">
+<div class="modal fade" id="updateMember" tabindex="-1" role="dialog" aria-labelledby="updateMember" aria-hidden="true" style="padding-top: 10%;">
 		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="member_title">
-					<p style="padding: 20px 0px 0px 20px; font-size: 19px; font-weight: bold;">회원 정보 수정</p>
-					<button type="reset" class="close" id="faqCancel" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
+			<div class="modal-content" style="width: 500px;">
+				<div class="modal_header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+					 <h4 class="modal-title" id="myModalLabel" style="margin: 20px;text-align: center;">회원 정보 수정</h4>
 				</div>
-				<div class="member_form">
-				<form>
-				</form>
+				<div class="modal_body" style="padding: 0 7%;">
+				
+		    		<form class="form-horizontal" id="profileform" action="/admin/user/updateprofile" method="post">
+					<div class="row">
+		 
+					  <div class="form-group">
+					  	<label for="email" class="col-sm-3 control-label">이메일</label>
+					  		<div class="col-sm-8">
+						      <input type="text" class="form-control" name="m_email" readOnly>
+						   </div>
+						</div>
+					  <div class="form-group">
+					    <label for="nick" class="col-sm-3 control-label">닉네임</label>
+					    <div class="col-sm-8">
+					    	<input type="text" class="form-control" name="m_nick" id="m_nickUpdate">
+					    	<div id="nickUpdateChk"></div>
+					    </div>
+					  </div>
+				
+					  <div class="form-group">
+					    <label for="pw" class="col-sm-3 control-label">비밀번호</label>
+					    <div class="col-sm-8">
+					    	<input type="text" class="form-control" name="m_pw" id="m_pwUpdate">
+					    	<div id="pwUpdateChk"></div>
+					    </div>
+					  </div>
+					  
+					  <input type="hidden" name="m_no" value=>
+				    	  
+					  	<button type="button" id="changeProfile" class="btn btn-default" style="margin: 0 40% 20px 40%;">수정하기</button>
+					</div> 	 
+					</form>
+							
+				
+				
 				</div>
 			</div>
 		</div>
@@ -116,23 +143,83 @@ $(document).ready(function(){
 
 		});
 		
-// 		function checkedListSubmit(){
-// 			var checkedList = []; // 배열 초기화
-// 			$("input[name='selectedList']:checked").each(function(i){
-// 				checkedList.push($(this).val()); // 체크된 값 뽑아서 배열에 넣음
-// 			});
-			
-// 			console.log(checkedList);
-			
-// 			$.ajax({
-// 				type : "post",
-// 				url : "/admin/user/disable",
-// 				data : {"checkedList": JSON.stringify(checkedList) },
-// 				dataType : "text"
-// 			});
-// 		};
+// 		$(".update_button").click(function(){
+// 			$(this).
+// 			$("#updateMember").modal();
+// 		});
+
+		// 비밀번호 정규식
+	var regex = /^[A-Za-z0-9]{6,12}$/;
+	
+	$("#m_pwUpdate").blur(function() {
 		
+		console.log($("#m_pwUpdate").val());
+		console.log(regex.test($("#m_pwUpdate").val()));
+		
+			if(!regex.test($("#m_pwUpdate").val())) {
+				$("#pwUpdateChk").html("숫자와 문자 포함 형태의 6~12자리");
+				$("#pwUpdateChk").css("color","red");
+				$("#pwUpdateChk").css("font-size","9px");
+			}
+			if(regex.test($("#m_pwUpdate").val())) {
+				$("#pwUpdateChk").html("사용 가능한 비밀번호 입니다");
+				$("#pwUpdateChk").css("color","blue");
+				$("#pwUpdateChk").css("font-size","9px");
+
+			}
+		});
+	
+	$("#changeProfile").click(function(){
+
+		if($("#m_pwUpdate").val()=="") {
+			$("#pwUpdateChk").html("비밀번호를 입력해 주세요");
+			$("#pwUpdateChk").css("color","red");
+			$("#pwUpdateChk").css("font-size","9px");
+
+			$("#m_pwUpdate").focus();
+            return false;
+	   
+         } else if($("#m_nickUpdate").val()=="") {
+             $("#nickUpdateChk").html("닉네임을 입력해 주세요");
+ 			 $("#nickUpdateChk").css("color","red");
+			 $("#pwUpdateChk").css("font-size","9px");
+
+			 $("#m_nickUpdate").focus();
+             return false;
+         } else {
+        	 $("#profileform").submit();
+         }
+		
+		
+	});
+
 		
 });
+
+
+function member_update(m_no){
+	console.log("수정요청");
+	
+	$.ajax({
+		type : "get",
+		url : "/admin/user/profile",
+		data : {"m_no": m_no },
+		dataType : "json",
+		success : function(res){
+			
+			$("input[type='hidden'][name='m_no']").val(res.m_no);
+			$("input[type='text'][name='m_email']").val(res.m_email);
+			$("input[type='text'][name='m_nick']").attr('placeholder', res.m_nick);
+			$("input[type='text'][name='m_email']").attr('placeholder', res.m_email);
+			$("input[type='text'][name='m_pw']").attr('placeholder', res.m_pw);
+			
+		},
+		error : function(e){
+			console.log("실패");
+		}			
+	});
+	
+	$("#updateMember").modal();
+}
 
 </script>
