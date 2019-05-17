@@ -282,7 +282,8 @@
 
 
 					<c:if test="${!empty login }">
-						<li><a href="#">MYPAGE</a></li>      
+						<li><a href="#">MYPAGE</a></li> 
+					</c:if>     
 					<c:if test="${login eq true }">
 						<li><a href="javascript:void(0);" onclick="mypage();">MYPAGE</a></li>
 						<li><a href="javascript:void(0);" onclick="logout();">LOGOUT</a></li>
