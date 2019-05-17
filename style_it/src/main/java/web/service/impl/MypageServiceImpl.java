@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import web.dao.face.MypageDao;
 
 import web.dto.FileUpload;
+import web.dto.Follow;
 import web.dto.Member;
 
 import web.dto.MemberQuiz;
@@ -100,15 +101,30 @@ public class MypageServiceImpl implements MypageService{
 	public int getCoLike(Member member) {
 		return mypageDao.getCoLike(member);
 	}
-	
-	
-	
-	
-	
+//	팔로우 리스트
 	@Override
-	public List getFollowList() {
-		return mypageDao.getFollowList();
+	public List<Member> getFollowList(int m_no) {
+		return mypageDao.getFollowList(m_no);
 	}
+//	팔로잉 리스트
+	@Override
+	public List<Member> getFollowingList(int m_no) {
+		return mypageDao.getFollowingList(m_no);
+	}
+//	내가 좋아요한 상품 리스트
+	@Override
+	public List<Product> getProLikeList(int m_no) {
+		return mypageDao.getProLikeList(m_no);
+	}
+//	유저가 좋아요한 상품 리스트
+	@Override
+	public List<Product> getMemProLikeList(int m_no) {
+		return mypageDao.getMemProLikeList(m_no);
+	}
+	
+	
+	
+	
 	
 	@Override
 	public List getFollowingList() {
@@ -272,6 +288,7 @@ public class MypageServiceImpl implements MypageService{
 		mypageDao.insertMemberQuizLprice(mq);
 		mypageDao.insertMemberQuizHprice(mq);
 	}
+
   
 	@Override
 	public MemberQuizSet transferToMemberQuizSet(List<MemberQuiz> answer) {

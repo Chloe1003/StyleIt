@@ -45,14 +45,11 @@ body {
 <!--         <a href=#><span class="text-muted">About</span></a> -->
 <!--         <a href=#><span class="text-muted">Terms</span></a> -->
 <!--       </div> -->
-<!--     </footer> -->
+<!--     </footer> -->	
+
 <h3>임시 session정보</h3>
-login : ${login }<br>
-email : ${m_email }<br>
-nick : ${m_nick }<br>
-m_no : ${m_no }<br>
-sessionID : <%=session.getId() %><br>
-<hr>
+	nick : ${m_nick }<br>
+	m_no : ${m_no }<br>
     
  
 	<footer class="footer">

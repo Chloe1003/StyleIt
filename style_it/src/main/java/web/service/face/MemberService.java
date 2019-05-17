@@ -1,16 +1,13 @@
 package web.service.face;
 
+import java.util.HashMap;
 import java.util.List;
 
+import web.dto.Follow;
 import web.dto.Member;
 
 public interface MemberService {
 
-		// 로그인 리스트 얻어오기
-		public List<Member> getLoginList();
-		
-		// 로그아웃 리스트 얻어오기
-		public List<Member> getLogoutList();
 		
 		// 맴버 가입
 		public void memberInsert(Member member);
@@ -18,32 +15,60 @@ public interface MemberService {
 		// 맴버 로그인
 		public boolean memberLogin(Member member);
 		
-		// 맴버 탈퇴 업데이트
-		public void memberUpdate(int m_no);
+		// 회원가입 체크용
+		public int checkjoin(Member member);
+
+		// 로그인 된 멤버 정보 가져오기
+		public Member getMember(Member member);
 		
-		// 맴버 정보 수정 업데이트
-		public void memberinfoUpdate(int m_no);
+		// m_no로 멤버 정보 가져오기
+		public Member getMemberByMno(int m_no);
+
+		// 팔로우 체크용
+		public boolean folCheck(Follow f);
+		
+		// 나를 팔로우 해준 사람을 팔로우 할때
+		public boolean folCheck_2(Follow f);
+		
+		// 멤퍼 페이지 팔로잉 리스트
+		public List<Member> getFollowingList(Member member);
+		
+		// 멤퍼페이지 팔로우 된 리스트
+		public List<Member> getFollowList(Member member);
 		
 		// 팔로우 추가
-		public void followInsert(int f_no);
+		public void followInsert(Follow f);
 		
 		// 팔로우 취소
-		public void followDelete(int f_no);
+		public void followDelete(Follow f);
+		
+		// 팔로워 추가
+		public void followerInsert(Follow f);
+		
+		// 팔로워 삭제
+		public void followerDelete(Follow f);
+		
 		
 		// 스타일링퀴즈 추가
 		public void stylingquizInsert(int qq_no);
-		
+				
 		// 스타일링퀴즈 업데이트
 		public void stylingquizUpdate(int qq_no);
 
-	public int checkjoin(Member member);
+		
 
-
-	// 로그인 된 멤버 정보 가져오기
-	public Member getMember(Member member);
 	
-	// m_no로 멤버 정보 가져오기
-	public Member getMemberByMno(int m_no);
+
+		
+
+		
+
+		
+
+		
+
+		
+						
 
 
 }

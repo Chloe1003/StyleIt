@@ -41,12 +41,79 @@
 
   
     <select id="selectMemberByMno" parameterType="int" resultType="web.dto.Member">
-    	SELECT m.m_no, m.m_email, m.m_nick, m.m_img, f.fu_storedname FROM member m
+    	SELECT m.m_no, m.m_email, m.m_nick, m.fu_no, f.fu_storedname FROM member m
     	JOIN fileupload f
-    	ON m.m_img = f.fu_no
+    	ON m.fu_no = f.fu_no
     	WHERE m_no = #{m_no }
     </select>
   
+  	<select id="folCheck" resultType="int" parameterType="web.dto.Follow">
+  		 
+  		 SELECT COUNT(*) FROM Follow f
+  		 WHERE followee_no =  #{followee_no }
+     	 and follower_no= #{follower_no }
+    	 
+  	
+  	</select>
+  	
+  	<select id="folCheck_2" resultType="int" parameterType="web.dto.Follow">
+  		 
+  		 SELECT COUNT(*) FROM Follow f
+  		 WHERE follower_no =  #{follower_no }
+     	 and followee_no= #{followee_no }
+    	 
+  	
+  	</select>
+  	
+  	<insert id="followInsert" parameterType="web.dto.Follow">
+  		
+  		INSERT INTO Follow ( f_no, follower_no, followee_no)
+  		VALUES ( follow_SEQ.nextval, #{follower_no }, #{followee_no } )
+  		
+  	</insert>
+  	
+  	<delete id="followDelete" parameterType="web.dto.Follow">
+  	
+  		DELETE Follow
+		WHERE follower_no = #{follower_no } AND followee_no = #{followee_no }	
+  	
+  	</delete>
+  	
+  	<insert id="followerInsert" parameterType="web.dto.Follow">
+  		
+  		INSERT INTO Follow ( f_no, follower_no, followee_no)
+  		VALUES ( follow_SEQ.nextval, #{follower_no }, #{followee_no } )
+  		
+  	</insert>
+  	
+  	<delete id="followerDelete" parameterType="web.dto.Follow">
+  	
+  		DELETE Follow
+		WHERE followee_no = #{followee_no } AND follower_no = #{follower_no }	
+  	
+  	</delete>
+  	
+  	<select id="getFollowingList" parameterType="web.dto.Member" resultType="web.dto.Member">
+  	
+  	    select f.follower_no, m.m_no, m.m_nick, fu.fu_no, fu.fu_storedname,f.followee_no ,
+        (SELECT COUNT(*) FROM follow WHERE followee_no=#{followee_no } and follower_no=f.follower_no) followcheck
+        from member m, Follow f, fileupload fu
+      where f.follower_no = m.m_no 
+      and m.fu_no= fu.fu_no
+      and f.followee_no= #{follower_no }
+  	
+  	</select>
+  	
+  	<select id="getFollowList" parameterType="web.dto.Member" resultType="web.dto.Member">
+  	
+  	   select f.follower_no, m.m_no, m.m_nick, fu.fu_no, fu.fu_storedname,f.followee_no ,
+        (SELECT COUNT(*) FROM follow WHERE followee_no=#{followee_no } and follower_no=f.followee_no) followcheck
+        from member m, Follow f, fileupload fu
+      where f.followee_no = m.m_no 
+      and m.fu_no= fu.fu_no
+      and f.follower_no= #{follower_no }
+  	
+  	</select>
 
   
   

@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import web.dto.FileUpload;
+import web.dto.Follow;
 import web.dto.Member;
 
 import web.dto.Product;
@@ -49,11 +50,16 @@ public interface MypageService {
 	public int getCoCollection(Member member);
 //	본인이 체크한 모든 좋아요 수 
 	public int getCoLike(Member member);
-	
-	
-	
 //	팔로우 리스트
-	public List getFollowList();
+	public List<Member> getFollowList(int m_no);
+//	팔로잉 리스트
+	public List<Member> getFollowingList(int m_no);
+//	내가 좋아요 한 상품 리스트
+	public List<Product> getProLikeList(int m_no);
+//	유저가 좋아요 한 상품리스트
+	public List<Product> getMemProLikeList(int m_no);
+	
+	
 //	팔로잉 리스트
 	public List getFollowingList();
 	
@@ -89,7 +95,6 @@ public interface MypageService {
 	public void updateCollection();
 //	컬렉션 삭제
 	public void deleteCollection();
-	
 
 //	추천받은 상품 리스트
 	public List<Product> getRecommendProduct(MemberQuizSet mq);
