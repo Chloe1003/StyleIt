@@ -86,7 +86,7 @@ public class AdminStylingTagController {
 		stored_name = file.getOriginalFilename();
 		
 		//파일 저장 경로
-		String path = context.getRealPath("upload");
+		String path = context.getRealPath("upload/image");
 		
 		//저장될 파일
 		File dest = new File(path, stored_name);

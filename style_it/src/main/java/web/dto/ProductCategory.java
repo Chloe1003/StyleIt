@@ -11,7 +11,6 @@ public class ProductCategory {
 	public void setPca_no(int pca_no) {
 		this.pca_no = pca_no;
 	}
-
 	public String getPca_category() {
 		return pca_category;
 	}
@@ -21,7 +20,10 @@ public class ProductCategory {
 	@Override
 	public String toString() {
 		return "ProductCategory [pca_no=" + pca_no + ", pca_category=" + pca_category + "]";
+
 	}
+	
+	
 	
 	
 

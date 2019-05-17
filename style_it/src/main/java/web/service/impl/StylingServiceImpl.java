@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import web.controller.AdminStylingTagController;
 import web.dao.face.StylingDao;
 import web.dto.Product;
+import web.dto.ProductCategory;
 import web.dto.Styling;
 import web.dto.StylingComment;
 import web.dto.StylingLike;
@@ -101,5 +102,30 @@ public class StylingServiceImpl implements StylingService{
 	@Override
 	public List<Product> getProductByStylingNoLogin(int s_no) {
 		return sDao.selectProductByStylingNoLogin(s_no);
+	}
+
+	@Override
+	public List<ProductCategory> getProductCategory() {
+		return sDao.selectProductCategory();
+	}
+
+	@Override
+	public List<HashMap> getProduct(HashMap<String, Object> map) {
+		return sDao.selectProduct(map);
+	}
+
+	@Override
+	public int getSearchCount(HashMap<String, Object> map) {
+		return sDao.selectSearchCount(map);
+	}
+
+	@Override
+	public void stylingInsert(HashMap<String, Object> map) {
+		sDao.fileUploadInsert(map);
+		int no = sDao.fileUploadNo(map);
+		map.put("no", no);
+		logger.info("impe MAP : "+map);
+		
+		sDao.selectStylingInsert(map);
 	}
 }
