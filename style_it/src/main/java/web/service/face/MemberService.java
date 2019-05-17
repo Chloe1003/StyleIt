@@ -1,5 +1,6 @@
 package web.service.face;
 
+import java.util.HashMap;
 import java.util.List;
 
 import web.dto.Follow;
@@ -26,13 +27,26 @@ public interface MemberService {
 		// 팔로우 체크용
 		public boolean folCheck(Follow f);
 		
+		// 나를 팔로우 해준 사람을 팔로우 할때
+		public boolean folCheck_2(Follow f);
+		
+		// 멤퍼 페이지 팔로잉 리스트
+		public List<Member> getFollowingList(Member member);
+		
+		// 멤퍼페이지 팔로우 된 리스트
+		public List<Member> getFollowList(Member member);
+		
 		// 팔로우 추가
 		public void followInsert(Follow f);
 		
 		// 팔로우 취소
 		public void followDelete(Follow f);
 		
+		// 팔로워 추가
+		public void followerInsert(Follow f);
 		
+		// 팔로워 삭제
+		public void followerDelete(Follow f);
 		
 		
 		// 스타일링퀴즈 추가
@@ -40,6 +54,16 @@ public interface MemberService {
 				
 		// 스타일링퀴즈 업데이트
 		public void stylingquizUpdate(int qq_no);
+
+		
+
+	
+
+		
+
+		
+
+		
 
 		
 

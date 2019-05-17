@@ -23,18 +23,21 @@ import org.springframework.web.multipart.MultipartFile;
 import web.dto.FileUpload;
 import web.dto.Follow;
 import web.dto.Member;
+import web.dto.Product;
+import web.service.face.MemberService;
 import web.service.face.MypageService;
 
 @Controller
 public class MypageContorller {
 	@Autowired MypageService mypageService;	
+	@Autowired MemberService memberService;
 	@Autowired ServletContext context;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MypageContorller.class);
 	
 //	마이페이지 이동
 	@RequestMapping("/mypage/mypage")
-	public void mypagego(Model model, Member member) {
+	public void mypagego(Model model, Member member, int m_no, Follow f) {
 		
 //		회원정보 뿌리기
 		model.addAttribute("mypage", mypageService.getUserInfo(member));
@@ -53,6 +56,11 @@ public class MypageContorller {
 //		본인이 체크한 모든 좋아요 숫자 뿌리기 -> 이건 문제있음 체크해야함
 		int countLike = mypageService.getCoLike(member);
 		model.addAttribute("countLike", countLike);
+		
+		List<Member> followList = mypageService.getFollowList(m_no);
+		
+		model.addAttribute("followList", followList);
+		System.out.println(followList);
 		
 	}
 //	현재 아이디 비밀번호 확인
@@ -140,24 +148,10 @@ public class MypageContorller {
 		return "redirect:/home";
 		
 	}
-//	팔로우 리스트 
-	@RequestMapping(value = "/mypage/followlist", method = RequestMethod.GET)
-	public String FollowList(Model model, int m_no, Member member) {
-		List<Member> followList = mypageService.getFollowList(m_no);
-		int countFollower = mypageService.getFollower(member);
-		
-		Map map = new HashMap();
-		map.put("followList", followList);
-		map.put("countFollower", countFollower);
-		model.addAllAttributes(map); 
-		
-		return "jsonView";
-	}
 //	팔로잉 리스트
 	@RequestMapping(value = "/mypage/followinglist", method = RequestMethod.GET )
-	public String FollowingList(Model model,  HttpSession session, Member member) {
+	public String FollowingList(Model model,  int m_no, Member member) {
 		
-		int m_no = (int) session.getAttribute("m_no");
 		List<Member> followingList = mypageService.getFollowingList(m_no);
 		int countFollowee = mypageService.getFollowee(member);
 		
@@ -168,19 +162,21 @@ public class MypageContorller {
 		
 		return "jsonView";
 	}
-	
-	
-	
-//	마이페이지에서 보는 본인이 체크한 모든 좋아요 리스트
-	@RequestMapping(value = "/mypage/alllikelist")
-	public void AllLikeList(Model model) {
-		
-	}
 //	본인이 만든 모든 스타일링리스트
 	@RequestMapping(value = "/mypage/stylinglist")
 	public void MypageStylingList(Model model) {
 		
 	}
+//	마이페이지에서 보는 본인이 체크한 상품 좋아요 리스트
+	@RequestMapping(value = "/mypage/Productlikelist")
+	public void ProLikeList(Model model, int m_no) {
+		List<Product> ProLikeList = mypageService.getProLikeList(m_no);
+		model.addAttribute("ProLikeList", ProLikeList);
+		
+	}
+	
+	
+	
 //	스타일링 작성 수정 삭제 
 	@RequestMapping(value = "/mypage/styling")
 	public String MypageStyling(HttpSession session, Model model) {

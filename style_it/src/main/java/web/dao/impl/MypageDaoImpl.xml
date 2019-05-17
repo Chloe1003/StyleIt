@@ -10,8 +10,9 @@
 	
 	<select id="getUserInfo" parameterType="web.dto.Member" resultType="web.dto.Member">
 	
-	  select * from member m, FileUpload f
-	  where m.fu_no = f.fu_no and m_no=#{m_no }
+	  select * from member m, FileUpload fu
+	  where m.fu_no = fu.fu_no 
+	  and m_no=#{m_no }
 	  
 	</select>
 	
@@ -102,8 +103,8 @@
 	
 	<select id="getCoLike" resultType="int" parameterType="web.dto.Member">
 	
-	    select count(*) from member m, StylingLike sl, ProductLike pl
-        where m.m_no = sl.m_no and m.m_no = pl.m_no and m.m_no = #{m_no }
+	    select count(*) from ProductLike
+        where m_no =#{m_no }
       		
 	</select>
 
@@ -117,9 +118,11 @@
 	</select>
 	
 	<select id="getFollowList" parameterType="int" resultType="web.dto.Member">
-	
-	  select f.followee_no, m.m_no, m.m_nick, fu.fu_no, fu.fu_storedname from member m, Follow f, fileupload fu
-      where f.followee_no  = m.m_no
+
+	  select f.follower_no, m.m_no, m.m_nick, fu.fu_no, fu.fu_storedname,f.followee_no ,
+        (SELECT COUNT(*) FROM follow WHERE followee_no=#{m_no } and follower_no=f.followee_no) followcheck
+        from member m, Follow f, fileupload fu
+      where f.followee_no = m.m_no 
       and m.fu_no= fu.fu_no
       and f.follower_no= #{m_no }
 	
@@ -131,6 +134,31 @@
       where f.follower_no = m.m_no 
       and m.fu_no= fu.fu_no
       and f.followee_no= #{m_no }
+	
+	</select>
+	
+	<select id="getProLikeList" parameterType="int" resultType="web.dto.Product">
+	
+		select p.p_no, p.p_price, p.p_name, fu.fu_storedname, b.pb_name, pl.m_no,
+		(select count(*) from productlike pl where p.p_no = pl.p_no) cntplike,
+		(select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck
+        from ProductLike pl, product p, FileUpload fu, productbrand b
+        where pl.p_no = p.p_no
+        and p.fu_no = fu.fu_no
+        and p.pb_no = b.pb_no
+        and pl.m_no = #{m_no }
+	
+	</select>
+	<select id="getMemProLikeList" parameterType="int" resultType="web.dto.Product">
+	
+		select p.p_no, p.p_price, p.p_name, fu.fu_storedname, b.pb_name, pl.m_no,
+		(select count(*) from productlike pl where p.p_no = pl.p_no) cntplike,
+		(select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck
+        from ProductLike pl, product p, FileUpload fu, productbrand b
+        where pl.p_no = p.p_no
+        and p.fu_no = fu.fu_no
+        and p.pb_no = b.pb_no
+        and pl.m_no = #{m_no }
 	
 	</select>
 	

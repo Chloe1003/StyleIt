@@ -1,5 +1,6 @@
 package web.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +53,17 @@ public class MemberServiceImpl implements MemberService{
 			return false;
 		}
 	}
-
-
+	
+	@Override
+	public boolean folCheck_2(Follow f) {
+		
+		if(memberDao.folCheck_2(f) == 1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	@Override
 	public void followInsert(Follow f) {
 		memberDao.followInsert(f);
@@ -64,7 +74,35 @@ public class MemberServiceImpl implements MemberService{
 	public void followDelete(Follow f) {
 		memberDao.followDelete(f);
 	}
+	
+	
+	@Override
+	public void followerInsert(Follow f) {
+		memberDao.followerInsert(f);
+		
+	}
 
+	@Override
+	public void followerDelete(Follow f) {
+		memberDao.followerDelete(f);
+		
+	}
+	
+	@Override
+	public List<Member> getFollowingList(Member member) {
+		return memberDao.getFollowingList(member);
+	}
+
+
+	@Override
+	public List<Member> getFollowList(Member member) {
+		return memberDao.getFollowList(member);
+	}
+
+
+	
+	
+	
 	@Override
 	public void stylingquizInsert(int qq_no) {
 		// TODO Auto-generated method stub
@@ -90,6 +128,9 @@ public class MemberServiceImpl implements MemberService{
 	public Member getMemberByMno(int m_no) {
 		return memberDao.selectMemberByMno(m_no);
 	}
+
+	
+	
 
 	
 

@@ -21,9 +21,7 @@ public class Member {
 //    팔로우 리스트 조회용
     private int follower_no;
     private int followee_no;
-    
-    
-    
+    private int followcheck;
 	public int getM_no() {
 		return m_no;
 	}
@@ -90,14 +88,21 @@ public class Member {
 	public void setFollowee_no(int followee_no) {
 		this.followee_no = followee_no;
 	}
+	public int getFollowcheck() {
+		return followcheck;
+	}
+	public void setFollowcheck(int followcheck) {
+		this.followcheck = followcheck;
+	}
 	@Override
 	public String toString() {
 		return "Member [m_no=" + m_no + ", m_email=" + m_email + ", m_nick=" + m_nick + ", m_date=" + m_date + ", m_pw="
 				+ m_pw + ", m_valid=" + m_valid + ", m_img=" + m_img + ", fu_no=" + fu_no + ", fu_storedName="
-				+ fu_storedName + ", follower_no=" + follower_no + ", followee_no=" + followee_no + "]";
+				+ fu_storedName + ", follower_no=" + follower_no + ", followee_no=" + followee_no + ", followcheck="
+				+ followcheck + "]";
 	}
     
-    
+
     
     
 	

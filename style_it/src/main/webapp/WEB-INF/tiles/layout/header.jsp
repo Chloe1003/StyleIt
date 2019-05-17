@@ -25,6 +25,7 @@
 	top: 50%;
 	left: 50%;
 	transform: translateX(-50%) translateY(-50%);
+	z-index:9999;
 }
 
 /* 뒷배경 설정 */
@@ -38,6 +39,7 @@
 	width: 100%;
 	height: 100%;
 	display: none;
+	z-index: 9999;
 }
 
 .bg1 {
@@ -50,6 +52,7 @@
 	width: 100%;
 	height: 100%;
 	display: none;
+	z-index: 9999;
 }
 
 /* X표시  */

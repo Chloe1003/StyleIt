@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import web.dao.face.MypageDao;
 
 import web.dto.FileUpload;
+import web.dto.Follow;
 import web.dto.Member;
 import web.dto.MemberQuiz;
 import web.dto.Product;
@@ -99,7 +100,17 @@ public class MypageServiceImpl implements MypageService{
 	public List<Member> getFollowingList(int m_no) {
 		return mypageDao.getFollowingList(m_no);
 	}
-
+//	내가 좋아요한 상품 리스트
+	@Override
+	public List<Product> getProLikeList(int m_no) {
+		return mypageDao.getProLikeList(m_no);
+	}
+//	유저가 좋아요한 상품 리스트
+	@Override
+	public List<Product> getMemProLikeList(int m_no) {
+		return mypageDao.getMemProLikeList(m_no);
+	}
+	
 	
 	
 	
@@ -188,6 +199,7 @@ public class MypageServiceImpl implements MypageService{
 		
 		return null;
 	}
+	
 
 	
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import web.dto.FileUpload;
+import web.dto.Follow;
 import web.dto.Member;
 
 import web.dto.Product;
@@ -41,6 +42,10 @@ public interface MypageService {
 	public List<Member> getFollowList(int m_no);
 //	팔로잉 리스트
 	public List<Member> getFollowingList(int m_no);
+//	내가 좋아요 한 상품 리스트
+	public List<Product> getProLikeList(int m_no);
+//	유저가 좋아요 한 상품리스트
+	public List<Product> getMemProLikeList(int m_no);
 	
 	
 //	팔로잉 리스트
@@ -81,6 +86,11 @@ public interface MypageService {
 	
 //	추천받은 상품 리스트
 	public List<Product> getRecommendProduct(int m_no);
+	
+	
+	
+	
+	
 	
 	
 	
