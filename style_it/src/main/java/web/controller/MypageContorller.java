@@ -127,7 +127,7 @@ public class MypageContorller {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		fu.setFu_storedName(fu_storedName);
+		fu.setFu_storedname(fu_storedName);
 		
 		
 		
