@@ -4,19 +4,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!-- jQuery 2.2.4 -->
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
-
-<!-- 부트스트랩 3.3.2 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
 <script type="text/javascript">
 //숨겨둔 로그인창처리
 function showfaq(){
 	document.getElementById("faqInsert_display").style.display="block";
 	document.getElementById("bg").style.display="block";//배경 어둡게 하는 것
+}
+
+
+function show2(){
+	//show 호출시 넘겨준 값을 이용하여 ajax 등을 통해 modal 을 띄울때 동적으로 바뀌어야 하는 값을 얻어온다.  
+	//얻어온 값을 이용하여, modal 에서 동적으로 바뀌어야 하는 값을 바꾸어 준다..  
+    $("#title").html("ajax를 통해 얻어온 id에 해당하는 값");
+    $("#content").html("ajax를 통해 얻어온 id에 해당하는 값");
+    //modal을 띄워준다.  
+    $("#myModal").modal('show');
+
 }
 
 $(document).ready(function(){
@@ -28,7 +31,10 @@ $(document).ready(function(){
 		}
 	});
 	
-	
+	$("#word").click(function(){
+	  var word =  $("input[type='text'][name='search']").val();
+	  $(location).attr("href", "/admin/faq/list?word="+word); 
+	});
 	
 	$(this).parents("form").submit();
 	
@@ -45,6 +51,9 @@ $(document).ready(function(){
 	$(".faqUpdate").click(function(){
 		var no = $(this).val();
 		
+
+		 
+
 		$.ajax({
 			type: "get"
 			, url: "/admin/faq/ajax?faq_no="+no
@@ -63,6 +72,7 @@ $(document).ready(function(){
 				console.log("실패");
 			}
 		});
+
 	});
 	
 });
@@ -97,7 +107,6 @@ th, td {
 
 <div class="row row-offcanvas row-offcanvas-right">
 
-<%-- <jsp:include page="/WEB-INF/views/layout/admin_sidebar.jsp" /> --%>
 <div style="text-align: right; padding-bottom: 100px;" class="container">
 	<div id="stylingContainer" style="display: flex;">
 		<div id="styling_left" style="flex: 1;"></div>
@@ -218,10 +227,15 @@ th, td {
 	</tbody>
 
 	</table>
+	
+	<div class="text-center">
+		<input type="text" style="width: 400px" name="search" id="search">
+		<button id="word" class="btn btn-success btn-sm">검색</button>
+	</div>
+
+<jsp:include page="./paging.jsp" />
 
 </div>
-
-<%-- <jsp:include page="./paging.jsp" /> --%>
 
 </div>
 

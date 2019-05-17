@@ -38,4 +38,10 @@
 	  	WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
 	</select>
 	
+	<update id="disableMember" parameterType="int">
+		UPDATE member 
+		SET m_valid='n'
+		WHERE m_no = #{m_no }
+	</update>
+	
 </mapper>

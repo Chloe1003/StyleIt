@@ -4,27 +4,34 @@ import java.util.HashMap;
 import java.util.List;
 
 import web.dto.Product;
+import web.dto.ProductCategory;
 import web.util.Paging;
 
 public interface AdminProductDao {
 	
 	// 페이징 처리된 제품 리스트 반환
-	public List<Product> selectProductList(Paging paging);
+	public List<HashMap> selectProductList(Paging paging);
 	
 	// 페이징 처리된 제품 카테고리, 브랜드 필터링 리스트 반환
-	public List<Product> selectFilteredList(HashMap<String, Integer> map);
+	public List<HashMap> selectFilteredList(HashMap<String, Integer> map);
 	
 	// 페이징 처리된 검색 제품 리스트 반환
-	public List<Product> selectSearchedList(HashMap<String, Object> map);
+	public List<HashMap> selectSearchedList(HashMap<String, Object> map);
 	
 	// 제품 상세 정보 반환
-	public Product selectProduct(int p_no);
+	public HashMap<String, Object> selectProduct(Product product);
+	
+	//스타일링 태그 파일 추가
+	public void fileUploadInsert(HashMap<String, Object> map);
+	
+	//스타일링 태그 파일넘버
+	public int fileUploadNo(HashMap<String, Object> map);
 	
 	// 제품 추가
-	public void insertProduct(Product p);
+	public void insertProduct(HashMap<String, Object> map);
 	
 	// 제품 정보 수정
-	public void updateProduct(Product p);
+	public void updateProduct(HashMap<String, Object> map);
 	
 	// 제품 삭제
 	public void deleteProduct(int p_no);
@@ -46,4 +53,25 @@ public interface AdminProductDao {
 	
 	// 검색된 선택 제품 속성 갯수 반환
 	public int cntProductByProductAttribute(HashMap<String, String> map);
+	
+	// 검색된 제품 수
+	public int selectSearchCount(HashMap<String, Object> map);
+	
+	// 총 제품 수
+	public int selectProductCnt();
+	
+	// 제품 카테고리
+	public List<HashMap> selectpcaList();
+	
+	// 제품 브랜드
+	public List<HashMap> selectpbList();
+	
+	// 제품 색
+	public List<HashMap> selectpcList();
+	
+	// 제품 태그
+	public List<HashMap> selectpoList();
+	public List<HashMap> selectppList();
+	public List<HashMap> selectpsList();
+	
 }

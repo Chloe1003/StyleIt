@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import web.controller.AdminStylingTagController;
 import web.dao.face.StylingDao;
 import web.dto.Product;
+import web.dto.ProductCategory;
 import web.dto.Styling;
 import web.dto.StylingComment;
 import web.dto.StylingLike;
@@ -91,47 +92,7 @@ public class StylingServiceImpl implements StylingService{
 		return sDao.selectStylingListNoLogin(st_no);
 	}
 
-	@Override
-	public List<StylingTag> getStylingTagList() {
-		
-		return sDao.selectStylingTagList();
-	}
 
-	@Override
-	public void stylingTagInsert(HashMap<String, Object> map) {
-		
-		logger.info("map : " + map);
-		logger.info("map.get : "+ map.get("st_name"));
-		logger.info("map.get : "+ map.get("stored_name"));
-		sDao.fileUploadInsert(map);
-		int no = sDao.fileUploadNo(map);
-		map.put("no", no);
-		logger.info("map2 : " + map);
-		sDao.stylingTagInsert(map);
-	}
-
-	@Override
-	public void stylingTagUpdate(HashMap<String, Object> map) {
-		logger.info("map : " + map);
-		logger.info("map.get : "+ map.get("st_name"));
-		logger.info("map.get : "+ map.get("stored_name"));
-		if (map.get("stored_name") == "") {
-			logger.info("비었당");
-			sDao.stylingTagUpdate(map);
-		} else {
-			logger.info("안비었당");
-			sDao.fileUploadInsert(map);
-			int no = sDao.fileUploadNo(map);
-			map.put("no", no);
-			sDao.stylingTagUpdate(map);
-		}
-	}
-
-	@Override
-	public void stylingTagDelete(StylingTag st) {
-		sDao.stylingTagDelete(st);
-	}
-		
 	@Override
 	public List<Product> getProductByStyling(HashMap<String, Integer> map) {
 		return sDao.selectProductByStyling(map);
@@ -141,5 +102,30 @@ public class StylingServiceImpl implements StylingService{
 	@Override
 	public List<Product> getProductByStylingNoLogin(int s_no) {
 		return sDao.selectProductByStylingNoLogin(s_no);
+	}
+
+	@Override
+	public List<ProductCategory> getProductCategory() {
+		return sDao.selectProductCategory();
+	}
+
+	@Override
+	public List<HashMap> getProduct(HashMap<String, Object> map) {
+		return sDao.selectProduct(map);
+	}
+
+	@Override
+	public int getSearchCount(HashMap<String, Object> map) {
+		return sDao.selectSearchCount(map);
+	}
+
+	@Override
+	public void stylingInsert(HashMap<String, Object> map) {
+		sDao.fileUploadInsert(map);
+		int no = sDao.fileUploadNo(map);
+		map.put("no", no);
+		logger.info("impe MAP : "+map);
+		
+		sDao.selectStylingInsert(map);
 	}
 }

@@ -22,5 +22,101 @@
 		<if test="attributeType=='pattern'">
 		</if>							
 	</insert>
+	
+	<select id="selectSearchCount" resultType="int" parameterType="HashMap">
+		select count(*) from ( 
+		select p.*, pca.pca_category, pb.pb_name from product p 
+		inner join productcategory pca on pca.pca_no = p.pca_no
+		inner join productbrand pb on pb.pb_no = p.pb_no
+		where p_name like '%'||#{word}||'%' and pca_category like '%' || #{cate} || '%' and pb_name like '%' || #{brand} || '%')
+	</select>
+	
+	<select id="selectSearchedList" resultType="HashMap" parameterType="HashMap">
+		select * from ( 
+		select rownum rnum, B.* from(
+		select p.*, pca.pca_category, pb.pb_name from product p 
+		inner join productcategory pca on pca.pca_no = p.pca_no
+		inner join productbrand pb on pb.pb_no = p.pb_no
+		where p_name like '%' || #{word} || '%' and pca_category like '%' || #{cate} || '%' and pb_name like '%' || #{brand} || '%'
+		order by p_no desc
+		) B	order by rnum
+		) R	where rnum between #{startNo} and #{endNo}
+	</select>
+	
+	<select id="selectProductCnt" resultType="int">
+		select count(*) from product
+	</select>
+	
+	<select id="selectProductList" resultType="HashMap" parameterType="web.util.Paging">
+		select * from ( 
+		select rownum rnum, B.* from(
+		select p.*, pca.pca_category, pb.pb_name from product p 
+		inner join productcategory pca on pca.pca_no = p.pca_no
+		inner join productbrand pb on pb.pb_no = p.pb_no
+		order by p_no desc
+		) B	order by rnum
+		) R	where rnum between #{startNo} and #{endNo}
+	</select>
+	
+	<select id="selectpcaList" resultType="HashMap" >
+		select * from productCategory
+	</select>
+	
+	<select id="selectpbList" resultType="HashMap">
+		select * from productbrand
+	</select>
+	
+	<select id="selectpcList" resultType="HashMap">
+		select * from productcolor
+	</select>
+	
+	<select id="selectpoList" resultType="HashMap">
+		select * from productoccasion
+	</select>
+
+	<select id="selectppList" resultType="HashMap">
+		select * from productpattern
+	</select>
+	
+	<select id="selectpsList" resultType="HashMap">
+		select * from productstyle
+	</select>	
+	
+	<insert id="insertProduct" parameterType="HashMap">
+		insert into product(p_no, p_gender, p_price, p_name, fu_no, pca_no, pco_no, pb_no, po_no, ps_no, pp_no, p_url)
+		values(product_seq.nextval, #{p_gender}, #{p_price}, #{p_name}, #{no}, #{category},	#{pcolor}, #{brand}, #{poccasion}, #{pstyle}, #{ppattern}, #{p_url})
+	</insert>
+  	
+	<insert id="fileUploadInsert" parameterType="HashMap" >
+		insert into fileupload(fu_no, fu_storedname, fu_date, fut_no) values(fileupload_seq.nextval, #{stored_name }, sysdate, 4) 
+	</insert>
+	
+	<select id="fileUploadNo" parameterType="HashMap" resultType="int">
+		select fu_no from fileupload
+		where fu_storedname=#{stored_name}
+	</select>
+	
+	<select id="selectProduct" parameterType="web.dto.Product" resultType="HashMap">
+		select p.*, fu.fu_storedname, pca.pca_category, pco.pco_name, pb.pb_name, po.po_name, ps.ps_name, pp.pp_name 
+		from product p
+		inner join fileupload fu on p.fu_no = fu.fu_no
+		inner join productcategory pca on p.pca_no = pca.pca_no
+		inner join productcolor pco on pco.pco_no = p.pco_no
+		inner join productbrand pb on pb.pb_no = p.pb_no
+		inner join productoccasion po on po.po_no = p.po_no
+		inner join productstyle ps on ps.ps_no = p.ps_no
+		inner join productpattern pp on pp.pp_no = p.pp_no
+		where p_no=#{p_no}
+	</select>
+	
+	<update id="updateProduct" parameterType="HashMap">
+		update product set p_gender=#{p_gender}, p_price=#{p_price}, p_name=#{p_name}, fu_no=#{no}, pca_no=#{category}, 
+		pco_no=#{pcolor}, pb_no=#{brand}, po_no=#{poccasion}, ps_no=#{pstyle}, pp_no=#{ppattern}, p_url=#{p_url}
+		where p_no=#{p_no}
+	</update>
+	
+	<delete id="deleteProduct" parameterType="int">
+		delete product where p_no=#{value}
+	</delete>
   	
   </mapper>

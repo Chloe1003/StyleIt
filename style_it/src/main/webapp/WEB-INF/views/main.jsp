@@ -13,43 +13,46 @@ td {
 	border: 1px solid #ffffff
 }
 </style>
-
-
-<h1> Main 화면</h1>
-<hr>
-
-<h3> 안녕 메인 </h3>
-
+   
 
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#mainBanner').carousel('cycle');
 	
-   	//추천 버튼 AJAX
-// 	$("#recommend").click(function(){
-// 		var board_no = $("input[type='hidden'][name='board_no']").val();
-// 		$.ajax({
-// 			type: "get"
-// 			, url: "/board/recommend?board_no="+board_no
-// 			, data: { } //요청파라미터
-// 			, dataType: "json"
-// 			, success: function(data){
-// 				if(data.check == 0){
-// 					$("#recommend").html('추천');
-// 				} else {
-// 					$("#recommend").html('추천취소');	
-// 				}
-				
-// 				$("#recommendhit").html(data.recommendhit);
-// 			}
-// 			, error: function( e ) {
-// 				console.log("실패");
-// 				console.log(e);
-// 			}
-// 		});
-// 	});
-});
+	$("#btnStyling").click(function(){
+		var login = false;
+		   
+		if(${login ne true}){
+		
+			console.log("test");
+			showlogin();
+		     
+		} else {   
+			location.href = "/styling/create";
+		}
+	});
+	
+	$("#btnStyleSearch").click(function(){
+		location.href = "/styling/tag";
+	});
 
+	$("#btnProductSearch").click(function(){
+		location.href = "/shop/list";
+	});
+	
+	$("#btnProductRecommend").click(function(){
+		
+		var login = false;
+		   
+		if(${login ne true}){
+			console.log("test");
+			showlogin();
+		} else {
+			location.href = "/mypage/recommend";
+		}
+	});
+	
+});
 </script>
 
 <div style="text-align: right; padding-bottom: 100px;" class="container">
@@ -270,7 +273,7 @@ jQuery(document).ready(function ($) {
 	<div id="stylingContainer" style="display: flex;">
 		<div id="styling_left" style="flex: 1;"></div>
 		<div id="styling_center" style="flex: 3;"><h3 align="center" >오늘의 스타일링</h3></div>
-		<div id="styling_right" style="flex: 1;"><a href="#">더 보기</a></div>
+		<div id="styling_right" style="flex: 1;"><a href="/styling/tag">더 보기</a></div>
 	</div>
 	<div id="jssor_1" style="position:relative;margin:0 auto;top:0px;left:0px;width:809px;height:150px;overflow:hidden;visibility:hidden;">
 		<!-- Loading Screen -->
@@ -299,7 +302,7 @@ jQuery(document).ready(function ($) {
 	<div id="stylingContainer" style="display: flex;">
 		<div id="styling_left" style="flex: 1;"></div>
 		<div id="styling_center" style="flex: 3;"><h3 align="center" >인기 제품</h3></div>
-		<div id="styling_right" style="flex: 1;"><a href="#">더 보기</a></div>
+		<div id="styling_right" style="flex: 1;"><a href="/shop/list">더 보기</a></div>
 	</div>
 	<div id="jssor_2" style="position:relative;margin:0 auto;top:0px;left:0px;width:809px;height:150px;overflow:hidden;visibility:hidden;">
 		<!-- Loading Screen -->

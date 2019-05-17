@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import web.controller.ShopController;
 import web.dao.face.ShopDao;
 import web.dto.Product;
+import web.dto.ProductOccasion;
+import web.dto.ProductStyle;
 import web.dto.Styling;
 import web.service.face.ShopService;
 import web.util.imgPaging;
@@ -40,11 +42,6 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 	@Override
-	public List<Product> getProductNoLogin(imgPaging paging) {
-		return shopDao.selectProductListNoLogin(paging);
-	}
-
-	@Override
 	public void pLikeUpdate(HashMap<String, Object> like) {
 		if(shopDao.plikeCheck(like)>0) {
 			shopDao.plikeDelete(like);
@@ -69,15 +66,6 @@ public class ShopServiceImpl implements ShopService{
 		return shopDao.selectProductView(map);
 	}
 
-	@Override
-	public Product getProductViewNoLogin(int p_no) {
-		return shopDao.selectProductViewNoLogin(p_no);
-	}
-
-	@Override
-	public List<Styling> getStylingByProductNoLogin(int p_no) {
-		return shopDao.selectStylingByProductNoLogin(p_no);
-	}
 	
 	@Override
 	public List<Styling> getStylingByProduct(HashMap<String, Integer> map) {
@@ -88,12 +76,6 @@ public class ShopServiceImpl implements ShopService{
 	@Override
 	public List<Product> getSimilarProduct(HashMap<String, Object> map) {
 		return shopDao.selectSimilarProduct(map);
-	}
-
-
-	@Override
-	public List<Product> getSimilarProductNoLogin(Product p) {
-		return shopDao.selectSimilarProductNoLogin(p);
 	}
 
 
@@ -118,5 +100,18 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 
+	@Override
+	public List<ProductOccasion> getProductOccasion() {
+		return shopDao.selectProductOccasion();
+	}
+
+
+	@Override
+	public List<ProductStyle> getProductStyle() {
+		return shopDao.selectProductStyle();
+	}
+
+
+	
 
 }

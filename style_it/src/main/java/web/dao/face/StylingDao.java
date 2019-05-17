@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import web.dto.Product;
+import web.dto.ProductCategory;
 import web.dto.Styling;
 import web.dto.StylingComment;
 import web.dto.StylingTag;
@@ -54,24 +55,23 @@ public interface StylingDao {
 	void CommentDelete(int s_no);
 //	스타일링 코맨트 리스트 
 	void getStylingCommentList(StylingComment sComment);
-
-	//스타일링 태그 리스트
-	public List<StylingTag> selectStylingTagList();
 	
-	//스타일링 태그 파일 추가
+	// 스타일링 제품 카테고리 리스트
+	public List<ProductCategory> selectProductCategory();
+	
+	// 스타일링 제품 리스트
+	public List<HashMap> selectProduct(HashMap<String, Object> map);
+	
+	// 스타일링 제품 수
+	public int selectSearchCount(HashMap<String, Object> map);
+	
+	// 스타일링 이미지 저장
 	public void fileUploadInsert(HashMap<String, Object> map);
 	
-	//스타일링 태그 파일넘버
+	// 파일 번호 구하기
 	public int fileUploadNo(HashMap<String, Object> map);
 	
-	//스타일링 태그 추가
-	public void stylingTagInsert(HashMap<String, Object> map);
-	
-	//스타일링 태그 수정
-	public void stylingTagUpdate(HashMap<String, Object> map);
-	
-//	//스타일링 태그 삭제
-//	public void stylingTagDelete(StylingTag st);
-	
+	public void selectStylingInsert(HashMap<String, Object> map);
+
 	
 }

@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -25,7 +26,6 @@
 	top: 50%;
 	left: 50%;
 	transform: translateX(-50%) translateY(-50%);
-	z-index:9999;
 }
 
 /* 뒷배경 설정 */
@@ -39,7 +39,6 @@
 	width: 100%;
 	height: 100%;
 	display: none;
-	z-index: 9999;
 }
 
 .bg1 {
@@ -52,7 +51,6 @@
 	width: 100%;
 	height: 100%;
 	display: none;
-	z-index: 9999;
 }
 
 /* X표시  */
@@ -245,6 +243,18 @@
 		$("#logo").click(function() {
 			location.href = "/main";
 		});
+		
+		$("#create").click(function(){
+			   var login = false;   
+			   
+			   if(${login ne true}){
+//			       console.log("비로그인");
+			      showlogin();
+			      
+			   } else {   
+				location.href = "/styling/create";
+			   }
+		});
 	});
 </script>
 
@@ -268,9 +278,13 @@
 			</div>
 			<div id="navbar" class="navbar-right">
 				<ul class="nav navbar-nav" style="font-size: 0.85em;">
-					<li><a href="/styling/create">CREATE+&nbsp;<span><img alt="faq"
+					<li><a href="javascript:void(0)" id="create">CREATE+&nbsp;<span><img alt="faq"
 								src="/resources/image/main/hanger.png" style="width: 20px;"></span></a></li>
 
+
+					<c:if test="${!empty login }">
+						<li><a href="#">MYPAGE</a></li> 
+					</c:if>     
 					<c:if test="${login eq true }">
 						<li><a href="javascript:void(0);" onclick="mypage();">MYPAGE</a></li>
 						<li><a href="javascript:void(0);" onclick="logout();">LOGOUT</a></li>
@@ -382,3 +396,4 @@
 
 
 <!-- End Header Area -->
+

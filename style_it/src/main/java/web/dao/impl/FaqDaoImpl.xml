@@ -6,36 +6,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <!-- 매퍼 설정 -->
-<mapper namespace="web.dao.face.AdminFaqDao">
-
-	<select id="selectAll" resultType="HashMap">
-		select f.*, fc.faqct_name from faq f
-		inner join faqcategory fc on fc.faqct_no = f.faqct_no
-		order by faq_no desc
-	</select>
-	
-	<select id="selectFaqcatNo" resultType="int" parameterType="HashMap">
-		select faqct_no from faqcategory
-		where faqct_name = #{faqct_name }
-	</select>
-	
-	<insert id="insert" parameterType="web.dto.Faq">
-		insert into faq (faq_no, faq_name, faq_answer, faqct_no)
-		values (faq_seq.nextval, #{faq_name }, #{faq_answer }, #{faqct_no })
-	</insert>
-	
-	<select id="fal" parameterType="web.dto.Faq" resultType="web.dto.Faq">
-		select * from faq
-		where faq_no = #{faq_no }
-	</select>
-	
-	<update id="update" parameterType="web.dto.Faq">
-		update faq set faq_name=#{faq_name }, faq_answer=#{faq_answer }, faqct_no=#{faqct_no }
-		where faq_no=#{faq_no }
-	</update>
-	
-	<delete id="delete" parameterType="web.dto.Faq">
-		delete faq where faq_no=#{faq_no }
-	</delete>
+<mapper namespace="web.dao.face.FaqDao">
 
 </mapper>

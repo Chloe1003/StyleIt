@@ -8,9 +8,10 @@
 <!-- 매퍼 설정 -->  
 <mapper namespace="web.dao.face.StylingDao">
 	<select id="selectStylingTag" resultType="web.dto.StylingTag">
-		SELECT s.st_no, s.st_name, s.st_date, s.fu_no, f.fu_storedname FROM stylingtag s
+		SELECT s.st_no, s.st_name, s.st_date, s.fu_no, s.st_able, f.fu_storedname FROM stylingtag s
 		JOIN fileupload f
 		ON s.fu_no = f.fu_no
+		WHERE  st_able = 'y'
 	</select>
 
 	<select id="selectStylingList" parameterType="HashMap" resultType="web.dto.Styling">
@@ -71,37 +72,6 @@
 		WHERE s.s_no= #{s_no }	
 	</select>
 	
-	<select id="selectStylingTagList" resultType="web.dto.StylingTag">
-		select * from stylingtag
-	</select>
-	
-	<insert id="fileUploadInsert" parameterType="HashMap" >
-		insert into fileupload(fu_no, fu_storedname, fu_date, fut_no) values(fileupload_seq.nextval, #{stored_name }, sysdate, 4) 
-	</insert>
-	
-	<select id="fileUploadNo" parameterType="HashMap" resultType="int">
-		select fu_no from fileupload
-		where fu_storedname=#{stored_name}
-	</select>
-	
-	<insert id="stylingTagInsert" parameterType="HashMap">
-		insert into stylingtag(st_no, st_name, st_date, fu_no) 
-		values(stylingtag_seq.nextval, #{st_name} , sysdate, #{no})
-	</insert> 
-	
-	<insert id="fileUploadUpdate" parameterType="HashMap">
-		update fileupload(fu_no, fu_storedname, fu_date, fut_no) values(fileupload_seq.nextval, #{stored_name }, sysdate, 4)
-	</insert>
-	
-	<insert id="stylingTagUpdate" parameterType="HashMap">
-		update stylingtag set st_name = #{st_name } where st_no=#{st_no } 
-	</insert> 
-	
-	<delete id="stylingTagDelete" parameterType="web.dto.StylingTag">
-		delete stylingtag where st_no=#{st_no }
-	</delete>
-	
-
 	<select id="selectProductByStyling" parameterType="HashMap" resultType="web.dto.Product">
 		SELECT s.s_no, s.p_no, p.p_name, p.p_price, b.pb_name, f.fu_storedname,
         		( select count(*) from productlike l where s.p_no = l.p_no ) cntplike,
@@ -116,6 +86,44 @@
   		WHERE s.s_no = #{s_no }
   	</select>
 
+  	
+  	<select id="selectProductCategory" resultType="web.dto.ProductCategory">
+  		select * from productcategory
+  	</select>
+  	
+  	<select id="selectProduct" resultType="HashMap" parameterType="HashMap">
+  		select * from ( 
+  		select rownum rnum, B.* from(
+  		select p.fu_no, f.fu_storedname from product p
+		inner join fileupload f on f.fu_no = p.fu_no
+  		where pca_no=#{pca_no}
+  		) B	order by rnum) R where rnum between #{paging.startNo} and #{paging.endNo}
+  	</select>
+  	
+  	<select id="selectSearchCount" resultType="int" parameterType="HashMap">
+  		select count(*) from (
+		select p.fu_no, f.fu_storedname from product p
+		inner join fileupload f on f.fu_no = p.fu_no
+		where pca_no=#{pca_no})
+  	</select>
+  	
+  	<insert id="fileUploadInsert" parameterType="HashMap">
+  		insert into fileupload(fu_no, fu_storedname, fu_date, fut_no) 
+  		values(fileupload_seq.nextval, #{stored_name }, sysdate, 2)
+  	</insert>
+  	
+  	<select id="fileUploadNo" parameterType="HashMap" resultType="int">
+  		select fu_no from fileupload
+		where fu_storedname=#{stored_name}
+  	</select>
+  	
+  	<insert id="selectStylingInsert" parameterType="HashMap">
+  		insert into styling(s_no, m_no, s_name, s_content, fu_no, st_no, s_date)
+  		values(styling_seq.nextval, #{m_no}, #{s_name}, #{s_content}, #{no}, #{st_no}, sysdate)
+  	</insert>
+  	
+
+
 
 	<select id="selectProductByStylingNoLogin" parameterType="int" resultType="web.dto.Product">
 		SELECT s.s_no, s.p_no, p.p_name, p.p_price, b.pb_name, f.fu_storedname, 
@@ -129,4 +137,5 @@
         ON p.pb_no = b.pb_no
   		WHERE s.s_no = #{s_no }	
 	</select>
+
 </mapper>

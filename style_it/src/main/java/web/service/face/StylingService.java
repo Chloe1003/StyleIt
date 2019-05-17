@@ -2,7 +2,7 @@ package web.service.face;
 
 import java.util.HashMap;
 import java.util.List;
-
+import web.dto.ProductCategory;
 import web.dto.Product;
 import web.dto.Styling;
 import web.dto.StylingComment;
@@ -50,17 +50,21 @@ public interface StylingService {
 	public void CommentDelete(int s_no);
 //	스타일링 코맨트 리스트 
 	public void getStylingCommentList(StylingComment sComment);
+
+	// 스타일링 제품 카테고리 리스트
+	public List<ProductCategory> getProductCategory();
 	
-	//스타일링 태그 리스트
-	public List<StylingTag> getStylingTagList();
+	// 스타일링 제품 리스트
+	public List<HashMap> getProduct(HashMap<String, Object> map);
 	
-	//스타일링 태그 추가
-	public void stylingTagInsert(HashMap<String, Object> map);
+	// 스타일링 제품 수
+	public int getSearchCount(HashMap<String, Object> map);
 	
-	//스타일링 태그 수정
-	public void stylingTagUpdate(HashMap<String, Object> map);
-	
+	// 스타일링 저장
+	public void stylingInsert(HashMap<String, Object> map);
 	
 	
 	
 }
+
+

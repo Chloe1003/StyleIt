@@ -4,7 +4,7 @@ public class ProductBrand {
 
 	private int pb_no;
 	private String pb_name;
-	
+
 	public int getPb_no() {
 		return pb_no;
 	}
