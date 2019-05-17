@@ -94,8 +94,8 @@
 				</c:forEach>		
 			</c:when>
 			<c:when test="${q.qq_no eq 8 }">
-				<span class="item"><input type="number" class="lprice" name="lprice"></span>원에서
-				<span class="item"><input type="number" class="hprice" name="hprice"></span>원 사이
+				<span class="item"><input type="number" class="lprice" name="p_lowprice"></span>원에서
+				<span class="item"><input type="number" class="hprice" name="p_highprice"></span>원 사이
 			</c:when>
 		</c:choose>
 		<div class="divider"></div>

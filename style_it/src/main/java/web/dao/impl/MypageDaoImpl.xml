@@ -181,11 +181,11 @@
   	</insert>
   	<insert id="insertMemberQuizLprice" parameterType="web.dto.MemberQuizSet">
   		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
-  		VALUES (memberquiz_seq.nextval, #{m_no }, 8, #{lprice })
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 8, #{p_lowprice })
   	</insert>
   	<insert id="insertMemberQuizHprice" parameterType="web.dto.MemberQuizSet">
   		INSERT INTO memberquiz(mq_no, m_no, qq_no, mq_answer)
-  		VALUES (memberquiz_seq.nextval, #{m_no }, 8, #{hprice })	
+  		VALUES (memberquiz_seq.nextval, #{m_no }, 8, #{p_highprice })	
   	</insert>	
   	
 <!--   	<insert id="insertMemberQuiz" parameterType="web.dto.MemberQuizSet"> -->
