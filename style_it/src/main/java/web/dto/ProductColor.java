@@ -3,7 +3,7 @@ package web.dto;
 public class ProductColor {
 	
 	private int pco_no;
-	private String pc_name;
+	private String pco_name;
 	
 	public int getPco_no() {
 		return pco_no;
@@ -11,15 +11,16 @@ public class ProductColor {
 	public void setPco_no(int pco_no) {
 		this.pco_no = pco_no;
 	}
-	public String getPc_name() {
-		return pc_name;
+
+	public String getPco_name() {
+		return pco_name;
 	}
-	public void setPc_name(String pc_name) {
-		this.pc_name = pc_name;
+	public void setPco_name(String pco_name) {
+		this.pco_name = pco_name;
 	}
 	@Override
 	public String toString() {
-		return "ProductColor [pco_no=" + pco_no + ", pc_name=" + pc_name + "]";
+		return "ProductColor [pco_no=" + pco_no + ", pco_name=" + pco_name + "]";
 	}
 	
 	

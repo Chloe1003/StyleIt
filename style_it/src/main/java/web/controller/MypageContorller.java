@@ -1,6 +1,7 @@
 package web.controller;
 
-
+import java.util.ArrayList;
+import java.util.List;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,6 +25,19 @@ import org.springframework.web.multipart.MultipartFile;
 import web.dto.FileUpload;
 import web.dto.Member;
 import web.service.face.MypageService;
+
+import web.dto.MemberQuiz;
+import web.dto.MemberQuizSet;
+import web.dto.Product;
+import web.dto.ProductBrand;
+import web.dto.ProductCategory;
+import web.dto.ProductColor;
+import web.dto.ProductOccasion;
+import web.dto.ProductPattern;
+import web.dto.ProductStyle;
+import web.dto.QuizQuestion;
+import web.service.face.MypageService;
+
 
 @Controller
 public class MypageContorller {
@@ -186,14 +200,63 @@ public class MypageContorller {
 		return null;
 	}
 	
-//	추천받은 제품 리스트
+
+	//	추천받은 제품 리스트
 	@RequestMapping(value = "/mypage/recommend")
-	public void RecommendProduct(HttpSession session, Model model) {
+	public void recommendProduct(HttpSession session, Model model) {
 		int m_no = (int) session.getAttribute("m_no");
 
+//		스타일링 퀴즈 답변 가져오기
+		List<MemberQuiz> answer = mypageService.getMemberQuiz(m_no);
+		
+		List<Product> rList = new ArrayList<>();
+		
+		if(answer!=null) {
+			
+			MemberQuizSet mqs = mypageService.transferToMemberQuizSet(answer);
+			mqs.setM_no(m_no);
+			
+			logger.info(mqs.toString());		
+			
+			rList = mypageService.getRecommendProduct(mqs);
+		}
+		
+		model.addAttribute("rList", rList);
+		
+	}
+	
+  //퀴즈 항목 
+	@RequestMapping(value="/mypage/quiz", method=RequestMethod.GET)
+	public void stylingQuizForm(Model model) {
+		
+		List<QuizQuestion> quiz = mypageService.getStylingQuiz();
+		List<ProductBrand> brand = mypageService.getBrand();
+		List<ProductCategory> category = mypageService.getCategory();
+ 		List<ProductColor> color = mypageService.getColor();
+		List<ProductOccasion> occasion = mypageService.getOccasion();
+		List<ProductPattern> pattern = mypageService.getPattern();
+		List<ProductStyle> style = mypageService.getStyle();
+		
+		model.addAttribute("qSet", quiz);
+		model.addAttribute("brand", brand);
+		model.addAttribute("category", category);
+		model.addAttribute("color", color);
+		model.addAttribute("occasion", occasion);
+		model.addAttribute("pattern", pattern);
+		model.addAttribute("style", style);
+		
+	}
+	
+  //작성한 퀴즈 값 저장
+	@RequestMapping(value="/mypage/quiz", method=RequestMethod.POST)
+	public String stylingQuizSubmit(MemberQuizSet mq, HttpSession session) {
+		int m_no = (int) session.getAttribute("m_no");
+		mq.setM_no(m_no);
+		
+		mypageService.saveMemberQuiz(mq);
 		
 		
-		
+		return "redirect:/mypage/quiz";
 	}
 	
 	
@@ -201,3 +264,4 @@ public class MypageContorller {
 	
 	
 }
+

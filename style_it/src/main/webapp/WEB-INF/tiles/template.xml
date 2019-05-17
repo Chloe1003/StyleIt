@@ -7,7 +7,12 @@
        
 <tiles-definitions>
 
+
+	<definition name="shop/listloading" template="/WEB-INF/views/shop/listloading.jsp">
+	</definition>
+
 	<definition name="styling/create/ajax" template="/WEB-INF/views/styling/create/ajax.jsp"/>
+
 
 	<!-- 기본 구성  -->
 	<definition name="tilesbase" template="/WEB-INF/tiles/layout.jsp">

@@ -5,140 +5,198 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <style>
+
+.wrap-loading{ /*화면 전체를 어둡게 합니다.*/
+    position: fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background: rgba(0,0,0,0.2); /*not in ie */
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');    /* ie */
+}
+.wrap-loading div{ /*로딩 이미지*/
+    position: fixed;
+    top:50%;
+    left:50%;
+    margin-left: -21px;
+    margin-top: -21px;
+}
+
+.display-none{ /*감추기*/
+	display:none;
+}
+
 .frame{
     width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
-
-#block{
-    width: 280px;
-    height: 280px;
-    position: relative;
-    display: inline-block;
+.shop-section{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.section-cate{
+    width: 108px;
     margin: 10px;
+    font-size: 12px;
+    line-height: 15px;
+    color: #4a3a3a;
+
+}
+.section-type-button{
+	height: 30px;
+    min-width: 112px;
+    margin: 20px 3px 30px 3px;
+    border: none; 
+    font-size: 14px;
+    line-height: 18px;
+    color: whitesmoke;
+    letter-spacing: .09px;
+    background: #E89994;
+    
+}
+.shop-search {
+	display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    font-family: Quicksand-Medium,sans-serif;
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: 700;
+    color: #4a3a3a;
+    letter-spacing: 2px;
+}
+.shop-search-input{
+	height: 100%;
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.search-input{
+	height: 40px;
+    max-width: 80vw;
+    padding: 0 50px;
+    width: 800px;
+    border: 1px solid #f7f7f7;
+    border-radius: 100px;
+    background-color: #fff;
+    -webkit-box-shadow: inset 0 1px 2px 0 rgba(80,80,80,.24);
+    box-shadow: inset 0 1px 2px 0 rgba(80,80,80,.24);
+    font-family: Quicksand-Regular,sans-serif;
+    font-size: 16px;
+    line-height: 16px;
+    color: #9b9b9b;
+    letter-spacing: 1.74px;
 }
 
-.img-wrapper{
-box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-width:inherit;
-height:inherit; 
-position:absolute;
-cursor: pointer; 
-background:white;
-}
-
-.img-wrapper img {
-width:inherit;
-height:inherit;
-object-fit: contain;
-}
-
-.darkness {
-  position:absolute;
-  top:0;
-  left:0;
-  width:inherit;
-  height:inherit;
-  background:linear-gradient(to bottom, #E89C8B, transparent );
-  opacity:0; 
-  transition:all .6s linear; 
-}
-
-.productname {
-  position:absolute;
-  top:180px;
-  left:20px;
-  width:240px;
-  height:55px;
-  opacity:0; 
-  transition:all .3s linear; 
-}
-
-/* 추가된 부분 */
-.productname span {
-  font-size:0.9em;
-  color:#777;
-  user-select:none;
-  font-weight: bold;
-/*   text-shadow: 0 1px 10px rgba(0,0,0,0.4); */
-}
-
-.img-wrapper:hover .darkness{
-  opacity:0.4;
-}
-
-.img-wrapper:hover .productname {
-  opacity:1;
-/*   transform:scale(1); */
-}
-
-.like{
-  position:absolute;
-  top:20px;
-  left:240px;
-  width:22px;
-  height:22px;
-  z-index:999;
-  
-  background-size: contain;
-}
-
-.likecnt{
-  position:absolute;
-  top:20px;
-  left:225px;
-  width:22px;
-  height:22px;
-  z-index:999;
-}
-
-
-.like.red {
-	background-image: url(/resources/image/styling/redheart.png)
-}
-.like.empty {
-	background-image: url(/resources/image/styling/emptyheart.png)
-}
 
 </style>
+<!-- <div class="wrap-loading display-none"> -->
+<!-- 	<div><img src="/image/shop/loading.gif"/></div> -->
+<!-- </div> -->
 
+<div class="shop-search">
+  <div class="shop-search-input">
+    <input placeholder="Search" type="text" class="search-input" id="search">
+  </div>
+</div>
 
-<div class="frame" id="frame">
-<c:forEach items="${productList }" var="p" begin="0" end="${productList.size()-1 }">
-<div id="block">
-	<div class="img-wrapper img" onclick="productView(${p.p_no })" data-pno="${p.p_no }">
-		<img src="/upload/${p.fu_storedname }" alt="images">
-		<div class="likecnt" id="likecnt">${p.cntplike }</div>
-		
-		<c:if test="${p.plikecheck eq 0 }">
-			<div class="like empty"></div>
-		</c:if>
-		<c:if test="${p.plikecheck eq 1 }">
-			<div class="like red"></div>
-		</c:if>
-		
-		<div class="darkness"></div>
-   		<div class="productname"><div style="font-weight:600;">KRW ${p.p_price }</div>
-     	<span draggable="false">${p.pb_name } <br> ${p.p_name } </span></div>
-
+<div class="shop-section">	
+	<div class="section-type">
+			<button class="section-type-button" type="button" onclick="sortByStyle(0)"><span>ALL</span></button>
+		<c:forEach items="${psList }" var="ps" begin="0" end="${psList.size()-1 }">
+			<button class="section-type-button" type="button" onclick="sortByStyle(${ps.ps_no })"><span>${ps.ps_name }</span></button>
+		</c:forEach>
 	</div>
 </div>
-</c:forEach>
-</div>
-<br><br>
 
+<div class="frame" id="frame">
+
+</div>
+
+<br><br>
+<input type="hidden" id="style">
+<input type="hidden" id="searchWord">
 
 <script type="text/javascript">
 $(document.body).css("background-color", "#eff6f6");
 $(document.body).find(".navbar").css("background-color", "#ffffff");
 
+$("#search").keydown(function(e){
+	if(window.event.keyCode == 13){
+		
+		console.log("검색어 입력");
+		
+		var search = $("#search").val();
+		$("#searchWord").val(search);
+		
+	    var ps_no = $("#style").val();	
+	     
+	  	$.ajax({
+			type : "get",
+			url : "/shop/listloading",
+			data : {"curPage": 1, 
+					"ps_no": ps_no,
+					"search" : search },
+			dataType : "html",
+			success : function(res){
+				console.log("검색 성공");			
+//	 			$("#page").append(res);
+				$(".frame").html(res);
+				
+			},
+			error : function(e){
+				console.log("실패");
+			}			
+		});
+		
+	}
+});
+	
 function productView(p_no){
 	location.href="/shop/view?p_no="+p_no;
 }
 
+function sortByStyle(ps_no){
+	
+// 	$(this).button('toggle');
+	
+	$("#style").val(ps_no);
+	
+	var search = $("#searchWord").val();
+	
+  	$.ajax({
+		type : "get",
+		url : "/shop/listloading",
+		data : {"curPage": 1, 
+				"ps_no": ps_no,
+				"search" : search },
+		dataType : "html",
+		success : function(res){
+			console.log("카테고리 선택 성공");			
+// 			$("#page").append(res);
+			$(".frame").html(res);
+			
+		},
+		error : function(e){
+			console.log("실패");
+		}			
+	});
+
+	
+}
 
 $(document).ready(function(){
+	
+	
 	
 	$(".like").click(function(){
 		
@@ -184,6 +242,8 @@ $(document).ready(function(){
     
 	
 	});
+	
+	getList(1, 0);
 		
 	
 });	
@@ -199,21 +259,35 @@ $(window).scroll(function() {
     if ($(window).scrollTop() == $(document).height() - $(window).height()) {
       console.log("스크롤 발생");
       console.log(page);
-      getList(page);
+      var ps_no = $("#style").val();
+      var search = $("#searchWord").val();
+      getList(page, ps_no, search);
       page++
     }
 });
-function getList(page){
+
+
+function getList(page, ps_no, search){
 	
   	$.ajax({
 		type : "get",
-		url : "/shop/list",
-		data : {"curPage": page },
+		url : "/shop/listloading",
+		data : {"curPage": page, 
+				"ps_no": ps_no,
+				"search" : search },
 		dataType : "html",
 		success : function(res){
 			console.log("스크롤 로딩 성공");			
-			$("#page").append(res);
+// 			$("#page").append(res);
+			$(".frame").append(res);
 			
+		},
+		beforeSend:function(){
+// 			이미지 보여주기 처리
+			$(".wrap-loading").removeClass('display-none');
+		},
+		complete:function(){
+			$(".wrap-loading").addClass('display-none');
 		},
 		error : function(e){
 			console.log("실패");
@@ -225,4 +299,4 @@ function getList(page){
 
 
 </script>
-</script> 
+

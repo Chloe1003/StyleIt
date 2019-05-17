@@ -74,8 +74,15 @@ public class AdminUserController {
 	
 	//회원관리 정지
 	@RequestMapping(value="/admin/user/disable", method=RequestMethod.GET)
-	public String adminUserDisable(){
+	public String adminUserDisable(HttpServletRequest req){
 		
-		return null;
+		String checked[] = req.getParameterValues("checkedList");
+		
+		for(String mem_no : checked) {
+			int m_no = Integer.parseInt(mem_no);
+			uServ.disableMember(m_no);
+		}
+		
+		return "redirect:/admin/user/list";
 	}
 }

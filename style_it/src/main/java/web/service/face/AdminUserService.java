@@ -25,6 +25,9 @@ public interface AdminUserService {
 	//총 회원 수 얻기
 	public int getTotalCount();
 
+	//멤버 비활성화
+	public void disableMember(int m_no);
+
 //	//회원관리 리스트
 //	public List<Member> selectSerachList();
 //	

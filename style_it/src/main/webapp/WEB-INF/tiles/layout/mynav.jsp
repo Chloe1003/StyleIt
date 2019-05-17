@@ -16,7 +16,7 @@
               <li class="navlist"><a href="#" style="color:#777;">STYLING</a></li>
               <li class="navlist"><a href="#" style="color:#777;">LIKE</a></li>
               <li class="navlist"><a href="#" style="color:#777;">COLLECTION</a></li>
-              <li class="navlist"><a href="#" style="color:#777;">FOR YOU</a></li>	 
+              <li class="navlist"><a href="/mypage/recommend" style="color:#777;">FOR YOU</a></li>	 
            </ul>
         </div><!--/.nav-collapse -->
       </div>
