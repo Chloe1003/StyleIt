@@ -12,6 +12,7 @@
 		SELECT * FROM (
 	  		SELECT rownum rnum, M.* FROM (
 			  	SELECT * FROM member
+			  	WHERE m_valid='y'
 			  	ORDER BY m_no desc
 	  			)M
 	  		)R
@@ -43,5 +44,16 @@
 		SET m_valid='n'
 		WHERE m_no = #{m_no }
 	</update>
+	
+	<update id="userUpdate" parameterType="web.dto.Member">
+		UPDATE member
+		SET m_nick=#{m_nick }, m_pw=#{m_pw }
+		WHERE m_no=#{m_no }
+	</update>
+	
+	<select id="selectUser" parameterType="int" resultType="web.dto.Member">
+		SELECT * FROM member
+		WHERE m_no = #{m_no }
+	</select>
 	
 </mapper>

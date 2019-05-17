@@ -28,6 +28,12 @@ public interface AdminUserService {
 	//멤버 비활성화
 	public void disableMember(int m_no);
 
+	//멤버 프로필 변경
+	public void updateProfile(Member m);
+
+	//멤버 정보 가져오기
+	public Member getUser(int m_no);
+
 //	//회원관리 리스트
 //	public List<Member> selectSerachList();
 //	
