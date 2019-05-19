@@ -29,7 +29,7 @@ public class MemberController {
 	@Autowired MemberService memberService;
 	@Autowired MypageService mypageService;	
 	
-	@RequestMapping("/home")
+	@RequestMapping("/main")
 	public void maingo() {
 	}
 //	회원가입
@@ -39,7 +39,7 @@ public class MemberController {
 		
 		memberService.memberInsert(member);
 		
-		return "redirect:/home";
+		return "redirect:/main";
 	}
 //	회원가입 중복처리
 	@RequestMapping(value = "/member/joincheck", method = RequestMethod.POST)
@@ -94,7 +94,7 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		
-		return "redirect:/home";
+		return "redirect:/main";
 	}
 //  맴버 페이지 이동
 	@RequestMapping (value = "/member/memberPage", method = RequestMethod.GET)
@@ -212,12 +212,28 @@ public class MemberController {
 //		팔로잉 할때 세션 아이디값을 followee에 넣고
 //		follower 에는 현재 보고 있는 페이지의 유저 넘버를 넣어야함. 
 	}
-//	마이페이지에서 보는 본인이 체크한 상품 좋아요 리스트
+//	멤버페이지에서 보는 멤버가 좋아요한 상품 리스트
 	@RequestMapping(value = "/member/MemProductlikelist")
 	public void MemberProLikeList(Model model, int m_no, Product p) {
 		System.out.println("m_no은?"+m_no);
-		List<Product> ProLikeList = mypageService.getMemProLikeList(m_no);
+		List<Product> ProLikeList = mypageService.getMemProLikeList(m_no); // 실수로 마이페이지 서비스로 보내버림..
 		model.addAttribute("ProLikeList", ProLikeList);
+		
+	}
+//	멤버페이지에서 보는 멤버가 좋아요한 상품 리스트
+	@RequestMapping(value = "/member/MemberStylingLikeList")
+	public void MemberStylingLikeList(Model model, int m_no, Product p) {
+		System.out.println("m_no은?"+m_no);
+		List<Product> StylingLikeList = memberService.getMemberStylingLikeList(m_no); // 실수로 마이페이지 서비스로 보내버림..
+		model.addAttribute("StylingLikeList", StylingLikeList);
+		
+	}
+//	멤머페이지에서 보는 멤머가 만든 스타일링 리스트
+	@RequestMapping(value = "/member/MemberStylingList")
+	public void MemberStylingList(Model model, int m_no, Product p) {
+		System.out.println("m_no은?"+m_no);
+		List<Product> memberstylingList = memberService.getMemberStylingList(m_no); // 실수로 마이페이지 서비스로 보내버림..
+		model.addAttribute("memberstylingList", memberstylingList);
 		
 	}
 	

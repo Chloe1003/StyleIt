@@ -60,6 +60,12 @@ public interface MypageDao {
 	public List<Product> getProLikeList(int m_no);
 //	유저가 좋아요 한 상품 리스트
 	public List<Product> getMemProLikeList(int m_no);
+//  유저가 좋아요한 스타일링 리스트
+	public List<Product> getStylingLikeList(int m_no);
+//	유저가 만든 스타일링 리스트
+	public List<Product> getStylingList(int m_no);
+	
+	
 	
 	
 //	팔로잉 리스트
@@ -127,6 +133,8 @@ public interface MypageDao {
 
 //	추천 상품 리스트 가져오기
 	public List<Product> selectRecommendProduct(MemberQuizSet mq);
+	
+	
 	
 	
 	

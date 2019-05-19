@@ -56,8 +56,13 @@ public interface MypageService {
 	public List<Member> getFollowingList(int m_no);
 //	내가 좋아요 한 상품 리스트
 	public List<Product> getProLikeList(int m_no);
+//	내가 만든 스타일링 리스트
+	public List<Product> getStylingList(int m_no);
+//	유저가 좋아요 한 스타일링 리스트
+	public List<Product> getStylingLikeList(int m_no);
 //	유저가 좋아요 한 상품리스트
 	public List<Product> getMemProLikeList(int m_no);
+	
 	
 	
 //	팔로잉 리스트
@@ -102,6 +107,8 @@ public interface MypageService {
 //	작성된 스타일링 퀴즈 가져오기 
 	public List<MemberQuiz> getMemberQuiz(int m_no);
 	
+
+	
 //	스타일링 퀴즈 답변 가져오기
 	public List<QuizQuestion> getStylingQuiz();
 	public List<ProductBrand> getBrand();
@@ -116,6 +123,8 @@ public interface MypageService {
 	
 //	멤버퀴즈 리스트를 멤버퀴즈셋 형태로 변경
 	public MemberQuizSet transferToMemberQuizSet(List<MemberQuiz> answer);
+	
+	
 		
 	
 }

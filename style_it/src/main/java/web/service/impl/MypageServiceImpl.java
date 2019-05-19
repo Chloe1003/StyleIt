@@ -116,11 +116,22 @@ public class MypageServiceImpl implements MypageService{
 	public List<Product> getProLikeList(int m_no) {
 		return mypageDao.getProLikeList(m_no);
 	}
+//	내가 만든 스타일링 리스트
+	@Override
+	public List<Product> getStylingList(int m_no) {
+		return mypageDao.getStylingList(m_no);
+	}
+//	유저가 좋아요한 스타일링 리스트
+	@Override
+	public List<Product> getStylingLikeList(int m_no) {
+		return mypageDao.getStylingLikeList(m_no);
+	}
 //	유저가 좋아요한 상품 리스트
 	@Override
 	public List<Product> getMemProLikeList(int m_no) {
 		return mypageDao.getMemProLikeList(m_no);
 	}
+	
 	
 	
 	
@@ -329,6 +340,7 @@ public class MypageServiceImpl implements MypageService{
 		
 		return mqs;		
 	}
+	
 
 
 

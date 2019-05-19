@@ -176,38 +176,30 @@ public class MypageContorller {
 		
 		return "jsonView";
 	}
-//	본인이 만든 모든 스타일링리스트
-	@RequestMapping(value = "/mypage/stylinglist")
-	public void MypageStylingList(Model model) {
-		
-	}
-//	마이페이지에서 보는 본인이 체크한 상품 좋아요 리스트
+//	마이페이지에서 보는 본인이 좋아요한 상품 좋아요 리스트
 	@RequestMapping(value = "/mypage/Productlikelist")
 	public void ProLikeList(Model model, int m_no) {
 		List<Product> ProLikeList = mypageService.getProLikeList(m_no);
 		model.addAttribute("ProLikeList", ProLikeList);
 		
 	}
+//	마이페이지에서 보는 본인이 좋아요한 스타일링 리스트
+	@RequestMapping(value = "/mypage/Stylinglikelist")
+	public void getStylingLikeList(Model model, int m_no) {
+		List<Product> StylingLikeList = mypageService.getStylingLikeList(m_no);
+		model.addAttribute("StylingLikeList", StylingLikeList);
+		
+	}
+//	마이페이지에서 보는 본인이 작성한 스타일링 리스트
+	@RequestMapping(value = "/mypage/mystylinglist")
+	public void getStylingList(Model model, int m_no) {
+		List<Product> StylingList = mypageService.getStylingList(m_no);
+		model.addAttribute("StylingList", StylingList);
+		
+	}
 	
 	
 	
-//	스타일링 작성 수정 삭제 
-	@RequestMapping(value = "/mypage/styling")
-	public String MypageStyling(HttpSession session, Model model) {
-		
-		return null;
-	}
-//	본인이 만든 모든 컬렉션리스트
-	@RequestMapping(value = "/mypage/allcollectionlist")
-	public void AllCollectionList(Model model) {
-		
-	}
-//	컬렉션 작성 수정 삭제 
-	@RequestMapping(value = "/mypage/collection")
-	public String MypageCollection(HttpSession session, Model model) {
-		
-		return null;
-	}
 	
 
 	//	추천받은 제품 리스트

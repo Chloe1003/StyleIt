@@ -50,9 +50,9 @@
 		<!-- SELECT FileUpload_SEQ.nextval from dual -->
 		
 		INSERT INTO FILEUPLOAD
-			(fu_no, fu_storedName, fut_no )
+			(fu_no, fu_storedname, fut_no )
 		VALUES 
-			( #{fu_no}, #{fu_storedName }, 5 )
+			( #{fu_no}, #{fu_storedname }, 5 )
 		<!-- <selectKey>  </selectKey> -->
 			
 	</insert>
@@ -96,8 +96,8 @@
 
 	<select id="getCoCollection" resultType="int" parameterType="web.dto.Member">
 	
-		select count(*) from member m, CollectionFolder cf
-      	where m.m_no = cf.m_no and m.m_no = #{m_no }
+		select count(*) from member m, stylinglike l
+            where m.m_no = l.m_no and m.m_no =#{m_no }
       		
 	</select>
 	
@@ -151,16 +151,43 @@
 	</select>
 	<select id="getMemProLikeList" parameterType="int" resultType="web.dto.Product">
 	
-		select p.p_no, p.p_price, p.p_name, fu.fu_storedname, b.pb_name, pl.m_no,
-		(select count(*) from productlike pl where p.p_no = pl.p_no) cntplike,
-		(select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck
-        from ProductLike pl, product p, FileUpload fu, productbrand b
-        where pl.p_no = p.p_no
-        and p.fu_no = fu.fu_no
-        and p.pb_no = b.pb_no
-        and pl.m_no = #{m_no }
+			select p.p_no, p.p_price, p.p_name, fu.fu_storedname, b.pb_name, pl.m_no,
+			(select count(*) from productlike pl where p.p_no = pl.p_no) cntplike,
+			(select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck
+	        from ProductLike pl, product p, FileUpload fu, productbrand b
+	        where pl.p_no = p.p_no
+	        and p.fu_no = fu.fu_no
+	        and p.pb_no = b.pb_no
+	        and pl.m_no = #{m_no }
 	
 	</select>
+	
+	<select id="getStylingList" parameterType="int" resultType="web.dto.Styling">
+	
+		select s.s_no, s.m_no, s.s_name, s.s_content, s.fu_no, fu.fu_storedname, s.st_no, s.s_date
+		, ( select count(*) from stylinglike l where s.s_no = l.s_no ) cntslike
+        from styling S, fileupload fu, member m
+        where s.m_no = m.m_no
+        and s.fu_no = fu.fu_no
+        and m.m_no= #{m_no }
+        
+	
+	</select>
+	
+	<select id="getStylingLikeList" parameterType="int" resultType="web.dto.Styling">
+	
+			 select s.s_no, s.m_no, s.s_name, s.s_content, s.fu_no, fu.fu_storedname, s.st_no, s.s_date
+			, ( select count(*) from stylinglike l where s.s_no = l.s_no ) cntslike
+    		, ( select count(*) from stylinglike l where s.s_no = l.s_no and l.m_no = #{m_no }  ) slikecheck
+	        from styling S, fileupload fu, stylinglike l
+	        where l.s_no = s.s_no
+	        and s.fu_no = fu.fu_no
+	        and l.m_no = #{m_no }
+	
+	
+	</select>
+	
+	
   	
   	<select id="selectStylingQuiz" resultType="web.dto.QuizQuestion">
   		SELECT * FROM quizquestion

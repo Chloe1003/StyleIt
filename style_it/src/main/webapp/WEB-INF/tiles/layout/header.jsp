@@ -26,6 +26,7 @@
 	top: 50%;
 	left: 50%;
 	transform: translateX(-50%) translateY(-50%);
+	z-index:9999;
 }
 
 /* 뒷배경 설정 */
@@ -39,6 +40,7 @@
 	width: 100%;
 	height: 100%;
 	display: none;
+	z-index:9999;
 }
 
 .bg1 {
@@ -51,6 +53,7 @@
 	width: 100%;
 	height: 100%;
 	display: none;
+	z-index:9999;	
 }
 
 /* X표시  */
@@ -140,7 +143,7 @@
 							if(data.login==true){
 							console.log("성공");
 							alert("로그인 성공");
-							location.href = "/home";
+							location.href = "/main";
 							}else{
 							console.log("실패");
 							 $("#loginChk").html("로그인 실패");
@@ -282,9 +285,6 @@
 								src="/resources/image/main/hanger.png" style="width: 20px;"></span></a></li>
 
 
-					<c:if test="${!empty login }">
-						<li><a href="#">MYPAGE</a></li> 
-					</c:if>     
 					<c:if test="${login eq true }">
 						<li><a href="javascript:void(0);" onclick="mypage();">MYPAGE</a></li>
 						<li><a href="javascript:void(0);" onclick="logout();">LOGOUT</a></li>
@@ -390,7 +390,6 @@
 		</div>
 	</form>
 </div>
-
 
 
 

@@ -17,7 +17,7 @@ public class Member {
     
 //    프로필 사진 파일업로드 조인 용
     private int fu_no;
-    private String fu_storedName;
+    private String fu_storedname;
 //    팔로우 리스트 조회용
     private int follower_no;
     private int followee_no;
@@ -70,11 +70,11 @@ public class Member {
 	public void setFu_no(int fu_no) {
 		this.fu_no = fu_no;
 	}
-	public String getFu_storedName() {
-		return fu_storedName;
+	public String getFu_storedname() {
+		return fu_storedname;
 	}
-	public void setFu_storedName(String fu_storedName) {
-		this.fu_storedName = fu_storedName;
+	public void setFu_storedname(String fu_storedname) {
+		this.fu_storedname = fu_storedname;
 	}
 	public int getFollower_no() {
 		return follower_no;
@@ -97,10 +97,12 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [m_no=" + m_no + ", m_email=" + m_email + ", m_nick=" + m_nick + ", m_date=" + m_date + ", m_pw="
-				+ m_pw + ", m_valid=" + m_valid + ", m_img=" + m_img + ", fu_no=" + fu_no + ", fu_storedName="
-				+ fu_storedName + ", follower_no=" + follower_no + ", followee_no=" + followee_no + ", followcheck="
+				+ m_pw + ", m_valid=" + m_valid + ", m_img=" + m_img + ", fu_no=" + fu_no + ", fu_storedname="
+				+ fu_storedname + ", follower_no=" + follower_no + ", followee_no=" + followee_no + ", followcheck="
 				+ followcheck + "]";
 	}
+
+    
     
 
     
