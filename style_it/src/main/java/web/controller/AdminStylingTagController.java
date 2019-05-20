@@ -81,12 +81,15 @@ public class AdminStylingTagController {
 		logger.info(file.getContentType());
 		logger.info(String.valueOf(file.isEmpty()));
 		
+//		고유한 식별자
+		String uId = UUID.randomUUID().toString().split("-")[0];
+		
 		//저장될 파일 이름
 		String stored_name = null;
-		stored_name = file.getOriginalFilename();
+		stored_name = file.getOriginalFilename()+uId;
 		
 		//파일 저장 경로
-		String path = context.getRealPath("upload/image");
+		String path = context.getRealPath("upload");
 		
 		//저장될 파일
 		File dest = new File(path, stored_name);
@@ -104,7 +107,7 @@ public class AdminStylingTagController {
 		
 		logger.info(upFile.toString());
 		
-		map.put("stored_name", upFile.getFu_storedname());
+		map.put("stored_name", upFile.getFu_storedname()+uId);
 		
 		logger.info("ST : "+map);
 		asts.stylingTagInsert(map);
@@ -133,9 +136,12 @@ public class AdminStylingTagController {
 		logger.info(file.getContentType());
 		logger.info(String.valueOf(file.isEmpty()));
 		
+//		고유한 식별자
+		String uId = UUID.randomUUID().toString().split("-")[0];
+		
 		//저장될 파일 이름
 		String stored_name = null;
-		stored_name = file.getOriginalFilename();
+		stored_name = file.getOriginalFilename()+uId;
 		
 		//파일 저장 경로
 		String path = context.getRealPath("upload");
@@ -156,7 +162,7 @@ public class AdminStylingTagController {
 		
 		logger.info(upFile.toString());
 		
-		map.put("stored_name", upFile.getFu_storedname());
+		map.put("stored_name", upFile.getFu_storedname()+uId);
 		
 		logger.info("ST : "+map);
 		asts.stylingTagUpdate(map);

@@ -108,12 +108,12 @@ th, td {
 
 <div class="row row-offcanvas row-offcanvas-right">
 
-<div style="text-align: right; padding-bottom: 100px;" class="container">
+<div style="text-align: right; " class="container">
 	<div id="stylingContainer" style="display: flex;">
 		<div id="styling_left" style="flex: 1;"></div>
 		<div id="styling_center" style="flex: 3;"><h3 align="center" >태그 관리</h3></div>
 		<div id="styling_right" style="flex: 1;">
-			<button class="btn" style="background-image: url('/resources/image/admin/tag_add.png'); background-color: transparent; width: 34px; height: 34px;" data-target="#addTag_display" data-toggle="modal"></button>
+			<button class="btn" style="background-image: url('/resources/image/admin/tag_add.png'); background-color: transparent; width: 34px; height: 34px;" data-backdrop="static" data-target="#addTag_display" data-toggle="modal"></button>
 		</div>
 	</div> 
 	
@@ -212,7 +212,7 @@ th, td {
 	<td>${i.st_name }</td>
 	<td><fmt:formatDate value="${i.st_date }" pattern="yyyy-MM-dd"/></td>
 	<td>${i.st_able }</td>
-	<td><button class="tagUpdate" style="background-color: transparent; border-color: transparent;" data-target="#updateTag_display" data-toggle="modal" onclick="update()">수정</button>
+	<td><button class="tagUpdate" style="background-color: transparent; border-color: transparent;" data-target="#updateTag_display" data-backdrop="static" data-toggle="modal" onclick="update()">수정</button>
 	</tr>
 	</c:forEach>
 	</tbody>

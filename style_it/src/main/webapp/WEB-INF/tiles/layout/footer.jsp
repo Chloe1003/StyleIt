@@ -47,11 +47,6 @@ body {
 <!--       </div> -->
 <!--     </footer> -->	
 
-<h3>임시 session정보</h3>
-	nick : ${m_nick }<br>
-	m_no : ${m_no }<br>
-    
- 
 	<footer class="footer">
 		<div class="fcontainer">
 	        <p class="pull-right"><a href="#" style="color:#009994;">Back to top</a></p>

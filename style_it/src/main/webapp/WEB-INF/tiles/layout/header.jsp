@@ -26,6 +26,7 @@
 	top: 50%;
 	left: 50%;
 	transform: translateX(-50%) translateY(-50%);
+	z-index:9998;
 }
 
 /* 뒷배경 설정 */
@@ -140,14 +141,14 @@
 							if(data.login==true){
 							console.log("성공");
 							alert("로그인 성공");
-							location.href = "/home";
+							location.href = "/main";
 							}else{
 							console.log("실패");
 							 $("#loginChk").html("로그인 실패");
 							 $("#loginChk").css("color","red");
 							}
 						}
-						,error : function(e) {
+						,error : function(e) {  
 							console.log("실패");
 						}
 					});
@@ -255,6 +256,10 @@
 				location.href = "/styling/create";
 			   }
 		});
+		
+		$("#style").click(function(){
+			location.href = "/main";
+		});
 	});
 </script>
 
@@ -273,8 +278,11 @@
 						class="icon-bar"></span>
 				</button>
 				<h1
-					style="color: #009994; font-family: 'Permanent Marker', cursive; margin-bottom: 15px;">style
-					it</h1>
+					style="color: #009994; font-family: 'Permanent Marker', cursive; margin-bottom: 15px;">
+					<span id="style" style="cursor:pointer">
+					style it
+					</span>
+					</h1>
 			</div>
 			<div id="navbar" class="navbar-right">
 				<ul class="nav navbar-nav" style="font-size: 0.85em;">
@@ -282,10 +290,7 @@
 								src="/resources/image/main/hanger.png" style="width: 20px;"></span></a></li>
 
 
-					<c:if test="${!empty login }">
-						<li><a href="#">MYPAGE</a></li> 
-					</c:if>     
-					<c:if test="${login eq true }">
+					<c:if test="${login eq true }">   
 						<li><a href="javascript:void(0);" onclick="mypage();">MYPAGE</a></li>
 						<li><a href="javascript:void(0);" onclick="logout();">LOGOUT</a></li>
 					</c:if>

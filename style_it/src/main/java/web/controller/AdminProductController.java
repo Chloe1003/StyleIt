@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletContext;
 
@@ -153,12 +154,15 @@ public class AdminProductController {
 		logger.info(file.getContentType());
 		logger.info(String.valueOf(file.isEmpty()));
 		
+//		고유한 식별자
+		String uId = UUID.randomUUID().toString().split("-")[0];
+		
 		//저장될 파일 이름
 		String stored_name = null;
-		stored_name = file.getOriginalFilename();
+		stored_name = file.getOriginalFilename()+uId;
 		
 		//파일 저장 경로
-		String path = context.getRealPath("upload/image");
+		String path = context.getRealPath("upload");
 		
 		//저장될 파일
 		File dest = new File(path, stored_name);
@@ -176,7 +180,7 @@ public class AdminProductController {
 		
 		logger.info(upFile.toString());
 		
-		map.put("stored_name", upFile.getFu_storedname());
+		map.put("stored_name", upFile.getFu_storedname()+uId);
 		
 		logger.info("제품 : "+map);
 		aps.updateProduct(map);
@@ -224,12 +228,15 @@ public class AdminProductController {
 		logger.info(file.getContentType());
 		logger.info(String.valueOf(file.isEmpty()));
 		
+//		고유한 식별자
+		String uId = UUID.randomUUID().toString().split("-")[0];
+		
 		//저장될 파일 이름
 		String stored_name = null;
-		stored_name = file.getOriginalFilename();
+		stored_name = file.getOriginalFilename()+uId;
 		
 		//파일 저장 경로
-		String path = context.getRealPath("upload/image");
+		String path = context.getRealPath("upload");
 		
 		//저장될 파일
 		File dest = new File(path, stored_name);
@@ -247,7 +254,7 @@ public class AdminProductController {
 		
 		logger.info(upFile.toString());
 		
-		map.put("stored_name", upFile.getFu_storedname());
+		map.put("stored_name", upFile.getFu_storedname()+uId);
 		
 		logger.info("제품 : "+map);
 		aps.addProduct(map);

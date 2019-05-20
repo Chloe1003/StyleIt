@@ -29,7 +29,7 @@ public class MemberController {
 	@Autowired MemberService memberService;
 	@Autowired MypageService mypageService;	
 	
-	@RequestMapping("/home")
+	@RequestMapping("/main")
 	public void maingo() {
 	}
 //	회원가입
@@ -39,7 +39,7 @@ public class MemberController {
 		
 		memberService.memberInsert(member);
 		
-		return "redirect:/home";
+		return "redirect:/main";
 	}
 //	회원가입 중복처리
 	@RequestMapping(value = "/member/joincheck", method = RequestMethod.POST)
@@ -94,7 +94,7 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		
-		return "redirect:/home";
+		return "redirect:/main";
 	}
 //  맴버 페이지 이동
 	@RequestMapping (value = "/member/memberPage", method = RequestMethod.GET)
