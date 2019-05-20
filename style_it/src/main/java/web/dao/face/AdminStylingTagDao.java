@@ -25,4 +25,10 @@ public interface AdminStylingTagDao {
 	
 	//스타일링 태그 수정
 	public void stylingTagUpdate(HashMap<String, Object> map);
+	
+	//스타일링 태그 파일 수정
+	public void fileUploadUpdate(HashMap<String, Object> map);
+	
+	//스타일링 태그 파일 수정 넘버 
+	public int fileNo(HashMap<String, Object> map);
 }

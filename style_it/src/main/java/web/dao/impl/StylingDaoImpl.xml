@@ -96,7 +96,7 @@
   		select rownum rnum, B.* from(
   		select p.fu_no, f.fu_storedname from product p
 		inner join fileupload f on f.fu_no = p.fu_no
-  		where pca_no=#{pca_no}
+  		where pca_no=#{pca_no} and p_name like '%' || #{word} || '%' 
   		) B	order by rnum) R where rnum between #{paging.startNo} and #{paging.endNo}
   	</select>
   	
@@ -104,7 +104,7 @@
   		select count(*) from (
 		select p.fu_no, f.fu_storedname from product p
 		inner join fileupload f on f.fu_no = p.fu_no
-		where pca_no=#{pca_no})
+		where pca_no=#{pca_no} and p_name like '%' || #{word} || '%' ) 
   	</select>
   	
   	<insert id="fileUploadInsert" parameterType="HashMap">
@@ -121,9 +121,6 @@
   		insert into styling(s_no, m_no, s_name, s_content, fu_no, st_no, s_date)
   		values(styling_seq.nextval, #{m_no}, #{s_name}, #{s_content}, #{no}, #{st_no}, sysdate)
   	</insert>
-  	
-
-
 
 	<select id="selectProductByStylingNoLogin" parameterType="int" resultType="web.dto.Product">
 		SELECT s.s_no, s.p_no, p.p_name, p.p_price, b.pb_name, f.fu_storedname, 

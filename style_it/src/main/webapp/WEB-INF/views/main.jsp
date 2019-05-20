@@ -284,7 +284,7 @@ jQuery(document).ready(function ($) {
 		<div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:809px;height:150px;overflow:hidden;">
 			<c:forEach var="i" items="${todayStyling }" begin="0" end="${todayStyling.size()-1 }">
 				<div>
-		    		<img data-u="image" src="/upload/image/${i.FU_STOREDNAME }" />
+		    		<a href="/styling/view?s_no=${i.ST_NO }"><img data-u="image" src="/upload/${i.FU_STOREDNAME }" /></a>
 				</div>
 			</c:forEach>  
 		</div>
@@ -313,7 +313,7 @@ jQuery(document).ready(function ($) {
 		<div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:809px;height:150px;overflow:hidden;">
    			<c:forEach var="i" items="${bestProduct }" begin="0" end="${bestProduct.size()-1 }">
 				<div>
-		    		<img data-u="image" src="/upload/image/${i.FU_STOREDNAME }" />
+		    		<a href="shop/view?p_no=${i.P_NO }"><img data-u="image" src="/upload/${i.FU_STOREDNAME }" /></a>
 				</div>
 			</c:forEach>  
 		</div>

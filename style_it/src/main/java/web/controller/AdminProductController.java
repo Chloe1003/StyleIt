@@ -96,6 +96,8 @@ public class AdminProductController {
 		
 		//게시글목록 MODEL로 추가
 		model.addAttribute("productList", productList);
+		
+		model.addAttribute("map", map);
 	}
 	
 	// 제품 상세 보기

@@ -14,7 +14,6 @@
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
 
-
 <script type="text/javascript">
 
 function proc(result){
@@ -38,16 +37,18 @@ function proc(result){
 	});
 }
 
+
+
 function filter(curPage){
 	var data = $("#pca_category").val();
-	var search = $("#search").val()
+	var word = $("input[type='text'][name='search']").val();
 	console.log(data);
-	console.log(search);
+	console.log(word);
 	
 	if(!curPage)	curPage=0;
 		$.ajax ({
 		type: "get"
-			, url: "/styling/create/ajax?pca_no="+data+"&search="+search+"&curPage="+curPage
+			, url: "/styling/create/ajax?pca_no="+data+"&word="+word+"&curPage="+curPage
 			, data: { } //요청파라미터
 			, dataType: "html"
 			, success: function( res ){
@@ -55,12 +56,11 @@ function filter(curPage){
 				
 				$("#product").html(res);
 				
-// 				proc(res);
 			}
 			, error: function( e ) {
 				console.log("실패");
 			}
-		});
+		});  
 
 }
 
@@ -85,11 +85,17 @@ var cnt = 0;
 
 // 보기편하게 여러줄로 코딩
 $(document).ready(function() {
+	
+	$("#word").click(function(){
+		 filter();
+	});
+	
 	$( "#createStyle div" )
 	.draggable({
 	    containment : 'parent' // 부모요소 안에 종속   
 	})
 	.css( 'cursor', 'move' )
+	.css( 'cursor', 'e-resize')
 	.mousedown(function(){ // mousedown 이벤트 생성
 	    $(this).css('z-index', css_test_idx); // 클릭한 이미지만 z-index 증가시킴
 	    css_test_idx++;
@@ -221,7 +227,6 @@ html2canvas(document.getElementById('createStyle'), {
 				<hr>
 				<div id="tb">
 					<div id="product">
-					제품선택
 					</div>
 				</div>
 				<div id="paging" style="visibility: hidden;">
