@@ -45,16 +45,6 @@ public interface StylingDao {
 //	비로그인시 스타일링별 제품 정보 가져오기
 	public List<Product> selectProductByStylingNoLogin(int s_no);
 	
-//	콜렉션 추가
-	void CollectionInsert(int cs_no);
-//	콜렉션 제거
-	void CollectionDelete(int cs_no);
-//	스타일링 코맨트 등록
-	void CommentInsert(int s_no);
-//	스타일링 코멘트 제거
-	void CommentDelete(int s_no);
-//	스타일링 코맨트 리스트 
-	void getStylingCommentList(StylingComment sComment);
 	
 	// 스타일링 제품 카테고리 리스트
 	public List<ProductCategory> selectProductCategory();
@@ -72,6 +62,15 @@ public interface StylingDao {
 	public int fileUploadNo(HashMap<String, Object> map);
 	
 	public void selectStylingInsert(HashMap<String, Object> map);
+
+	// 코멘트 목록 가져오기
+	public List<StylingComment> selectComments(int s_no);
+
+	// 코멘트 삽입하기
+	void insertComment(HashMap<String, Object> map);
+
+	// 코멘트 삭제하기
+	void deleteComment(int co_no);
 
 	
 }

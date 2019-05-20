@@ -40,17 +40,6 @@ public interface StylingService {
 //	비로그인시 스타일링별 제품 정보 얻어오기
 	public List<Product> getProductByStylingNoLogin(int s_no);
 
-	//	콜렉션 추가
-	public void CollectionInsert(int cs_no);
-//	콜렉션 제거
-	public void CollectionDelete(int cs_no);
-//	스타일링 코맨트 등록
-	public void CommentInsert(int s_no);
-//	스타일링 코멘트 제거
-	public void CommentDelete(int s_no);
-//	스타일링 코맨트 리스트 
-	public void getStylingCommentList(StylingComment sComment);
-
 	// 스타일링 제품 카테고리 리스트
 	public List<ProductCategory> getProductCategory();
 	
@@ -62,6 +51,15 @@ public interface StylingService {
 	
 	// 스타일링 저장
 	public void stylingInsert(HashMap<String, Object> map);
+
+	// 코멘트 목록 가져오기
+	public List<StylingComment> getComments(int s_no);
+
+	// 코멘트 저장하기
+	public void addComment(HashMap<String, Object> map);
+
+	// 코멘트 삭제하기
+	public void deleteComment(int co_no);
 	
 	
 	

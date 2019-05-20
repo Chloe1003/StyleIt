@@ -3,11 +3,11 @@ package web.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
-import java.sql.Blob;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -25,16 +25,13 @@ import org.springframework.web.servlet.ModelAndView;
 import web.dto.FileUpload;
 import web.dto.Member;
 import web.dto.Product;
-
 import web.dto.ProductCategory;
-
-
 import web.dto.Styling;
+import web.dto.StylingComment;
 import web.dto.StylingLike;
 import web.dto.StylingTag;
 import web.service.face.MemberService;
 import web.service.face.StylingService;
-import web.util.Paging;
 import web.util.StylingPaging;
 
 @Controller
@@ -264,11 +261,13 @@ public class StylingController {
 			int make = s.getM_no();
 			Member maker = mServ.getMemberByMno(make);			
 			
-			List<Product> pList = sServ.getProductByStyling(map);
-
+			List<Product> pList = sServ.getProductByStyling(map);	
+			List<StylingComment> cList = sServ.getComments(s_no);
+			
 			model.addAttribute("styling", s);	
 			model.addAttribute("maker", maker);
 			model.addAttribute("product", pList);
+			model.addAttribute("cList", cList);
 			
 		} else { // 로그인 안되어 있을 때
 			logger.info("login false");
@@ -276,10 +275,13 @@ public class StylingController {
 			Styling s = sServ.getStylingViewNoLogin(s_no);
 			int make = s.getM_no();
 			Member maker = mServ.getMemberByMno(make);
+			List<StylingComment> cList = sServ.getComments(s_no);
+
 			
 			model.addAttribute("styling", s);
 			model.addAttribute("maker", maker);
 			model.addAttribute("product", sServ.getProductByStylingNoLogin(s_no));
+			model.addAttribute("cList", cList);
 
 		}
 
@@ -313,16 +315,44 @@ public class StylingController {
 		
 	}
 //	스타일링 댓글 입력
-	@RequestMapping(value = "/styling/comment", method = RequestMethod.POST)
-	public String StylingComment(HttpSession session, int s_no, StylingLike sLike) {
+	@RequestMapping(value = "/styling/addcomment", method = RequestMethod.POST)
+	public String addComment(HttpSession session, int s_no, String co_content, Model model) {
 		
-		return "redirect:/styling/view?s_no=\"+s_no;";
-	}
-//	컬렉션에 스타일링 추가하기
-	@RequestMapping(value = "/styling/colInsert", method = RequestMethod.GET)
-	public String CollectionInsert(int cs_no) {
+		logger.info("스타일링 댓글 추가");
+					
+		HashMap<String, Object> map = new HashMap<>();
 		
-		return "redirect:/styling/view";
+		int m_no = (int) session.getAttribute("m_no");
+		
+		map.put("m_no", m_no);
+		map.put("co_content", co_content);
+		map.put("s_no", s_no);
+		
+		sServ.addComment(map);
+		
+		
+		List<StylingComment> cList = sServ.getComments(s_no);
+
+		model.addAttribute("cList", cList);
+
+		
+		return "styling/comment";
 	}
+	
+	// 스타일링 댓글 삭제
+	@RequestMapping(value = "/styling/deletecomment", method = RequestMethod.GET)
+	public String deleteComment(HttpSession session, int s_no, int co_no, Model model) {
+		
+		logger.info("스타일링 댓글 삭제");
+		
+		sServ.deleteComment(co_no);
+		List<StylingComment> cList = sServ.getComments(s_no);
+
+		model.addAttribute("cList", cList);
+		
+		return "styling/comment";
+	}
+
+	
 	
 }

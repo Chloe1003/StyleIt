@@ -62,30 +62,7 @@ public class StylingServiceImpl implements StylingService{
 		return sDao.getStylingViewNoLogin(s_no);
 	}
 	
-	@Override
-	public void CollectionInsert(int cs_no) {
-		sDao.CollectionInsert(cs_no);
-	}
 
-	@Override
-	public void CollectionDelete(int cs_no) {
-		sDao.CollectionDelete(cs_no);
-	}
-
-	@Override
-	public void CommentInsert(int s_no) {
-		sDao.CommentInsert(s_no);
-	}
-
-	@Override
-	public void CommentDelete(int s_no) {
-		sDao.CommentDelete(s_no);
-	}
-
-	@Override
-	public void getStylingCommentList(StylingComment sComment) {
-		sDao.getStylingCommentList(sComment);
-	}
 
 	@Override
 	public List<Styling> getStylingListNoLogin(int st_no) {
@@ -127,5 +104,20 @@ public class StylingServiceImpl implements StylingService{
 		logger.info("impe MAP : "+map);
 		
 		sDao.selectStylingInsert(map);
+	}
+
+	@Override
+	public List<StylingComment> getComments(int s_no) {
+		return sDao.selectComments(s_no);
+	}
+
+	@Override
+	public void addComment(HashMap<String, Object> map) {
+		sDao.insertComment(map);
+	}
+
+	@Override
+	public void deleteComment(int co_no) {
+		sDao.deleteComment(co_no);
 	}
 }

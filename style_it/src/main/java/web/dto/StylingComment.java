@@ -10,6 +10,16 @@ public class StylingComment {
 	private String co_content;
 	private int  s_no;
 	
+//	----- join table --------
+	private String m_nick;
+	
+	
+	public String getM_nick() {
+		return m_nick;
+	}
+	public void setM_nick(String m_nick) {
+		this.m_nick = m_nick;
+	}
 	public int getCo_no() {
 		return co_no;
 	}
@@ -43,7 +53,7 @@ public class StylingComment {
 	@Override
 	public String toString() {
 		return "StylingComment [co_no=" + co_no + ", m_no=" + m_no + ", co_date=" + co_date + ", co_content="
-				+ co_content + ", s_no=" + s_no + "]";
+				+ co_content + ", s_no=" + s_no + ", m_nick=" + m_nick + "]";
 	}
 	
 	
