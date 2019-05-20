@@ -117,34 +117,6 @@ public class StylingController {
 		return mav;
 	}
 	
-	//스타일링 작성 AJAX
-//	@RequestMapping(value="/styling/create/ajax", method=RequestMethod.GET)
-//	public @ResponseBody List<HashMap> ajax(@RequestParam HashMap<String, Object> map,
-//			@RequestParam(defaultValue="0") int curPage) {
-//		
-//		logger.info("PRO  : "+map);
-//		StylingPaging paging;
-//		
-//		//총 게시글 수 얻기
-//		int totalCount = sServ.getSearchCount(map);  
-//		logger.info("총 수 : " + totalCount);
-//			
-//		//페이지 객체 생성
-//		paging = new StylingPaging(totalCount, curPage, 9, 5);
-//		logger.info("페이징 : "+ paging);
-//		
-//		//업로드된 파일 전체 조회
-////		map.put("startNo", paging.getStartNo());
-////		map.put("endNo", paging.getEndNo());
-//
-//		map.put("paging", paging);
-//		
-//		List<HashMap> pc = sServ.getProduct(map); 
-//		logger.info("PC : "+pc);
-//		
-//		
-//		return pc;
-//	}
 	// 스타일링 캔버스
 	@RequestMapping(value="/styling/canvas", method=RequestMethod.GET)
 	public void canvas() {

@@ -53,7 +53,12 @@ public class AdminStylingTagServiceImpl implements AdminStylingTagService {
 			astd.stylingTagUpdate(map);
 		} else {
 			logger.info("안비었당");
-			astd.fileUploadInsert(map);
+			int no2 = astd.fileNo(map);
+			logger.info("no2 : " + no2);
+			map.put("no2", no2);
+			
+			astd.fileUploadUpdate(map);
+			
 			int no = astd.fileUploadNo(map);
 			map.put("no", no);
 			astd.stylingTagUpdate(map);
