@@ -13,8 +13,8 @@
 							<c:if test="${cList.size()>0 }">
 							<c:forEach items="${cList }" var="c" begin="0" end="${cList.size()-1 }">
 							<tr>
-								<td id="replyElements"><h6 style="margin: 3px 0;">${c.m_nick }</h6></td>
-								<td id="replyElements"><h6 style="margin: 3px 0;">${c.co_content } <span style="font-size: 0.9em;color: #828282;"><fmt:formatDate value="${c.co_date }" pattern="yy.MM.dd/HH:mm"/></span></h6></td>
+								<td id="replyElements"><h6 style="margin:3px 0;">${c.m_nick }</h6></td>
+								<td id="replyElements"><h6 style="margin:3px 0;">${c.co_content } <span style="font-size: 0.9em;color: #828282;"><fmt:formatDate value="${c.co_date }" pattern="yy.MM.dd/HH:mm"/></span></h6></td>
 								<td id="replyElements"><c:if test="${c.m_no eq m_no }"><h6 onClick="replydelete(${c.co_no})" style="cursor: pointer;margin: 3px 0;">삭제</h6></c:if></td>
 							</tr>
 							</c:forEach>

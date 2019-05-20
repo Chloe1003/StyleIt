@@ -156,5 +156,10 @@
 		DELETE stylingcomment
 		WHERE co_no = #{co_no }
 	</delete>
+	
+	<select id="commentCnt" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM stylingcomment
+		WHERE s_no = #{s_no }
+	</select>
 
 </mapper>

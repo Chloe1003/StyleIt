@@ -263,11 +263,13 @@ public class StylingController {
 			
 			List<Product> pList = sServ.getProductByStyling(map);	
 			List<StylingComment> cList = sServ.getComments(s_no);
+			int commentcnt = sServ.commentCnt(s_no);
 			
 			model.addAttribute("styling", s);	
 			model.addAttribute("maker", maker);
 			model.addAttribute("product", pList);
 			model.addAttribute("cList", cList);
+			model.addAttribute("commentcnt", commentcnt);
 			
 		} else { // 로그인 안되어 있을 때
 			logger.info("login false");
@@ -276,12 +278,14 @@ public class StylingController {
 			int make = s.getM_no();
 			Member maker = mServ.getMemberByMno(make);
 			List<StylingComment> cList = sServ.getComments(s_no);
+			int commentcnt = sServ.commentCnt(s_no);
 
 			
 			model.addAttribute("styling", s);
 			model.addAttribute("maker", maker);
 			model.addAttribute("product", sServ.getProductByStylingNoLogin(s_no));
 			model.addAttribute("cList", cList);
+			model.addAttribute("commentcnt", commentcnt);
 
 		}
 

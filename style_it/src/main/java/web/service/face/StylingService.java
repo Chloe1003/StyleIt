@@ -60,6 +60,9 @@ public interface StylingService {
 
 	// 코멘트 삭제하기
 	public void deleteComment(int co_no);
+
+	// 코멘트 개수 가져오기
+	public int commentCnt(int s_no);
 	
 	
 	

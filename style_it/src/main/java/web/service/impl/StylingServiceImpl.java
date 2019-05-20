@@ -120,4 +120,9 @@ public class StylingServiceImpl implements StylingService{
 	public void deleteComment(int co_no) {
 		sDao.deleteComment(co_no);
 	}
+	
+	@Override
+	public int commentCnt(int s_no) {
+		return sDao.commentCnt(s_no);
+	}
 }

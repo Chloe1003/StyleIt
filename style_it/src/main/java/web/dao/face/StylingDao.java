@@ -72,5 +72,8 @@ public interface StylingDao {
 	// 코멘트 삭제하기
 	void deleteComment(int co_no);
 
+	// 코멘트 개수 세기
+	int commentCnt(int s_no);
+
 	
 }
