@@ -45,7 +45,7 @@
 	
 	<update id="stylingTagUpdate" parameterType="HashMap">
 		update stylingtag set st_name=#{st_name}, st_able=#{st_able}
-		where st_no=30
+		where st_no=#{st_no}
 	</update>
 	
 </mapper>

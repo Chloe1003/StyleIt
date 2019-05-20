@@ -96,15 +96,29 @@
   		select rownum rnum, B.* from(
   		select p.fu_no, f.fu_storedname from product p
 		inner join fileupload f on f.fu_no = p.fu_no
-  		where pca_no=#{pca_no} and p_name like '%' || #{word} || '%' 
-  		) B	order by rnum) R where rnum between #{paging.startNo} and #{paging.endNo}
+  		where 1=1
+  		<if test="pca_no != ''">
+  			and pca_no=#{pca_no}
+  		</if> 
+  		<if test="p_name != ''">
+  			and p_name like '%' || #{word} || '%'
+  		</if> 
+  		) B	order by rnum 
+  		) R where rnum between #{paging.startNo} and #{paging.endNo}
   	</select>
   	
   	<select id="selectSearchCount" resultType="int" parameterType="HashMap">
   		select count(*) from (
 		select p.fu_no, f.fu_storedname from product p
 		inner join fileupload f on f.fu_no = p.fu_no
-		where pca_no=#{pca_no} and p_name like '%' || #{word} || '%' ) 
+		where 1=1
+		<if test="pca_no != ''">
+		and pca_no=#{pca_no} 
+		</if> 
+		<if test="p_name != ''"> 
+		and p_name like '%' || #{word} || '%' 
+		</if>
+		)
   	</select>
   	
   	<insert id="fileUploadInsert" parameterType="HashMap">
@@ -134,5 +148,17 @@
         ON p.pb_no = b.pb_no
   		WHERE s.s_no = #{s_no }	
 	</select>
+	
+	<select id="selectStylingNo" parameterType="HashMap" resultType="int">
+		select s_no from styling where fu_no=#{no}
+	</select>
+	
+	<select id="selectProductNo" parameterType="HashMap" resultType="int">
+		select p_no from product where fu_no=#{funo}
+	</select>
+	
+	<insert id="selectStylingProductInsert" parameterType="HashMap">
+		insert into stylingproduct (sp_no, s_no, p_no) values(stylingproduct_seq.nextval, #{sno}, #{pno})
+	</insert>
 
 </mapper>

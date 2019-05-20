@@ -61,7 +61,7 @@ public interface StylingService {
 	public int getSearchCount(HashMap<String, Object> map);
 	
 	// 스타일링 저장
-	public void stylingInsert(HashMap<String, Object> map);
+	public void stylingInsert(HashMap<String, Object> map, int[] checked);
 	
 	
 	
