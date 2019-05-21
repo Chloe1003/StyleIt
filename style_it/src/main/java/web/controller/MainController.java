@@ -55,7 +55,7 @@ public class MainController {
 		logger.info("word : "+word);
 		if( word != null) {
 			//총 게시글 수 얻기
-			int totalCount = mainService.getSearchCount(map);  
+			int totalCount = mainService.getSearchCount(map);
 			logger.info("총 수 : " + totalCount);
 				
 			//페이지 객체 생성
@@ -65,6 +65,8 @@ public class MainController {
 			//업로드된 파일 전체 조회
 			map.put("startNo", paging.getStartNo());
 			map.put("endNo", paging.getEndNo());
+			
+			logger.info("MAP : "+map);
 			
 			faqList = mainService.getFaqList(map);
 			
@@ -85,6 +87,7 @@ public class MainController {
 		
 		model.addAttribute("paging", paging);
 		model.addAttribute("faqList", faqList);
+		model.addAttribute("word", word);
 	}
 	
 	// 게시글 수정 AJAX
