@@ -283,7 +283,7 @@ object-fit: contain;
 			<div class="likecnt" id="likecnt">${styling.cntslike }</div>
 			
 			<div class="comment" onclick="comment(${styling.s_no })"></div>
-			<div class="collection"></div><span>컬렉션에 추가</span>
+<!-- 			<div class="collection"></div><span>컬렉션에 추가</span> -->
 		</div>
 
 		<div class="info-divider"></div>
@@ -295,7 +295,7 @@ object-fit: contain;
 				<div>${maker.m_nick }</div>
 			</div>
 			<div style="margin-top: 7px;">
-				<div class="follow">FOLLOW</div>
+				<div class="follow" id="follow">FOLLOW</div>
 			</div>
 		</div>
 	</div>

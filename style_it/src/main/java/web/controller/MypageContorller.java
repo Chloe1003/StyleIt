@@ -34,10 +34,13 @@ import web.dto.Product;
 import web.dto.ProductBrand;
 import web.dto.ProductCategory;
 import web.dto.ProductColor;
+import web.dto.ProductLike;
 import web.dto.ProductOccasion;
 import web.dto.ProductPattern;
 import web.dto.ProductStyle;
 import web.dto.QuizQuestion;
+import web.dto.Styling;
+import web.dto.StylingLike;
 import web.service.face.MypageService;
 
 
@@ -71,7 +74,10 @@ public class MypageContorller {
 		int countLike = mypageService.getCoLike(member);
 		model.addAttribute("countLike", countLike);
 		
+		
 		List<Member> followList = mypageService.getFollowList(m_no);
+		
+		logger.info("test");
 		
 		model.addAttribute("followList", followList);
 		System.out.println(followList);
@@ -176,16 +182,19 @@ public class MypageContorller {
 		
 		return "jsonView";
 	}
-//	본인이 만든 모든 스타일링리스트
-	@RequestMapping(value = "/mypage/stylinglist")
-	public void MypageStylingList(Model model) {
-		
-	}
+	
 //	마이페이지에서 보는 본인이 체크한 상품 좋아요 리스트
 	@RequestMapping(value = "/mypage/Productlikelist")
-	public void ProLikeList(Model model, int m_no) {
+	public void ProLikeList(Model model, HttpSession session) {
+		
+		int m_no = (int) session.getAttribute("m_no");
+		
 		List<Product> ProLikeList = mypageService.getProLikeList(m_no);
 		model.addAttribute("ProLikeList", ProLikeList);
+		
+		int countProduct = mypageService.getCountProduct(m_no);
+		logger.info("countProduct : "+countProduct);
+		model.addAttribute("countProduct", countProduct);
 		
 	}
 	
@@ -195,7 +204,7 @@ public class MypageContorller {
 	@RequestMapping(value = "/mypage/styling")
 	public String MypageStyling(HttpSession session, Model model) {
 		
-		return null;
+		return "mypage/styling";
 	}
 //	본인이 만든 모든 컬렉션리스트
 	@RequestMapping(value = "/mypage/allcollectionlist")
@@ -268,7 +277,61 @@ public class MypageContorller {
 		return "redirect:/mypage/recommend";
 	}
 	
+	/////////////////
 	
+//	마이페이지에서 보는 본인이 체크한 제품 좋아요 리스트
+//	@RequestMapping(value = "/mypage/productlikelist")
+//	public void ProductLikeList(Model model, HttpSession session) {
+//		
+//		List<ProductLike> pKList = new ArrayList<>();
+//		int m_no = (int) session.getAttribute("m_no");
+//		
+//		pKList = mypageService.getProductLikeList();
+//		logger.info("pKList : "+pKList);
+//		model.addAttribute("pKList", pKList);
+//		
+//		int countProduct = mypageService.getCountProduct(m_no);
+//		logger.info("countProduct : "+countProduct);
+//		model.addAttribute("countProduct", countProduct);
+//		
+//
+//		
+//	}
+	
+//	마이페이지에서 보는 본인이 체크한 스타일링 좋아요 리스트
+	@RequestMapping(value = "/mypage/stylinglikelist")
+	public void StylingLikeList(Model model) {
+		
+		List<StylingLike> sKList = new ArrayList<>();
+		
+		sKList = mypageService.getStylingLikeList();
+		
+		model.addAttribute("sKList", sKList);
+		
+	}
+	
+	
+	
+//	본인이 만든 모든 스타일링리스트
+	@RequestMapping(value = "/mypage/stylinglist")
+	public void MypageStylingList(Model model, Styling st, HttpSession session) {
+		
+		logger.info("st : "+st);
+		logger.info("stylinglist");
+		logger.info("session : "+session.getAttribute("m_no"));
+		int m_no = (int) session.getAttribute("m_no");
+		
+		List<Styling> sList = mypageService.getStylingList(m_no);
+		logger.info("stylinglist2 : "+sList);
+		model.addAttribute("sList", sList);
+		
+		int countStyling = mypageService.getCountStyling(m_no);
+		logger.info("countStyling : "+countStyling);
+		model.addAttribute("countStyling", countStyling);
+		
+		
+		
+	}	
 	
 	
 	

@@ -18,7 +18,7 @@
 			<!-- 인터셉터 처리되는 URL -->
 			<mapping path="/admin/**" />
 			<!-- 인터셉터 제외 URL -->
-<!-- 			<exclude-mapping path="/admin/adminFail" /> -->
+			<exclude-mapping path="/faq" />
 			<!-- 인터셉터 빈 등록 -->
 			<beans:bean class="web.interceptor.AdminInterceptor" />
 		</interceptor>

@@ -70,10 +70,10 @@ public class Member {
 	public void setFu_no(int fu_no) {
 		this.fu_no = fu_no;
 	}
-	public String getFu_storedname() {
+	public String getfu_storedname() {
 		return fu_storedname;
 	}
-	public void setFu_storedName(String fu_storedname) {
+	public void setfu_storedname(String fu_storedname) {
 		this.fu_storedname = fu_storedname;
 	}
 	public int getFollower_no() {

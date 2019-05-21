@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import web.dto.Banner;
+import web.dto.Faq;
 import web.dto.Styling;
+import web.util.Paging;
 
 public interface MainService {
 	
@@ -17,20 +19,21 @@ public interface MainService {
 	
 	// 인기제품 리스트 가져오기
 	public List<HashMap> getBestProduct();
+	
+	// FAQ리스트 가져오기
+	public List<HashMap> getFaqList(HashMap<String, Object> map);
 
-//	// 배너 추가하기
-//	public void bannerWrite(HttpServletRequest req);
-//
-//	// bannerno 가져오기
-//	public int getBannerNo();
-//
-//	// 배너 정보 가져오기
-//	public MainBanner getBanner(int bannerno);
-//
-//	// 배너 정보 수정하기
-//	public void updateBanner(HttpServletRequest req);
-//
-//	// 배너 정보 삭제하기
-//	public void del(int parseInt);
-
+	// 게시글 본문 찾기
+	public Faq fal(Faq faq);
+	
+	//검색 게시글 얻기
+	public int getSearchCount(HashMap<String, Object> map);
+	
+	// 총 게시물 수 얻기
+	public int getTotalCount();
+	
+	// FAQ 전체 리스트
+	public List<HashMap> getPagingFaqList(Paging paging);
 }
+
+

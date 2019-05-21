@@ -143,7 +143,7 @@ public class StylingController {
 			
 			//저장될 파일 이름
 			String stored_name = null;
-			stored_name = map.get("s_name")+".png"+uId;
+			stored_name = map.get("s_name")+uId+".png";
 			logger.info("stored_name : "+stored_name);
 			
 			//파일 저장 경로
@@ -163,7 +163,7 @@ public class StylingController {
 			
 			int m_no = (int) session.getAttribute("m_no");
 			
-			map.put("stored_name", stored_name+uId);
+			map.put("stored_name", stored_name);
 			map.put("m_no", m_no);
 			logger.info("MAP  : " + map);
 			

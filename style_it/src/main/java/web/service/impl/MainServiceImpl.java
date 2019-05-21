@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import web.dao.face.MainDao;
 import web.dto.Banner;
+import web.dto.Faq;
 import web.dto.Styling;
 import web.service.face.MainService;
+import web.util.Paging;
 
 @Service 
 public class MainServiceImpl implements MainService {
@@ -31,6 +33,29 @@ public class MainServiceImpl implements MainService {
 		return mainDao.selectBestProduct();
 	}
 
-		
+	@Override
+	public List<HashMap> getFaqList(HashMap<String, Object> map) {
+		return mainDao.selectFaqList(map);
+	}
+
+	@Override
+	public Faq fal(Faq faq) {
+		return mainDao.fal(faq);
+	}
+
+	@Override
+	public int getSearchCount(HashMap<String, Object> map) {
+		return mainDao.selectSearchCount(map);
+	}
+
+	@Override
+	public int getTotalCount() {
+		return mainDao.selectCntFaq();
+	}
+
+	@Override
+	public List<HashMap> getPagingFaqList(Paging paging) {
+		return mainDao.selectPagingList(paging);
+	}
 	
 }

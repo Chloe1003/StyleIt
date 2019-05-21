@@ -5,6 +5,52 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <style>
+.button {
+	
+	margin-left:10%;
+    display: block;
+    width: 150px;
+    height: 40px;
+    background: #d63c00;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.productlike{
+	position: relative;
+    height: 500px;
+    width: 100%;
+    background-color: white;
+
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+
+    flex-direction: column;
+    -webkit-box-pack: justify;
+
+/*     justify-content: space-between; */
+    -webkit-box-align: center;
+
+    align-items: center;
+
+}
+.p-header{
+    font-size: 16px;
+    line-height: 16px;
+    text-transform: uppercase;
+    color: #333;
+    height: 40px;
+    display: flex;
+    -webkit-box-pack: center;
+    /* justify-content: center; */
+    -webkit-box-align: center;
+    align-items: center;
+    margin: 20px 5px;
+}
 .frame{
     width: 80%;
     margin-left: auto;
@@ -103,7 +149,12 @@ object-fit: contain;
 
 </style>
 
-
+<a class="button" href= "/shop/list" style="color:white;">+ 제품 더보기</a>  
+<div class="productlike">
+<div class="p-header">나의 좋아요 한 제품 수  / <span style="position: relative; left: 7px; font-size: 15px; font-weight: bold;">
+								${countProduct } 개</span></div>
+							
+           
 <div class="frame" id="frame">
 <c:forEach items="${ProLikeList }" var="p">
 <div id="block">
@@ -124,6 +175,7 @@ object-fit: contain;
 	</div>
 </div>
 </c:forEach>
+</div>  
 </div>
 <br><br>
 
