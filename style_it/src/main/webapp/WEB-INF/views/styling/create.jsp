@@ -14,7 +14,6 @@
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
 
-
 <script type="text/javascript">
 
 function proc(result){
@@ -34,20 +33,21 @@ function proc(result){
 		str += '<td>' + item.FU_NO + '</td>';
 		$('table').append(str);
 		
-    
 	});
 }
 
+
+
 function filter(curPage){
 	var data = $("#pca_category").val();
-	var search = $("#search").val()
+	var word = $("input[type='text'][name='search']").val();
 	console.log(data);
-	console.log(search);
+	console.log(word);
 	
 	if(!curPage)	curPage=0;
 		$.ajax ({
 		type: "get"
-			, url: "/styling/create/ajax?pca_no="+data+"&search="+search+"&curPage="+curPage
+			, url: "/styling/create/ajax?pca_no="+data+"&word="+word+"&curPage="+curPage
 			, data: { } //요청파라미터
 			, dataType: "html"
 			, success: function( res ){
@@ -55,12 +55,11 @@ function filter(curPage){
 				
 				$("#product").html(res);
 				
-// 				proc(res);
 			}
 			, error: function( e ) {
 				console.log("실패");
 			}
-		});
+		});  
 
 }
 
@@ -85,6 +84,11 @@ var cnt = 0;
 
 // 보기편하게 여러줄로 코딩
 $(document).ready(function() {
+	
+	$("#word").click(function(){
+		 filter();
+	});
+	
 	$( "#createStyle div" )
 	.draggable({
 	    containment : 'parent' // 부모요소 안에 종속   
@@ -99,7 +103,12 @@ $(document).ready(function() {
 	
 	//이미지 복사
 	//원본 이미지 클릭시
-	$("#product").on("click", "[id^='Clone']", function() {  
+	$("#product").on("click", "[id^='Clone']", function() {
+		
+		var b = "";
+		b = b + $(this).attr("data-value") + ",";
+		console.log("b : "+b);
+		
 		cnt += 1; 
 		var a = $(this).clone()
 		.draggable({containment : 'parent'})
@@ -109,15 +118,17 @@ $(document).ready(function() {
 	    css_test_idx++;
 	    // 그러면 이미지가 겹칠경우 클릭한 것이 항상 위에 표시됨
 		});
-
 		a.attr("id","dumy"+cnt) //id에 숫자부여 
 		.appendTo("#createStyle"); //createStyle에 추가
 		a.find('button').eq(0).removeAttr("disabled"); //속성에 disabled 삭제
 		a.find('img').attr("style", "visibility : visible"); //버튼 보이기
+		a.find('input[type="checkbox"]').attr("checked", true);  
 		
-		return cnt
+		return cnt;
 	});
 });
+
+
 
 
 function SAVE() {   
@@ -126,6 +137,18 @@ var s_name = $("#s_name").val();
 var s_content = $("#s_content").val();
 var st_no = $("#st_no").val();
 console.log("st_no : "+ st_no);
+var checked = "";
+//선택된 라디오박스 val 담는 변수
+
+$( "input[name='check']:checked" ).each (function (){
+   checked = checked + $(this).attr("data-value")+"," ;
+   //var checked에 라디오박스 val 담기
+});
+
+checked = checked.substring(0,checked.lastIndexOf( ","))
+   //맨뒤의 ,(컴마) 지우기
+console.log(checked)
+
 var background = document.getElementById('createStyle').style.background;
 if(background == "") {
     document.getElementById('createStyle').style.background = "#fff"; 
@@ -143,7 +166,7 @@ html2canvas(document.getElementById('createStyle'), {
         	
         	$.ajax({
         	    type: 'POST'
-    			, url: "/styling/canvas/ajax?s_name="+s_name+"&s_content="+s_content+"&st_no="+st_no
+    			, url: "/styling/canvas/ajax?s_name="+s_name+"&s_content="+s_content+"&st_no="+st_no+"&checked="+checked
         	    , data: fd
         	    , processData: false
         	    , contentType: false
@@ -221,7 +244,6 @@ html2canvas(document.getElementById('createStyle'), {
 				<hr>
 				<div id="tb">
 					<div id="product">
-					제품선택
 					</div>
 				</div>
 				<div id="paging" style="visibility: hidden;">

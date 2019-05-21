@@ -6,11 +6,21 @@ public class Faq {
     private String faq_name;
     private String faq_answer;    
     private int faqct_no;
+    private String faqct_name;
     
+
 	@Override
 	public String toString() {
 		return "Faq [faq_no=" + faq_no + ", faq_name=" + faq_name + ", faq_answer=" + faq_answer + ", faqct_no="
-				+ faqct_no + "]";
+				+ faqct_no + ", faqct_name=" + faqct_name + "]";
+	}
+
+	public String getFaqct_name() {
+		return faqct_name;
+	}
+	
+	public void setFaqct_name(String faqct_name) {
+		this.faqct_name = faqct_name;
 	}
 
 	public int getFaq_no() {

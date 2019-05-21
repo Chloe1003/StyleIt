@@ -5,7 +5,12 @@ import java.util.List;
 
 
 import web.dto.FileUpload;
+import web.dto.Follow;
 import web.dto.Member;
+
+import web.dto.MemberQuiz;
+import web.dto.Product;
+
 import web.dto.ProductLike;
 
 import web.dto.MemberQuiz;
@@ -18,6 +23,8 @@ import web.dto.ProductOccasion;
 import web.dto.ProductPattern;
 import web.dto.ProductStyle;
 import web.dto.QuizQuestion;
+import web.dto.Styling;
+import web.dto.StylingLike;
 
 public interface MypageDao {
 	
@@ -47,10 +54,16 @@ public interface MypageDao {
 	public int getCoCollection(Member member);
 //	체크한 모든 좋아요 숫자
 	public int getCoLike(Member member);
-	
-	
 //	팔로우 리스트
-	public List getFollowList();
+	public List<Member> getFollowList(int m_no);
+//	팔로잉 리스트
+	public List<Member> getFollowingList(int m_no);
+//	좋아요한 상품 리스트
+	public List<Product> getProLikeList(int m_no);
+//	유저가 좋아요 한 상품 리스트
+	public List<Product> getMemProLikeList(int m_no);
+	
+	
 //	팔로잉 리스트
 	public List getFollowingList();
 //	본인이 좋아요한 스타일 리스트
@@ -116,6 +129,29 @@ public interface MypageDao {
 
 //	추천 상품 리스트 가져오기
 	public List<Product> selectRecommendProduct(MemberQuizSet mq);
+	
+	//---------yoon---------//
+	
+	//제품 좋아요 리스트 가져오기
+	public List<ProductLike> getProductLikeList();
+	
+	//스타일링 좋아요 리스트 가져오기
+	public List<StylingLike> getStylingLikeList();
+	
+	public List<Styling> getStylingList(int m_no);
+	
+	//마이페이지 내가 좋아요한 스타일링 수
+	public int selectCountStyling(int m_no);
+	
+	//마이페이지 내가 좋아요한 제품 수
+	public int selectCountProduct(int m_no);
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

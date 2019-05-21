@@ -5,11 +5,11 @@ import java.util.List;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
-
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import web.dto.FileUpload;
+import web.dto.Follow;
 import web.dto.Member;
+import web.dto.Product;
+import web.service.face.MemberService;
 import web.service.face.MypageService;
 
 import web.dto.MemberQuiz;
@@ -32,27 +34,30 @@ import web.dto.Product;
 import web.dto.ProductBrand;
 import web.dto.ProductCategory;
 import web.dto.ProductColor;
+import web.dto.ProductLike;
 import web.dto.ProductOccasion;
 import web.dto.ProductPattern;
 import web.dto.ProductStyle;
 import web.dto.QuizQuestion;
+import web.dto.Styling;
+import web.dto.StylingLike;
 import web.service.face.MypageService;
 
 
 @Controller
 public class MypageContorller {
 	@Autowired MypageService mypageService;	
+	@Autowired MemberService memberService;
 	@Autowired ServletContext context;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MypageContorller.class);
 	
 //	마이페이지 이동
 	@RequestMapping("/mypage/mypage")
-	public void mypagego(Model model, Member member) {
+	public void mypagego(Model model, Member member, int m_no, Follow f) {
 		
 //		회원정보 뿌리기
 		model.addAttribute("mypage", mypageService.getUserInfo(member));
-		
 //		팔로우 숫자 뿌리기
 		int countFollower = mypageService.getFollower(member);
 		model.addAttribute("countFollower", countFollower);
@@ -65,9 +70,17 @@ public class MypageContorller {
 //		본인이 만든 컬렉션 숫자 뿌리기
 		int countCollection = mypageService.getCoCollection(member);
 		model.addAttribute("countCollection", countCollection);
-//		본인이 체크한 모든 좋아요 숫자 뿌리기
+//		본인이 체크한 모든 좋아요 숫자 뿌리기 -> 이건 문제있음 체크해야함
 		int countLike = mypageService.getCoLike(member);
 		model.addAttribute("countLike", countLike);
+		
+		
+		List<Member> followList = mypageService.getFollowList(m_no);
+		
+		logger.info("test");
+		
+		model.addAttribute("followList", followList);
+		System.out.println(followList);
 		
 	}
 //	현재 아이디 비밀번호 확인
@@ -129,8 +142,6 @@ public class MypageContorller {
 		}
 		fu.setFu_storedname(fu_storedName);
 		
-		
-		
 		logger.info(fu.toString());
 //		다음번호 미리 가져와기
 		int fu_no = mypageService.dualNo();
@@ -146,7 +157,6 @@ public class MypageContorller {
 		
 //		먼저 인서트하고 그다음에 유저 fu_no를 업데이트 해준다!
 	}
-	
 //	회원탈퇴
 	@RequestMapping(value = "/mypage/deleteUser", method = RequestMethod.POST)
 	public String deleteUser(Member member, HttpSession session) {
@@ -158,35 +168,43 @@ public class MypageContorller {
 		return "redirect:/home";
 		
 	}
-	
-//	팔로우 리스트 
-	@RequestMapping(value = "/mypage/followlist")
-	public void FollowList(Model model) {
-		
-		
-		
-		
-	}
 //	팔로잉 리스트
-	@RequestMapping(value = "/mypage/followinglist")
-	public String FollowingList(Model model) {
-		return null;
+	@RequestMapping(value = "/mypage/followinglist", method = RequestMethod.GET )
+	public String FollowingList(Model model,  int m_no, Member member) {
+		
+		List<Member> followingList = mypageService.getFollowingList(m_no);
+		int countFollowee = mypageService.getFollowee(member);
+		
+			Map map = new HashMap();
+			map.put("followingList", followingList);
+			map.put("countFollowee", countFollowee);
+			model.addAllAttributes(map); 
+		
+		return "jsonView";
 	}
-//	마이페이지에서 보는 본인이 체크한 모든 좋아요 리스트
-	@RequestMapping(value = "/mypage/alllikelist")
-	public void AllLikeList(Model model) {
+	
+//	마이페이지에서 보는 본인이 체크한 상품 좋아요 리스트
+	@RequestMapping(value = "/mypage/Productlikelist")
+	public void ProLikeList(Model model, HttpSession session) {
+		
+		int m_no = (int) session.getAttribute("m_no");
+		
+		List<Product> ProLikeList = mypageService.getProLikeList(m_no);
+		model.addAttribute("ProLikeList", ProLikeList);
+		
+		int countProduct = mypageService.getCountProduct(m_no);
+		logger.info("countProduct : "+countProduct);
+		model.addAttribute("countProduct", countProduct);
 		
 	}
-//	본인이 만든 모든 스타일링리스트
-	@RequestMapping(value = "/mypage/stylinglist")
-	public void MypageStylingList(Model model) {
-		
-	}
+	
+	
+	
 //	스타일링 작성 수정 삭제 
 	@RequestMapping(value = "/mypage/styling")
 	public String MypageStyling(HttpSession session, Model model) {
 		
-		return null;
+		return "mypage/styling";
 	}
 //	본인이 만든 모든 컬렉션리스트
 	@RequestMapping(value = "/mypage/allcollectionlist")
@@ -259,7 +277,61 @@ public class MypageContorller {
 		return "redirect:/mypage/recommend";
 	}
 	
+	/////////////////
 	
+//	마이페이지에서 보는 본인이 체크한 제품 좋아요 리스트
+//	@RequestMapping(value = "/mypage/productlikelist")
+//	public void ProductLikeList(Model model, HttpSession session) {
+//		
+//		List<ProductLike> pKList = new ArrayList<>();
+//		int m_no = (int) session.getAttribute("m_no");
+//		
+//		pKList = mypageService.getProductLikeList();
+//		logger.info("pKList : "+pKList);
+//		model.addAttribute("pKList", pKList);
+//		
+//		int countProduct = mypageService.getCountProduct(m_no);
+//		logger.info("countProduct : "+countProduct);
+//		model.addAttribute("countProduct", countProduct);
+//		
+//
+//		
+//	}
+	
+//	마이페이지에서 보는 본인이 체크한 스타일링 좋아요 리스트
+	@RequestMapping(value = "/mypage/stylinglikelist")
+	public void StylingLikeList(Model model) {
+		
+		List<StylingLike> sKList = new ArrayList<>();
+		
+		sKList = mypageService.getStylingLikeList();
+		
+		model.addAttribute("sKList", sKList);
+		
+	}
+	
+	
+	
+//	본인이 만든 모든 스타일링리스트
+	@RequestMapping(value = "/mypage/stylinglist")
+	public void MypageStylingList(Model model, Styling st, HttpSession session) {
+		
+		logger.info("st : "+st);
+		logger.info("stylinglist");
+		logger.info("session : "+session.getAttribute("m_no"));
+		int m_no = (int) session.getAttribute("m_no");
+		
+		List<Styling> sList = mypageService.getStylingList(m_no);
+		logger.info("stylinglist2 : "+sList);
+		model.addAttribute("sList", sList);
+		
+		int countStyling = mypageService.getCountStyling(m_no);
+		logger.info("countStyling : "+countStyling);
+		model.addAttribute("countStyling", countStyling);
+		
+		
+		
+	}	
 	
 	
 	

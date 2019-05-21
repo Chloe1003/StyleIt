@@ -3,8 +3,12 @@ package web.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+
+import java.sql.Blob;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -114,34 +118,6 @@ public class StylingController {
 		return mav;
 	}
 	
-	//스타일링 작성 AJAX
-//	@RequestMapping(value="/styling/create/ajax", method=RequestMethod.GET)
-//	public @ResponseBody List<HashMap> ajax(@RequestParam HashMap<String, Object> map,
-//			@RequestParam(defaultValue="0") int curPage) {
-//		
-//		logger.info("PRO  : "+map);
-//		StylingPaging paging;
-//		
-//		//총 게시글 수 얻기
-//		int totalCount = sServ.getSearchCount(map);  
-//		logger.info("총 수 : " + totalCount);
-//			
-//		//페이지 객체 생성
-//		paging = new StylingPaging(totalCount, curPage, 9, 5);
-//		logger.info("페이징 : "+ paging);
-//		
-//		//업로드된 파일 전체 조회
-////		map.put("startNo", paging.getStartNo());
-////		map.put("endNo", paging.getEndNo());
-//
-//		map.put("paging", paging);
-//		
-//		List<HashMap> pc = sServ.getProduct(map); 
-//		logger.info("PC : "+pc);
-//		
-//		
-//		return pc;
-//	}
 	// 스타일링 캔버스
 	@RequestMapping(value="/styling/canvas", method=RequestMethod.GET)
 	public void canvas() {
@@ -149,23 +125,28 @@ public class StylingController {
 	
 	// 스타일링 캔버스
 	@RequestMapping(value="/styling/canvas/ajax", method=RequestMethod.POST)
-	public @ResponseBody HashMap<String, Object> canvas_ajax(MultipartFile data, FileUpload upFile, @RequestParam HashMap<String, Object> map, HttpSession session) {
+	public @ResponseBody HashMap<String, Object> canvas_ajax(MultipartFile data, FileUpload upFile, 
+			@RequestParam HashMap<String, Object> map, HttpSession session, int[] checked) {
 			
 			logger.info("파일업로드");        
 			logger.info("ST : "+map);
 			logger.info("Title : "+map.get("s_name")+".png");
+			logger.info("Checked : "+Arrays.toString(checked));
 			logger.info(data.toString());
 			logger.info(String.valueOf(data.getSize()));
 			logger.info(data.getContentType());
 			logger.info(String.valueOf(data.isEmpty()));
 			
+//			고유한 식별자
+			String uId = UUID.randomUUID().toString().split("-")[0];
+			
 			//저장될 파일 이름
 			String stored_name = null;
-			stored_name = map.get("s_name")+".png";
+			stored_name = map.get("s_name")+uId+".png";
 			logger.info("stored_name : "+stored_name);
 			
 			//파일 저장 경로
-			String path = context.getRealPath("upload/image");
+			String path = context.getRealPath("upload");
 			
 			//저장될 파일
 			File dest = new File(path, stored_name);
@@ -185,7 +166,7 @@ public class StylingController {
 			map.put("m_no", m_no);
 			logger.info("MAP  : " + map);
 			
-			sServ.stylingInsert(map);
+			sServ.stylingInsert(map, checked);
 			
 		return map;
 	}
@@ -257,14 +238,24 @@ public class StylingController {
 			map.put("m_no", m_no);
 			map.put("s_no", s_no);
 			
+			logger.info("m_no : "+m_no);
+			logger.info("s_no : "+s_no);
+			
 			Styling s = sServ.getStylingView(map);
 			int make = s.getM_no();
 			Member maker = mServ.getMemberByMno(make);			
+
 			
 			List<Product> pList = sServ.getProductByStyling(map);	
 			List<StylingComment> cList = sServ.getComments(s_no);
 			int commentcnt = sServ.commentCnt(s_no);
 			
+
+			logger.info("s1 :  : : : ");
+			List<Product> pList = sServ.getProductByStyling(map);
+
+			logger.info("s2 :  : : : ");
+
 			model.addAttribute("styling", s);	
 			model.addAttribute("maker", maker);
 			model.addAttribute("product", pList);
@@ -275,11 +266,14 @@ public class StylingController {
 			logger.info("login false");
 
 			Styling s = sServ.getStylingViewNoLogin(s_no);
+			logger.info("s :  : : : ");
 			int make = s.getM_no();
+			logger.info("make :  : : : ");
 			Member maker = mServ.getMemberByMno(make);
 			List<StylingComment> cList = sServ.getComments(s_no);
 			int commentcnt = sServ.commentCnt(s_no);
 
+			
 			
 			model.addAttribute("styling", s);
 			model.addAttribute("maker", maker);

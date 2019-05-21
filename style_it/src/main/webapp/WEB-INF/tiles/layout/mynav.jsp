@@ -12,11 +12,10 @@
       <div class="container">
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-center">
-              <li class="navlist"><a href="#" style="color:#777;">MY</a></li>
-              <li class="navlist"><a href="#" style="color:#777;">STYLING</a></li>
-              <li class="navlist"><a href="#" style="color:#777;">LIKE</a></li>
-              <li class="navlist"><a href="#" style="color:#777;">COLLECTION</a></li>
-              <li class="navlist"><a href="/mypage/recommend" style="color:#777;">FOR YOU</a></li>	 
+              <li class="navlist"><a href="/mypage/mypage?m_no=${m_no }" style="color:#777;">MY</a></li>
+              <li class="navlist"><a href="/mypage/stylinglist" style="color:#777;">STYLING</a></li>
+              <li class="navlist"><a href="/mypage/Productlikelist?m_no=${m_no }" style="color:#777;">LIKE</a></li>
+              <li class="navlist"><a href="/mypage/recommend?m_no=${m_no }" style="color:#777;">FOR YOU</a></li>	 
            </ul>
         </div><!--/.nav-collapse -->
       </div>

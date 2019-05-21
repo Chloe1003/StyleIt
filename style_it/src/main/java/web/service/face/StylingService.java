@@ -63,6 +63,9 @@ public interface StylingService {
 
 	// 코멘트 개수 가져오기
 	public int commentCnt(int s_no);
+
+	public void stylingInsert(HashMap<String, Object> map, int[] checked);
+
 	
 	
 	

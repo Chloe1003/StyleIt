@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 매퍼 설정 -->
+<mapper namespace="web.dao.face.FileDao">
+
+	<insert id="insert" parameterType="web.dto.UploadFile">
+		INSERT INTO uploadfile(fileno,origin_name,stored_name,file_size)
+		VALUES ( seq_uploadfile.nextval, #{origin_name }, #{stored_name }, #{file_size })
+	</insert>
+	
+	<select id="selectAll" resultType="web.dto.UploadFile">
+		SELECT * FROM uploadfile
+		ORDER BY fileno
+	</select>
+	
+	<select id="selectByFileno"
+	 parameterType="int" resultType="web.dto.UploadFile">
+		SELECT * FROM uploadfile
+		WHERE fileno = #{fileno }	
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

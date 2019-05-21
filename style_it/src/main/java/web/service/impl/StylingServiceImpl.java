@@ -97,13 +97,21 @@ public class StylingServiceImpl implements StylingService{
 	}
 
 	@Override
-	public void stylingInsert(HashMap<String, Object> map) {
+	public void stylingInsert(HashMap<String, Object> map, int[] checked) {
 		sDao.fileUploadInsert(map);
 		int no = sDao.fileUploadNo(map);
 		map.put("no", no);
 		logger.info("impe MAP : "+map);
-		
 		sDao.selectStylingInsert(map);
+		int sno = sDao.selectStylingNo(map);
+		map.put("sno", sno);
+		for (int i=0; i<checked.length; i++) {
+			int funo = checked[i];
+			map.put("funo", funo);
+			int pno = sDao.selectProductNo(map);
+			map.put("pno", pno);
+			sDao.selectStylingProductInsert(map);
+		}
 	}
 
 	@Override
