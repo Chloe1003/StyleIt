@@ -19,10 +19,13 @@ import web.dto.Product;
 import web.dto.ProductBrand;
 import web.dto.ProductCategory;
 import web.dto.ProductColor;
+import web.dto.ProductLike;
 import web.dto.ProductOccasion;
 import web.dto.ProductPattern;
 import web.dto.ProductStyle;
 import web.dto.QuizQuestion;
+import web.dto.Styling;
+import web.dto.StylingLike;
 import web.service.face.MypageService;
 
 
@@ -330,7 +333,31 @@ public class MypageServiceImpl implements MypageService{
 		return mqs;		
 	}
 
+	//---------yoon---------//
 
+	@Override
+	public List<ProductLike> getProductLikeList() {				
+		return mypageDao.getProductLikeList();
+	}
+	
+	@Override
+	public List<StylingLike> getStylingLikeList() {				
+		return mypageDao.getStylingLikeList();
+	}
+	
+	@Override
+	public List<Styling> getStylingList(int m_no) {
+		return mypageDao.getStylingList(m_no);
+	}
+	
+	@Override
+	public int getCountStyling(int m_no) {
+		return mypageDao.selectCountStyling(m_no);
+	}
+	@Override
+	public int getCountProduct(int m_no) {
+		return mypageDao.selectCountProduct(m_no);
+	}
 
 	
 }

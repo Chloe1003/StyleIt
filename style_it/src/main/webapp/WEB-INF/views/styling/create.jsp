@@ -224,7 +224,6 @@ html2canvas(document.getElementById('createStyle'), {
 			</select>
 			<div id="createStyle"></div> <br>
 			<button id="Reset" onclick="Reset()">초기화</button> 
-			<input type="text" id="fu_no" name="fu_no" value="" />
 		</div>
 		
 		<div style="border: 1px solid #ffffff; flex: 4;">
