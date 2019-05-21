@@ -149,6 +149,31 @@
   		WHERE s.s_no = #{s_no }	
 	</select>
 	
+
+	<select id="selectComments" parameterType="int" resultType="web.dto.StylingComment">
+		SELECT c.co_no, c.m_no, c.co_date, c.co_content, c.s_no, m.m_nick 
+		FROM stylingcomment c
+		JOIN member m
+		ON c.m_no = m.m_no
+		WHERE c.s_no = #{s_no }
+		ORDER BY c.co_date ASC
+	</select>
+	
+	<insert id="insertComment" parameterType="HashMap">
+		INSERT INTO stylingcomment(co_no, m_no, co_content, s_no)
+		VALUES (stylingcomment_seq.nextval, #{m_no }, #{co_content }, #{s_no }) 
+	</insert>
+	
+	<delete id="deleteComment" parameterType="int">
+		DELETE stylingcomment
+		WHERE co_no = #{co_no }
+	</delete>
+	
+	<select id="commentCnt" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM stylingcomment
+		WHERE s_no = #{s_no }
+	</select>
+
 	<select id="selectStylingNo" parameterType="HashMap" resultType="int">
 		select s_no from styling where fu_no=#{no}
 	</select>
@@ -160,5 +185,6 @@
 	<insert id="selectStylingProductInsert" parameterType="HashMap">
 		insert into stylingproduct (sp_no, s_no, p_no) values(stylingproduct_seq.nextval, #{sno}, #{pno})
 	</insert>
+
 
 </mapper>
