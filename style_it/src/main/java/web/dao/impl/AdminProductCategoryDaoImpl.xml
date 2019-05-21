@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 매퍼 설정 -->
+<mapper namespace="web.dao.face.AdminProductCategoryDao">
+
+	<select id="selectCntProductCategory" resultType="int">
+		select count(*) from productcategory
+	</select>
+
+	<select id="selectPagingList" resultType="HashMap" parameterType="web.util.Paging">
+		select * from ( 
+		select rownum rnum, B.* from(
+		select * from productcategory order by pca_no desc
+		) B	order by rnum
+		) R	where rnum between #{startNo} and #{endNo}	
+	</select>
+	
+	<insert id="insert" parameterType="web.dto.ProductCategory">
+		insert into productcategory (pca_no, pca_category)
+		values (productcategory_seq.nextval, #{pca_category })
+	</insert>
+	
+	<select id="fal" parameterType="web.dto.ProductCategory" resultType="web.dto.ProductCategory">
+		select * from productcategory
+		where pca_no = #{pca_no }
+	</select>
+	
+	<update id="update" parameterType="web.dto.ProductCategory">
+		update productcategory set pca_category=#{pca_category }
+		where pca_no=#{pca_no }
+	</update>
+	
+	<delete id="delete" parameterType="web.dto.ProductCategory">
+		delete productcategory where pca_no=#{pca_no }
+	</delete>
+	
+	<select id="selectSearchPagingList" resultType="HashMap" parameterType="HashMap">
+		select * from ( 
+		select rownum rnum, B.* from(
+		select * from productcategory 
+		where pca_category like '%' || #{word} || '%'
+		order by pca_no desc
+		) B	order by rnum
+		) R	where rnum between #{startNo} and #{endNo}
+	</select>
+	
+	<select id="selectCntSearchProductCategory" resultType="int" parameterType="String">
+		select count(*) from productcategory
+	  	where pca_category like '%'||#{value }||'%' 
+	</select>
+
+</mapper>

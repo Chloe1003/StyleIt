@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 매퍼 설정 -->
+<mapper namespace="web.dao.face.AdminProductBrandDao">
+
+	<select id="selectCntProductBrand" resultType="int">
+		select count(*) from productbrand
+	</select>
+
+	<select id="selectPagingList" resultType="HashMap" parameterType="web.util.Paging">
+		select * from ( 
+		select rownum rnum, B.* from(
+		select * from productbrand order by pb_no desc
+		) B	order by rnum
+		) R	where rnum between #{startNo} and #{endNo}	
+	</select>
+	
+	<insert id="insert" parameterType="web.dto.ProductBrand">
+		insert into productbrand (pb_no, pb_name)
+		values (productbrand_seq.nextval, #{pb_name })
+	</insert>
+	
+	<select id="fal" parameterType="web.dto.ProductBrand" resultType="web.dto.ProductBrand">
+		select * from productbrand
+		where pb_no = #{pb_no }
+	</select>
+	
+	<update id="update" parameterType="web.dto.ProductBrand">
+		update productbrand set pb_name=#{pb_name }
+		where pb_no=#{pb_no }
+	</update>
+	
+	<delete id="delete" parameterType="web.dto.ProductBrand">
+		delete productbrand where pb_no=#{pb_no }
+	</delete>
+	
+	<select id="selectSearchPagingList" resultType="HashMap" parameterType="HashMap">
+		select * from ( 
+		select rownum rnum, B.* from(
+		select * from productbrand 
+		where pb_name like '%' || #{word} || '%'
+		order by pb_no desc
+		) B	order by rnum
+		) R	where rnum between #{startNo} and #{endNo}
+	</select>
+	
+	<select id="selectCntSearchProductBrand" resultType="int" parameterType="String">
+		select count(*) from productbrand
+	  	where pb_name like '%'||#{value }||'%' 
+	</select>
+
+</mapper>
