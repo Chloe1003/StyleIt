@@ -284,7 +284,8 @@ object-fit: contain;
 			</c:if>
 			<div class="likecnt" id="likecnt">${styling.cntslike }</div>
 			
-			<div class="comment" onclick="comment()">${commentcnt }</div>
+			<div class="comment" onclick="comment()"></div>
+			<div class="commentcnt" id="commentcnt">${commentcnt }</div>
 <!-- 			<div class="collection"></div><span>컬렉션에 추가</span> -->
 		</div>
 
