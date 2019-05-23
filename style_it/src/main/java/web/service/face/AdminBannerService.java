@@ -22,6 +22,9 @@ public interface AdminBannerService {
 
 	// 전체 리스트
 	public List<Banner> getPagingBannerList(Paging paging);
+	
+	//스타일링 배너 삭제
+	public void bannerDelete(int b_no);
 
 
 	

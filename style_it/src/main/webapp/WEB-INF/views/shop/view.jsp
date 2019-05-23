@@ -120,13 +120,6 @@ margin-bottom: 20px;
     background-size: contain;
     margin: 0 20px;    
 }
-.collection{
-	background-image: url(/resources/image/styling/add.png);
-	width:20px;
-    height:20px;
-    background-size: contain;
-    margin: 0 10px 0 20px;
-}
 
 .buy{
 	padding: 5px 100px;
@@ -292,7 +285,6 @@ object-fit: contain;
 		
 		<div class="icon">			
 			<div class="styling"></div><span>스타일링하기</span>
-			<div class="collection"></div><span>컬렉션에 추가</span>
 		</div>
 
 		<div class="info-divider"></div>

@@ -7,9 +7,17 @@ public class Banner {
 	private String b_name;
 	private int fu_no;
 	private Date b_date;
+	private String fu_storedname;
 	@Override
 	public String toString() {
-		return "Banner [b_no=" + b_no + ", b_name=" + b_name + ", fu_no=" + fu_no + ", b_date=" + b_date + "]";
+		return "Banner [b_no=" + b_no + ", b_name=" + b_name + ", fu_no=" + fu_no + ", b_date=" + b_date
+				+ ", fu_storedname=" + fu_storedname + "]";
+	}
+	public String getFu_storedname() {
+		return fu_storedname;
+	}
+	public void setFu_storedname(String fu_storedname) {
+		this.fu_storedname = fu_storedname;
 	}
 	public int getB_no() {
 		return b_no;

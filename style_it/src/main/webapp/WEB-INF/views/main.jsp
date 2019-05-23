@@ -74,12 +74,12 @@ $(document).ready(function() {
 		<c:forEach var="i" begin="0" end="${bannerList.size()-1 }">
 	  		<c:if test="${i eq 0 }">
 	    	<div class="item active" style="width: 100%; height: 350px;">
-	      		<img src="/resources/image/banner/${bannerList[i].FU_STOREDNAME }" style="width: 100%; height: 100%;">
+	      		<img src="/upload/${bannerList[i].FU_STOREDNAME }" style="width: 100%; height: 100%;">
 	    	</div>
 	    	</c:if>
 	    	<c:if test="${i ne 0 }">
 	    	<div class="item" style="width: 100%; height: 350px;">
-	      		<img src="/resources/image/banner/${bannerList[i].FU_STOREDNAME }" style="width: 100%; height: 100%;">
+	      		<img src="/upload/${bannerList[i].FU_STOREDNAME }" style="width: 100%; height: 100%;">
 	    	</div>
 	    	</c:if>
 		</c:forEach>

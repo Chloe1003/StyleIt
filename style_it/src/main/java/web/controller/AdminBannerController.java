@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-
+import java.util.UUID;
 
 import javax.servlet.ServletContext;
 
@@ -85,9 +85,12 @@ public class AdminBannerController {
 		logger.info(file.getContentType());
 		logger.info(String.valueOf(file.isEmpty()));
 		
+		//고유한 식별자
+		String uId = UUID.randomUUID().toString().split("-")[0];
+		
 		//저장될 파일 이름
 		String stored_name = null;
-		stored_name = file.getOriginalFilename();
+		stored_name = file.getOriginalFilename()+uId;
 		
 		//파일 저장 경로
 		String path = context.getRealPath("upload");
@@ -108,7 +111,7 @@ public class AdminBannerController {
 		
 		logger.info(upFile.toString());
 		
-		map.put("stored_name", upFile.getFu_storedname());
+		map.put("stored_name", stored_name);
 		
 		logger.info("Banner : "+map);
 		asts.bannerInsert(map);
@@ -143,9 +146,12 @@ public class AdminBannerController {
 		logger.info(file.getContentType());
 		logger.info(String.valueOf(file.isEmpty()));
 		
+		//고유한 식별자
+		String uId = UUID.randomUUID().toString().split("-")[0];
+		
 		//저장될 파일 이름
 		String stored_name = null;
-		stored_name = file.getOriginalFilename();
+		stored_name = file.getOriginalFilename()+uId;
 		
 		//파일 저장 경로
 		String path = context.getRealPath("upload");
@@ -166,7 +172,7 @@ public class AdminBannerController {
 		
 		logger.info(upFile.toString());
 		
-		map.put("stored_name", upFile.getFu_storedname());
+		map.put("stored_name", stored_name);
 		
 		logger.info("Banner : "+map);
 		asts.bannerUpdate(map);
@@ -181,7 +187,11 @@ public class AdminBannerController {
 	@RequestMapping(value="/admin/banner/delete")
 	public String bannerDelete(int b_no) {
 
-		return null;
+		logger.info("삭제 시작");
+		logger.info("b_no : "+b_no);
+		asts.bannerDelete(b_no);
+		
+		return "redirect:/admin/banner/list";
 	}
 	
 

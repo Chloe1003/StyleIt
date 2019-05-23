@@ -221,25 +221,36 @@ public class MypageContorller {
 
 	//	추천받은 제품 리스트
 	@RequestMapping(value = "/mypage/recommend")
-	public void recommendProduct(HttpSession session, Model model) {
+	public String recommendProduct(HttpSession session, Model model) {
+		
+		
+		
 		int m_no = (int) session.getAttribute("m_no");
 
 //		스타일링 퀴즈 답변 가져오기
 		List<MemberQuiz> answer = mypageService.getMemberQuiz(m_no);
+		logger.info("answer : "+answer);
 		
 		List<Product> rList = new ArrayList<>();
 		
+		if(answer.isEmpty()) {
+			logger.info("MemberQuizSetInt");
+			return "redirect:/mypage/quiz";
+		}
+		
 		if(answer!=null) {
-			
+			logger.info("MemberQuizSet");
 			MemberQuizSet mqs = mypageService.transferToMemberQuizSet(answer);
 			mqs.setM_no(m_no);
 			
 			logger.info(mqs.toString());		
 			
 			rList = mypageService.getRecommendProduct(mqs);
-		}
+		} 
 		
 		model.addAttribute("rList", rList);
+		
+		return "mypage/recommend";
 		
 	}
 	

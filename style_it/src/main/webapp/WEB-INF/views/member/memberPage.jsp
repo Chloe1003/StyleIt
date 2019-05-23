@@ -272,7 +272,7 @@ $(document).ready(function() {
 		</div>
 		<!-- 프로필 사진 -->
 		<div class="img_placeholder">
-			<img class="imt_loaded" src="/upload/${mypage.fu_storedName }" />
+			<img class="imt_loaded" src="/upload/${mypage.fu_storedname }" />
 		</div>
 		<!-- 팔로잉, 팔로워 숫자 -->
 		<div class="follow">
@@ -291,9 +291,6 @@ $(document).ready(function() {
 		<div class="lBottom" style="position: relative; bottom: -13px; left: 490px;">
 			<span style="cursor: pointer; position: relative; left: 15px; font-size: 20px; font-weight: bold; color: black;" onclick="showMemProductLikeList()">${countLike }</span>
 		<br>좋아요</div>
-		<div class="cBottom" style="position: relative; bottom: 36px;  left: 740px;">
-			<span style="position: relative; left: 15px; font-size: 20px; font-weight: bold;">${countCollection }</span>
-		<br>컬렉션</div>
 	
 	</div>
 			<!-- 멤퍼페이지에서 팔로우 한 리스트 -->
@@ -310,7 +307,7 @@ $(document).ready(function() {
 						<div class="followeeUser" id="followeeUser1" style="overflow: auto;">
 							<c:forEach items="${memberfollowingList }" var="vo">
 								<div style="text-align: center; margin-top: 10px; margin-left: 1%; width:11.5%; float:left;">
-								<a href="/member/memberPage?m_no=${vo.m_no }"><img class="userImg" src="/upload/${vo.fu_storedName }"/></a>
+								<a href="/member/memberPage?m_no=${vo.m_no }"><img class="userImg" src="/upload/${vo.fu_storedname }"/></a>
 									<br><br>
 									${vo.m_nick }
 									<br><br>
@@ -340,7 +337,7 @@ $(document).ready(function() {
 						<div class="followeeUser" id="followeeUser1" style="overflow: auto;">
 							<c:forEach items="${memberfollowList }" var="vo">
 								<div style="text-align: center; margin-top: 10px; margin-left: 1%; width:11.5%; float:left;">
-								<a href="/member/memberPage?m_no=${vo.m_no }"><img class="userImg" src="/upload/${vo.fu_storedName }"/></a>
+								<a href="/member/memberPage?m_no=${vo.m_no }"><img class="userImg" src="/upload/${vo.fu_storedname }"/></a>
 									<br><br>
 									${vo.m_nick }
 									<br><br>
