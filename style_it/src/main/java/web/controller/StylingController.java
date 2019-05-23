@@ -381,7 +381,7 @@ public class StylingController {
 	public String unfollow(@RequestParam HashMap<String, Object> map) {
 	
 		logger.info("map : "+ map);
-		
+		   
 		
 		
 		return "redirect:/styling/view?s_no=83";
