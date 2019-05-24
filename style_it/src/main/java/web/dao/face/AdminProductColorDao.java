@@ -34,5 +34,11 @@ public interface AdminProductColorDao {
 	
 	// 검색 게시물 수
 	public int selectCntSearchProductColor(String word);
+	
+	// 비활성화
+	public void disable(ProductColor pc);
+	
+	// 활성화
+	public void able(ProductColor pc);
 
 }

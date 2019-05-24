@@ -129,12 +129,17 @@ public class MemberController {
 		model.addAttribute("folCheck", folCheck);
 		System.out.println("============"+folCheck);
 		
+		logger.info("member Start: "+member);
+		
 		member.setFollowee_no ((int) session.getAttribute("m_no"));
 		member.setFollower_no(m_no);
+		
+		logger.info("member end: "+member);
 
 //		멤버페이지에서 보는 팔로우 당한 리스트
 		List<Member> memberfollowList = memberService.getFollowList(member); 
 		model.addAttribute("memberfollowList", memberfollowList);
+		logger.info("followList : "+memberfollowList);
 		
 //		멤버페이지에서 보는 팔로잉 리스트
 		List<Member> memberfollowingList = memberService.getFollowingList(member);

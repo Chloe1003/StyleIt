@@ -67,7 +67,7 @@
 	</select>
 	
 	<select id="selectpcList" resultType="HashMap">
-		select * from productcolor
+		select * from productcolor where pco_able='y'
 	</select>
 	
 	<select id="selectpoList" resultType="HashMap">

@@ -75,6 +75,7 @@ $(document).ready(function(){
 		$("input[name='b_able'][value='"+able+"']").attr("checked", true);
 	});
 	
+	
 });
 
   
@@ -102,6 +103,9 @@ th, td {
         text-align: left;
         vertical-align: middle;
 }
+
+a:link { color: black; text-decoration: none; }
+a:visited { color: black; text-decoration: none; }
 </style>
 
 <div class="container">
@@ -115,7 +119,7 @@ th, td {
 		<div id="styling_right" style="flex: 1;">
 			<button class="btn" style="float:right; background: #009994; color: white; font-size:15px;
 										font-weight: bold;"
-								data-target="#addBanner_display" data-toggle="modal">배너등록</button>
+								data-target="#addBanner_display" data-toggle="modal" data-backdrop="static">배너등록</button>
 		</div>
 	</div> 
 	
@@ -202,9 +206,12 @@ th, td {
 	<tr>
 	<td>${i.b_no }</td>
 	<td>${i.b_name }</td>
-	<td>${b.fu.storedname } </td>
+	<td><img src="/resources/image/banner/${i.fu_storedname }" style="width: 100px; height:100px;"/> </td>
 	<td><fmt:formatDate value="${i.b_date }" pattern="yyyy-MM-dd"/></td>
-	<td><button class="bannerUpdate" style="background-color: transparent; border-color: transparent;" data-target="#updateBanner_display" data-toggle="modal" onclick="update()">수정</button>
+	<td><button class="bannerUpdate" style="background-color: transparent; border-color: transparent;" 
+		data-backdrop="static" data-target="#updateBanner_display" data-toggle="modal" onclick="update()">수정</button>
+	 / <a href="/admin/banner/delete?b_no=${i.b_no }" style="">삭제</a>
+	</td>
 	</tr>
 	</c:forEach>
 	</tbody>

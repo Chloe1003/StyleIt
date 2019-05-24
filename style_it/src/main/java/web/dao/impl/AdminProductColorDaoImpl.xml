@@ -53,5 +53,13 @@
 		select count(*) from productcolor
 	  	where pco_name like '%'||#{value }||'%' 
 	</select>
+	
+	<update id="disable" parameterType="web.dto.ProductColor">
+		update productcolor set pco_able='n' where pco_no=#{pco_no }
+	</update>
+	
+	<update id="able" parameterType="web.dto.ProductColor">
+		update productcolor set pco_able='y' where pco_no=#{pco_no }
+	</update>
 
 </mapper>

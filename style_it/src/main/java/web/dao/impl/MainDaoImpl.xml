@@ -17,6 +17,7 @@
 		select s.* , 
 		(select fu_storedname from fileupload f where f.fu_no = s.fu_no) fu_storedname
 		from styling s
+		where s_date>(sysdate -7 )
 		order by s_date   
 	</select>
 	

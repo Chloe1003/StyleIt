@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import web.controller.AdminStylingTagController;
 import web.dao.face.StylingDao;
+import web.dto.Member;
 import web.dto.Product;
 import web.dto.ProductCategory;
 import web.dto.Styling;
@@ -132,5 +133,25 @@ public class StylingServiceImpl implements StylingService{
 	@Override
 	public int commentCnt(int s_no) {
 		return sDao.commentCnt(s_no);
+	}
+	
+	@Override
+	public int checkFollow(HashMap<String, Integer> map) {
+		return sDao.checkFollow(map);
+	}
+
+	@Override
+	public int getFollowNo(HashMap<String, Integer> map) {
+		return sDao.selectFollowNo(map);
+	}
+
+	@Override
+	public void insertFollow(HashMap<String, Object> map) {
+		 sDao.followerInsert(map);
+	}
+
+	@Override
+	public void deleteFollow(HashMap<String, Object> map) {
+		sDao.followerDelete(map);
 	}
 }

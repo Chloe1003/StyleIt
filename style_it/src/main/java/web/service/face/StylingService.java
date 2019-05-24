@@ -3,6 +3,7 @@ package web.service.face;
 import java.util.HashMap;
 import java.util.List;
 import web.dto.ProductCategory;
+import web.dto.Member;
 import web.dto.Product;
 import web.dto.Styling;
 import web.dto.StylingComment;
@@ -50,7 +51,8 @@ public interface StylingService {
 	public int getSearchCount(HashMap<String, Object> map);
 	
 	// 스타일링 저장
-	public void stylingInsert(HashMap<String, Object> map);
+//	public void stylingInsert(HashMap<String, Object> map);
+	public void stylingInsert(HashMap<String, Object> map, int[] checked);
 
 	// 코멘트 목록 가져오기
 	public List<StylingComment> getComments(int s_no);
@@ -63,9 +65,19 @@ public interface StylingService {
 
 	// 코멘트 개수 가져오기
 	public int commentCnt(int s_no);
-
-	public void stylingInsert(HashMap<String, Object> map, int[] checked);
-
+	
+	// 팔로우 체크
+	public int checkFollow(HashMap<String, Integer> map);
+	
+	// 팔로우 넘버 가져오기
+	public int getFollowNo(HashMap<String, Integer> map);
+	
+	// 팔로우 추가
+	public void insertFollow(HashMap<String, Object> map);
+	
+	// 팔로우 삭제
+	public void deleteFollow(HashMap<String, Object> map);
+	 
 	
 	
 	

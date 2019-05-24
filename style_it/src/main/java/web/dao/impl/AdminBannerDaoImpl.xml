@@ -20,7 +20,7 @@
 	
 	<insert id="bannerInsert" parameterType="HashMap">
 		insert into banner(b_no, b_name, fu_no, b_date) 
-		values(banner_seq.nextval, #{b_name}, #{no}, sysdate);
+		values(banner_seq.nextval, #{b_name}, #{no}, sysdate)
 	</insert> 
 	
 
@@ -36,9 +36,14 @@
 	<select id="selectBannerList" resultType="web.dto.Banner" parameterType="web.util.Paging">
 		select * from ( 
 		select rownum rnum, B.* from(
-		select * from banner order by b_no desc
+		select b.*, f.fu_storedname from banner b
+ 		inner join fileupload f on f.fu_no = b.fu_no order by b_no desc
 		) B	order by rnum
-		) R	where rnum between #{startNo} and #{endNo}		
+		) R	where rnum between #{startNo} and #{endNo}
 	</select>  
+	
+	<delete id="delete" parameterType="int">
+		delete banner where b_no=#{value }
+	</delete>
 	
 </mapper>

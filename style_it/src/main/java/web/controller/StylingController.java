@@ -8,6 +8,7 @@ import java.sql.Blob;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -27,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import web.dto.FileUpload;
+import web.dto.Follow;
 import web.dto.Member;
 import web.dto.Product;
 import web.dto.ProductCategory;
@@ -137,7 +139,7 @@ public class StylingController {
 			logger.info(data.getContentType());
 			logger.info(String.valueOf(data.isEmpty()));
 			
-//			고유한 식별자
+			//고유한 식별자
 			String uId = UUID.randomUUID().toString().split("-")[0];
 			
 			//저장될 파일 이름
@@ -243,19 +245,27 @@ public class StylingController {
 			
 			Styling s = sServ.getStylingView(map);
 			int make = s.getM_no();
-			Member maker = mServ.getMemberByMno(make);			
+			Member maker = mServ.getMemberByMno(make);
+			logger.info("MAKER : "+maker);
 
 			
 			List<Product> pList = sServ.getProductByStyling(map);	
 			List<StylingComment> cList = sServ.getComments(s_no);
 			int commentcnt = sServ.commentCnt(s_no);
 			
+			//팔로우 리스트
+			
+			logger.info("fm_no : "+maker.getM_no());
+			logger.info("fwm_no : "+(int) session.getAttribute("m_no"));
+			
+			map.put("fm_no", maker.getM_no());
+			map.put("fwm_no", (int) session.getAttribute("m_no"));
+			
+			int fcheck = sServ.checkFollow(map);
+			logger.info("fcheck : "+fcheck);
+			
 
-			logger.info("s1 :  : : : ");
-			List<Product> pList = sServ.getProductByStyling(map);
-
-			logger.info("s2 :  : : : ");
-
+			model.addAttribute("fcheck", fcheck);
 			model.addAttribute("styling", s);	
 			model.addAttribute("maker", maker);
 			model.addAttribute("product", pList);
@@ -350,7 +360,31 @@ public class StylingController {
 		
 		return "styling/comment";
 	}
-
+	
+	// 스타일링 팔로우
+	@RequestMapping(value="/styling/follow", method=RequestMethod.GET)
+	public String follow(@RequestParam HashMap<String, Object> map, HttpSession session) {
+	
+		logger.info("map : "+ map);
+		map.put("m_no", (int) session.getAttribute("m_no"));
+		logger.info("map : "+ map);
+		sServ.insertFollow(map);
+		
+		return "redirect:/styling/view?s_no="+map.get("s_no");
+	}
+	
+	// 스타일링 팔로우
+	@RequestMapping(value="/styling/unfollow", method=RequestMethod.GET)
+	public String unfollow(@RequestParam HashMap<String, Object> map, HttpSession session) {
+	
+		logger.info("map : "+ map);
+		map.put("m_no", (int) session.getAttribute("m_no"));
+		logger.info("map : "+ map);
+		sServ.deleteFollow(map);
+		
+		return "redirect:/styling/view?s_no="+map.get("s_no");
+	}
+	
 	
 	
 }

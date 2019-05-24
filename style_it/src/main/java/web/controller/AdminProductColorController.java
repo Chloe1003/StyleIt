@@ -1,5 +1,7 @@
 package web.controller;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,11 +54,9 @@ public class AdminProductColorController {
 		
 		productColorList = fs.getSearchPagingList(map);
 		
-		
 		} else {
 			
 		logger.info("word 존재안함");
-		
 		//총 게시글 수 얻기
 		int totalCount = fs.getTotalCount();
 		logger.info("총 수 : " + totalCount);
@@ -64,17 +64,14 @@ public class AdminProductColorController {
 		//페이지 객체 생성
 		paging = new Paging(totalCount, curPage);
 		logger.info("페이징 : "+ paging);
-		
 			
 		//업로드된 파일 전체 조회
 		productColorList = fs.getPagingProductColorList(paging);
 		logger.info("productColorList : "+productColorList);
-		
 		}
 		
 		//페이징객체 MODEL로 추가
 		model.addAttribute("paging", paging);
-		
 		//게시글목록 MODEL로 추가
 		model.addAttribute("productColorList", productColorList);
 	}
@@ -110,16 +107,28 @@ public class AdminProductColorController {
 			return productColor;
 		}
 		
-		// 게시글 삭제
-		@RequestMapping(value="/admin/pAttribute/color/delete", method=RequestMethod.GET)
-		public String delete(ProductColor productColor) {
+		// 활성화여부
+		@RequestMapping(value="/admin/pAttribute/color/able_ajax", method=RequestMethod.GET)
+		public void delete(ProductColor productColor, Writer out) {
 			
+			logger.info("AJAX");
 			logger.info("productColor : "+productColor);
-			//삭제
-			fs.delete(productColor);
 			
-			
-			return "redirect:/admin/pAttribute/color/list";
+			//본문 서치
+			if(productColor.getPco_able().equals("y")) {
+				logger.info("Disable");
+				fs.disable(productColor);
+			} else {
+				logger.info("Able");
+				fs.able(productColor);
+			}
+			logger.info("AJAX 완료");
+
+			try {
+				out.append("");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}

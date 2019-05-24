@@ -55,8 +55,12 @@ public class AdminBannerServiceImpl implements AdminBannerService {
 
 	@Override
 	public int getTotalCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return astd.selectCntBanner();
+	}
+
+	@Override
+	public void bannerDelete(int b_no) {
+		astd.delete(b_no);
 	}
 
 

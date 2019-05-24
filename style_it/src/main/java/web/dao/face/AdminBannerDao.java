@@ -22,7 +22,7 @@ public interface AdminBannerDao {
 	public void update(Banner banner);
 	
 	// 배너 삭제
-	public void delete(Banner banner);
+	public void delete(int banner);
 
 
 	public void fileUploadInsert(HashMap<String, Object> map);
@@ -33,8 +33,12 @@ public interface AdminBannerDao {
 
 	public void bannerInsert(HashMap<String, Object> map);
 
-
+	public int selectCntBanner();
+	
 	public void bannerUpdate(HashMap<String, Object> map);
+	
+	
+	
 
 
 }

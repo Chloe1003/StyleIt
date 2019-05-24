@@ -185,6 +185,23 @@
 	<insert id="selectStylingProductInsert" parameterType="HashMap">
 		insert into stylingproduct (sp_no, s_no, p_no) values(stylingproduct_seq.nextval, #{sno}, #{pno})
 	</insert>
+	
+	<select id="checkFollow" resultType="int" parameterType="HashMap">
+		select count(*) from follow where follower_no=#{fm_no } and followee_no=#{fwm_no }
+	</select>
 
+	<select id="selectFollowNo" resultType="int" parameterType="HashMap">
+		select f_no from follow where follower_no=#{fm_no } and followee_no=#{fwm_no }
+	</select>
+	
+  	<insert id="followerInsert" parameterType="HashMap">
+  		INSERT INTO Follow ( f_no, follower_no, followee_no)
+  		VALUES ( follow_SEQ.nextval, #{fm_no }, #{m_no } )
+  	</insert>
+  	
+  	<delete id="followerDelete" parameterType="HashMap">
+  		DELETE Follow
+		WHERE followee_no = #{m_no } AND follower_no = #{fm_no }	
+  	</delete>
 
 </mapper>

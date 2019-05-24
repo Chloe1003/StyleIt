@@ -126,7 +126,15 @@ display:inline-flex;
     margin: 0 20px;
 
 }
-.follow{
+.list_FOLLOW{
+	padding: 5px 30px;
+    background: #009994;
+    border-radius: 15px;
+    color: white;
+    margin-left:30px;
+
+}
+.list_UNFOLLOW{
 	padding: 5px 30px;
     background: #009994;
     border-radius: 15px;
@@ -296,10 +304,21 @@ object-fit: contain;
 			<div class="profile"><img src="/upload/${maker.fu_storedname }" alt="profile"></div>
 			<div class="nickname">
 				<div style="color:#ccc;">Created by</div>
-				<div>${maker.m_nick }</div>
+				<div><a href="/member/memberPage?m_no=${maker.m_no }">${maker.m_nick }</a></div>
 			</div>
 			<div style="margin-top: 7px;">
-				<div class="follow" id="follow">FOLLOW</div>
+			
+			<div class="follow" id="follow">
+			<c:if test="${fcheck eq 0 }">
+				<input type="hidden" id="fm_no" class="fm_no" value="${maker.m_no }" />
+				<input type="button" id="insertFw" class="list_FOLLOW" value="FOLLOW">
+			</c:if>
+			<c:if test="${fcheck eq 1 }">
+				<input type="hidden" id="fm_no" class="fm_no" value="${maker.m_no }" />
+				<input type="button" id="deleteFw" class="list_UNFOLLOW" value="UNFOLLOW">
+			</c:if>
+			</div>
+			
 			</div>
 		</div>
 	</div>
@@ -420,7 +439,21 @@ function replydelete(co_no){
 	});
 }
 
+
 $(document).ready(function(){
+	
+	$('#insertFw').click(function(){
+		var s_no = ${styling.s_no };
+		var fm_no = $("#fm_no").val(); 
+		location.href = "/styling/follow?fm_no="+fm_no+"&s_no="+s_no;
+	});
+	
+	$('#deleteFw').click(function(){
+		var s_no = ${styling.s_no };
+		var fm_no = $("#fm_no").val(); 
+		location.href = "/styling/unfollow?fm_no="+fm_no+"&s_no="+s_no;
+	});
+	
 	var login = false;
 	
 	$(".like").click(function(){		
@@ -528,7 +561,7 @@ $(document).ready(function(){
 			}
 		});
 	});
-		
+	
 	
 });	
 </script>    

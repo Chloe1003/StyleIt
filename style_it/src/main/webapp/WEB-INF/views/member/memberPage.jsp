@@ -338,10 +338,14 @@ $(document).ready(function() {
 		<br>스타일링</div>
 		<div class="lBottom" style="position: relative; bottom: -13px; left: 490px;">
 			<span style="cursor: pointer; position: relative; left: 15px; font-size: 20px; font-weight: bold; color: black;" onclick="showMemProductLikeList()">${countLike }</span>
+
+		<br>좋아요</div>
+
 		<br><span style="position: relative; left: -22px;">Product 좋아요</span></div>
 		<div class="cBottom" style="position: relative; bottom: 36px;  left: 740px;">
 			<span style="cursor: pointer; position: relative; left: 15px; font-size: 20px; font-weight: bold;" onclick="showMemberStylingLikeList()">${countCollection }</span>
 		<br><span style="position: relative; left: -20px;">Styling 좋아요</span></div>
+
 	
 	</div>
 			<!-- 멤퍼페이지에서 팔로우 한 리스트 -->
