@@ -67,7 +67,7 @@ th, td {
 		<div id="ap_left" style="flex: 1;">
 			<a href="/admin/product/list" style="color: black"><span>제품관리</span></a></div>  
 		<div id="ap_left2" style="flex: 1;">
-			<a href="#" style="color: black"><span>제품속성 관리</span></a></div>  
+			<a href="/admin/pAttribute/list" style="color: black"><span>제품속성 관리</span></a></div>  
 		<div id="ap_center" style="flex: 3;"></div>  
 		<div id="ap_right" style="flex: 1;">
 			<a href="/admin/product/insert" style="color: black"><span>제품 등록</span></a></div>

@@ -71,6 +71,12 @@ public interface StylingService {
 	
 	// 팔로우 넘버 가져오기
 	public int getFollowNo(HashMap<String, Integer> map);
+	
+	// 팔로우 추가
+	public void insertFollow(HashMap<String, Object> map);
+	
+	// 팔로우 삭제
+	public void deleteFollow(HashMap<String, Object> map);
 	 
 	
 	

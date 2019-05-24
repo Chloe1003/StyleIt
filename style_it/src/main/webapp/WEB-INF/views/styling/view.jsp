@@ -314,7 +314,7 @@ object-fit: contain;
 				<input type="button" id="insertFw" class="list_FOLLOW" value="FOLLOW">
 			</c:if>
 			<c:if test="${fcheck eq 1 }">
-				<input type="hidden" id="fn_no" class="fn_no" value="${fno }" />
+				<input type="hidden" id="fm_no" class="fm_no" value="${maker.m_no }" />
 				<input type="button" id="deleteFw" class="list_UNFOLLOW" value="UNFOLLOW">
 			</c:if>
 			</div>
@@ -450,8 +450,8 @@ $(document).ready(function(){
 	
 	$('#deleteFw').click(function(){
 		var s_no = ${styling.s_no };
-		var fno = $("#fn_no").val();
-		location.href = "/styling/unfollow?fn_no="+fno+"&s_no="+s_no;
+		var fm_no = $("#fm_no").val(); 
+		location.href = "/styling/unfollow?fm_no="+fm_no+"&s_no="+s_no;
 	});
 	
 	var login = false;

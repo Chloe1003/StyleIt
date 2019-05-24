@@ -90,6 +90,12 @@ public interface StylingDao {
 	
 	// 팔로우 넘버 가져오기
 	public int selectFollowNo(HashMap<String, Integer> map);
+	
+	// 팔로우 추가하기
+	public void followerInsert(HashMap<String, Object> map);
+	
+	// 팔로우 추가하기
+	public void followerDelete(HashMap<String, Object> map);
 
 	
 }

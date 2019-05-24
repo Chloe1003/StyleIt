@@ -93,7 +93,7 @@ public class AdminBannerController {
 		stored_name = file.getOriginalFilename()+uId;
 		
 		//파일 저장 경로
-		String path = context.getRealPath("upload");
+		String path = context.getRealPath("resources/image/banner");
 		
 		//저장될 파일
 		File dest = new File(path, stored_name);
@@ -154,7 +154,7 @@ public class AdminBannerController {
 		stored_name = file.getOriginalFilename()+uId;
 		
 		//파일 저장 경로
-		String path = context.getRealPath("upload");
+		String path = context.getRealPath("resources/image/banner");
 		
 		//저장될 파일
 		File dest = new File(path, stored_name);

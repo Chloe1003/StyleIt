@@ -144,4 +144,14 @@ public class StylingServiceImpl implements StylingService{
 	public int getFollowNo(HashMap<String, Integer> map) {
 		return sDao.selectFollowNo(map);
 	}
+
+	@Override
+	public void insertFollow(HashMap<String, Object> map) {
+		 sDao.followerInsert(map);
+	}
+
+	@Override
+	public void deleteFollow(HashMap<String, Object> map) {
+		sDao.followerDelete(map);
+	}
 }

@@ -264,12 +264,7 @@ public class StylingController {
 			int fcheck = sServ.checkFollow(map);
 			logger.info("fcheck : "+fcheck);
 			
-			if( fcheck==1) {
-			int followNo = sServ.getFollowNo(map); 
-			logger.info("followNo : "+followNo);
-			model.addAttribute("fno", followNo);
-			}
-			
+
 			model.addAttribute("fcheck", fcheck);
 			model.addAttribute("styling", s);	
 			model.addAttribute("maker", maker);
@@ -368,23 +363,26 @@ public class StylingController {
 	
 	// 스타일링 팔로우
 	@RequestMapping(value="/styling/follow", method=RequestMethod.GET)
-	public String follow(@RequestParam HashMap<String, Object> map) {
+	public String follow(@RequestParam HashMap<String, Object> map, HttpSession session) {
 	
 		logger.info("map : "+ map);
-//		sServ.insertFollow(map);
+		map.put("m_no", (int) session.getAttribute("m_no"));
+		logger.info("map : "+ map);
+		sServ.insertFollow(map);
 		
-		return "redirect:/styling/view?s_no=83";
+		return "redirect:/styling/view?s_no=49";
 	}
 	
 	// 스타일링 팔로우
 	@RequestMapping(value="/styling/unfollow", method=RequestMethod.GET)
-	public String unfollow(@RequestParam HashMap<String, Object> map) {
+	public String unfollow(@RequestParam HashMap<String, Object> map, HttpSession session) {
 	
 		logger.info("map : "+ map);
-		   
+		map.put("m_no", (int) session.getAttribute("m_no"));
+		logger.info("map : "+ map);
+		sServ.deleteFollow(map);
 		
-		
-		return "redirect:/styling/view?s_no=83";
+		return "redirect:/styling/view?s_no=49";
 	}
 	
 	
