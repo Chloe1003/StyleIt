@@ -370,7 +370,7 @@ public class StylingController {
 		logger.info("map : "+ map);
 		sServ.insertFollow(map);
 		
-		return "redirect:/styling/view?s_no=49";
+		return "redirect:/styling/view?s_no="+map.get("s_no");
 	}
 	
 	// 스타일링 팔로우
@@ -382,7 +382,7 @@ public class StylingController {
 		logger.info("map : "+ map);
 		sServ.deleteFollow(map);
 		
-		return "redirect:/styling/view?s_no=49";
+		return "redirect:/styling/view?s_no="+map.get("s_no");
 	}
 	
 	

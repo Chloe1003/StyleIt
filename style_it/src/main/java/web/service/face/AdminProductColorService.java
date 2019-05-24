@@ -32,4 +32,10 @@ public interface AdminProductColorService {
 	// 검색 게시물 수 얻기
 	public int getSearchCount(String word);
 	
+	// 활성 여부 ajax
+	public void disable(ProductColor pc);
+	
+	// 활성 여부 ajax
+	public void able(ProductColor pc);
+	
 }

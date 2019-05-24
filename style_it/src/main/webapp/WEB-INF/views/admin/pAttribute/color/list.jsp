@@ -35,16 +35,6 @@ $(document).ready(function(){
 	
 	$(this).parents("form").submit();
 	
-	$(".productColorDelete").click(function() {
-		var no = $(this).parents("tr").children("td").eq(0).html()
-		result = confirm('삭제 하시겠습니까');
-		if(result == true){
-			$(location).attr("href","/admin/pAttribute/color/delete?pco_no="+no);
-		}else{
-			return false;
-		}
-	});
-	
 	$(".productColorUpdate").click(function(){
 		var no = $(this).val();
 		
@@ -56,13 +46,43 @@ $(document).ready(function(){
 			, success: function( res ){
 				console.log("성공");
 				$("#updatePco_name").val(res.pco_name);
-				var pcoNo = res.pco_no;
-				$("input[name='pco_no'][value='"+pcoNo+"']").attr("checked", true);
+				$("#updatePco_no").val(res.pco_no);
 			}
 			, error: function( e ) {
 				console.log("실패");
 			}
 		});
+	});
+	
+	$(".productColorDelete").click(function(){
+		var no = $(this).parents().children("td").eq(0).html();
+		console.log("no : "+no);
+		var able = $(this).val();
+		console.log("able : "+able);
+		
+		var $this = $(this);
+		
+		$.ajax({
+			type: "get"
+			, url: "/admin/pAttribute/color/able_ajax?pco_no="+no+"&pco_able="+able
+			, data: { } //요청파라미터
+			, dataType: "html"
+			, success: function( res ){
+				console.log("성공");
+
+				if( $this.val() == 'y' ) {
+					$this.val('n');
+					
+				} else {
+					$this.val('y');
+					
+				}
+			}			
+			, error: function( e ) {
+				console.log("실패");
+			}
+		});
+		
 	});
 	
 });
@@ -164,12 +184,12 @@ th, td {
 					</button>
 				</div>
 				<hr>
-					<!-- brand추가 form -->
-					<form action="/admin/pAttribute/color/insert" style="z-index: 999;" method="post" class="form-horizontal" >
+					<!-- color 수정 form -->
+					<form action="/admin/pAttribute/color/update" style="z-index: 999;" method="post" class="form-horizontal" >
 					<div style="padding: 20px;">
 					<!-- color 제목 입력 창 -->
 					<div class="form-group">
-						<input type="hidden" class="form-control" id="updatePco_no" name="pco_no">
+						<input type="hidden" class="form-control" id="updatePco_no" name="pco_no" >
 						<input type="text"  class="form-control" id="updatePco_name" name="pco_name" 
 									placeholder="Color제목" value="${updatePCO.pco_name }">
 					</div>
@@ -180,8 +200,8 @@ th, td {
 								margin-left: 38px; background: #009994; color: white;">확인</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 					</div>
-				</div>
-					</form>
+					</div>
+					</form>  
 			</div>
 		</div>
 	</div>
@@ -205,7 +225,8 @@ th, td {
 	<td>관리자</td>
 	<td><button class="productColorUpdate"  style="background-color: transparent; border-color: transparent;" 
 				data-target="#productColorUpdate_display" data-toggle="modal" value="${i.PCO_NO }">수정</button></td> 
-	<td><button class="productColorDelete" style="background-color: transparent; border-color: transparent;">삭제</button></td>
+	<td><input type="button" class="productColorDelete" 
+		style="background-color: transparent; border-color: transparent;" value="${i.PCO_ABLE }" /></td>
 	</tr>
 	</c:forEach>
 	</tbody>

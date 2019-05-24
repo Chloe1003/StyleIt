@@ -57,6 +57,16 @@ public class AdminProductColorServiceImpl implements AdminProductColorService {
 		return fd.selectCntSearchProductColor(word);
 	}
 
+	@Override
+	public void disable(ProductColor pc) {
+		 fd.disable(pc);
+	}
+	
+	@Override
+	public void able(ProductColor pc) {
+		 fd.able(pc);
+	}
+
 
 	
 
