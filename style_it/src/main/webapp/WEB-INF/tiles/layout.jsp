@@ -48,7 +48,7 @@ $(document).ready(function() {
 <tiles:insertAttribute name="nav"/>
 
 <!-- BODY -->
-<div class="wrap">
+<div class="wrap" style="overflow: hidden;">
 	<tiles:insertAttribute name="body"/>
 </div>
 

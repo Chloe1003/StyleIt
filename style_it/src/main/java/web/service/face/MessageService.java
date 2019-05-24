@@ -6,12 +6,21 @@ import web.dto.MessageRoom;
 
 public interface MessageService {
 	
-	// 메시지 방 리스트 반환
-	public List<MessageRoom> getRoomList(int m_no);
-	
-	// 메시지 리스트 반환
-	public List<Message> getMsgList(int mr_no);
-	
-	// 메시지 보내기
-	public void sendMsg(Message msg);
+	public int dualNo();
+
+	public void MakeMroom(MessageRoom mr);
+
+	public void sendMassege(Message m);
+
+	public int countChat(MessageRoom mr);
+
+	public int getMr_no(MessageRoom mr);
+
+	public List<Message> MessageList(int mr_no);
+
+	public List<MessageRoom> getmrList(int m_no);
+
+	public void countUpdate(Message message);
+
+	public int getNotRead(int mr_no, int m_no1);
 }

@@ -47,13 +47,11 @@
 	
 	<insert id="insertImg" parameterType="web.dto.FileUpload">
 		
-		<!-- SELECT FileUpload_SEQ.nextval from dual -->
 		
 		INSERT INTO FILEUPLOAD
 			(fu_no, fu_storedname, fut_no )
 		VALUES 
 			( #{fu_no}, #{fu_storedname }, 5 )
-		<!-- <selectKey>  </selectKey> -->
 			
 	</insert>
 	
@@ -187,6 +185,22 @@
 	
 	</select>
 	
+	<select id="getUserImg" parameterType="String" resultType="String">
+		
+		select fu.fu_storedname from member m, fileupload fu
+		where m.fu_no = fu.fu_no
+		and m.m_nick = #{m_nick }
+		
+	</select>
+	
+	<select id="getCountAllRead" parameterType="web.dto.Message" resultType="int">
+	
+			SELECT COUNT(*) FROM message me, member m
+            WHERE me.receiver_no = m.m_no 
+            and me.msg_read= 'n'
+            and m.m_no = #{m_no }
+	
+	</select>
 	
   	
   	<select id="selectStylingQuiz" resultType="web.dto.QuizQuestion">

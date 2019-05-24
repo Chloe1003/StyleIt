@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import web.dto.Follow;
 import web.dto.Member;
+import web.dto.Message;
+import web.dto.MessageRoom;
 import web.dto.Product;
 import web.service.face.MemberService;
+import web.service.face.MessageService;
 import web.service.face.MypageService;
 
 @Controller
@@ -28,6 +31,7 @@ public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	@Autowired MemberService memberService;
 	@Autowired MypageService mypageService;	
+	@Autowired MessageService mServ;
 	
 	@RequestMapping("/main")
 	public void maingo() {
@@ -135,6 +139,29 @@ public class MemberController {
 //		멤버페이지에서 보는 팔로잉 리스트
 		List<Member> memberfollowingList = memberService.getFollowingList(member);
 		model.addAttribute("memberfollowingList", memberfollowingList);
+		
+		
+		
+//		------------------------ 쪽지 리스트-----------------
+		
+		MessageRoom mr = new MessageRoom();
+		int mm_no =(int) session.getAttribute("m_no");
+		mr.setParticipant1(mm_no); //세션
+		mr.setParticipant2(m_no); //대상
+			
+		System.out.println("sesssion"+mm_no);
+		System.out.println("대상? "+m_no);
+		
+		int cnt = mServ.countChat(mr);
+		
+		if(cnt != 0) {
+			int mr_no = mServ.getMr_no(mr);
+			
+			List<Message> MessageList = mServ.MessageList(mr_no);
+			model.addAttribute("MessageList", MessageList);
+		}
+		
+			
 		
 			
 	}

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <style type="text/css">
 a:link { color: white; text-decoration: none;}
@@ -85,6 +86,15 @@ a:active {text-decoration: none; color: white;}
     transform:translateX(-50%) translateY(-50%);
     z-index:9999;
 }
+.message_display {
+	position: fixed; height: 640px; width: 680px; display:none; font-family:nanum;
+	margin-left: auto; margin-right: auto; background : white;
+	top : 50%;
+   	left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    z-index:9999;
+    
+}
 .bg_follow {
 	background: rgba(0, 0, 0, 0.5);
 	position: fixed;
@@ -95,6 +105,7 @@ a:active {text-decoration: none; color: white;}
 	width: 100%;
 	height: 100%;
 	display: none;
+	 z-index:9999;
 }    
 .userImg{
 	border-radius: 150px;
@@ -228,6 +239,11 @@ $(document).ready(function() {
 		document.getElementById("follow_display1").style.display = "none"; 
 		document.getElementById("bg_follow1").style.display = "none";
 	})
+	$("#messageCancel").click(function() {
+		document.getElementById("Message_display").style.display = "none"; 
+		document.getElementById("bg_Message").style.display = "none";
+		ws.close();
+	})
 	
 	
 	$("#follow_button").click(function() {
@@ -263,6 +279,28 @@ $(document).ready(function() {
 			
 		});
 	
+	$("#sendMsg").click(function() {
+
+		$.ajax({
+			type : "post"
+			,url : "/message/insertmr"
+			,data : { "m_no" : $("#m_no").val(),
+					  "msg_content" : $("#msg_content").val() }
+			,dataType : "json"
+			,success : function( res ) {
+				console.log("성공");
+				console.log(res.message.msg_content);
+				 $("#msg_content").focus();				
+				
+			}
+			,error : function(e) {
+				console.log("실패");
+				console.log(e);
+			}
+			});
+			
+		});
+	
 });
 
 </script>
@@ -276,7 +314,8 @@ $(document).ready(function() {
 					<c:if test="${folCheck eq false }">
 						<input type="button" class="FOLLOW" id="follow_button" value="FOLLOW"/>
 					</c:if> 
-			<img class="mail" src="/resources/image/mypage/mail.png"/>
+			
+			<a style="cursor: pointer;" onclick= "showMessage()"><img class="mail" src="/resources/image/mypage/mail.png"/></a>
 		</div>
 		<!-- 프로필 사진 -->
 		<div class="img_placeholder">
@@ -364,6 +403,133 @@ $(document).ready(function() {
 						</div>
 					</div>
 				</div>	
+			
+			
+				 		<!-- 보내는 메세지창 -->
+						<div class="bg_follow" id="bg_Message"></div>
+							<div class="message_display" id="Message_display">
+					  				<input type="hidden" id="m_no"  name="m_no" value="${mypage.m_no }">
+						  				<button type="button" class="close" id="messageCancel" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+								<div style="background-color: #61d2d6; height: 80px; text-align: center; padding-top: 29px; font-size: 22px; color: white;">MessageRoom With ${mypage.m_nick }</div>
+									<div style="width:100%; height:auto;">
+										<div id="chatAreabox" style="overflow-y: scroll; height: 460px">
+												<div style="text-align: center; margin-top: 10px; margin-left: 1%;">
+											<c:forEach items="${MessageList }" var="m">
+														<p style="margin-bottom: -4px; margin-top: 8px;">${m.m_nick }
+														<fmt:formatDate value="${m.msg_date }" pattern="yy/MM/dd, HH:mm:SS"/>
+														</p>
+															<c:if test="${m.sender_no eq m_no  }">
+																<p style="width: 300px; height: 30px; background-color: #ffff9e; margin: auto; display: inline-block; font-weight: bold; font-size: 17px;">
+																	${m.msg_content }
+																</p>
+															</c:if>
+															<c:if test="${m.sender_no ne m_no }">
+																<p style="width: 300px; height: 30px; background-color: #87e1ff 	; margin: auto; display: inline-block; font-weight: bold; font-size: 17px;">
+																	${m.msg_content }
+																</p>
+															</c:if>
+														<div style="position: relative; display: inline-block">
+															<img style="border-radius: 150px; width: 45px;height: 45px;" 
+															src="/upload/${m.fu_storedname }"/></div>
+														<hr>
+											</c:forEach>
+													<div id="msg"></div>
+												</div>
+											</div>
+	  							   	  </div> 
+	  							  <div style="width: 100%; height: 100px; background-color: #e8e8e8;">
+										<input type="text" id="msg_content" name="msg_content" placeholder="메세지를 입력해주세요."
+										style="width: 524px; height: 75px; margin-left: 61px; margin-top: 12px;
+											   font-size: 16px; line-height: 18px; color: #b0b0b0;"/>
+				  						<input type="button" id="sendMsg"value="SEND" 
+				  						style="height: 40px; width: 67px; background-color: #61d2d6; border-color: #61d2d6; border: none; font-size: 18px; color: white;"/>
+	  							  </div>
+							</div>
+			
+   
+   
+<script>
+// sockjs 를 이용한 서버와 연결되는 객체
+var ws = null;
+var user_nick= null;
+var first = 0;
+
+function showMessage(msg_content) {
 	
+	document.getElementById("Message_display").style.display="block";
+	document.getElementById("bg_Message").style.display="block";//배경 어둡게 하는 것 
+	 $("#msg_content").focus();
+	 $('#chatAreabox').scrollTop($('#chatAreabox')[0].scrollHeight);
+
 	
+	if(first==0){
+		connect();
+		first++;
+	}
+	
+    console.log(msg_content);
+    var jsonMessage = JSON.parse(msg_content);
+   
+        
+    if('${m_nick}' == jsonMessage.m_nick){
+		$("#msg").append('<p style="margin-bottom: -4px; margin-top: 8px;">'+jsonMessage.m_nick+ '</p>');
+		$("#msg").append('<p style="width: 300px; height: 30px; background-color: #ffff9e; display: inline-block; font-weight: bold; font-size: 17px;">'+jsonMessage.msg_content+'</p>');
+		$("#msg").append('<div style="position: relative; display: inline-block"><img style="border-radius: 150px; width: 45px;height: 45px;"src="/upload/'+jsonMessage.fu_storedname+'"</img></div>');
+		$("#msg").append('<hr>');
+    }else{
+    	$("#msg").append('<p style="margin-bottom: -4px; margin-top: 8px;">'+jsonMessage.m_nick+ '</p>');
+    	$("#msg").append('<p style="width: 300px; height: 30px; background-color: #87e1ff; display: inline-block; font-weight: bold; font-size: 17px;">'+jsonMessage.msg_content+'</p>');
+    	$("#msg").append('<div style="position: relative; display: inline-block"><img style="border-radius: 150px; width: 45px;height: 45px;"src="/upload/'+jsonMessage.fu_storedname+'"</img></div>');
+    	$("#msg").append('<hr>');
+	}
+	
+    $('#chatAreabox').scrollTop($('#chatAreabox')[0].scrollHeight); 
+}
+
+function connect() {
+    // SockJS라이브러리를 이용하여 서버에 연결
+    ws = new WebSocket("ws://localhost:8088/chatEcho");
+  	console.log(ws);
+
+    // 서버가 메시지를 보내주면 함수가 호출된다.
+    ws.onmessage = function(msg_content) {
+        showMessage(msg_content.data);
+    }
+}
+
+function disconnect() {
+    if (ws != null) {
+        ws.close();
+    }
+    setConnected(false);
+    console.log("Disconnected");
+}
+
+function send() {
+    // 웹소켓 서버에 메시지를 전송
+    ws.send(JSON.stringify({'msg_content': $("#msg_content").val()}));
+    // 채팅입력창을 지우고 포커싱하라.
+    $("#msg_content").val('');
+    $("#msg_content").focus();
+}
+
+
+// $(함수(){ 함수내용 });  // jquery에서 문서가 다 읽어들이면 함수()를 호출한다.
+$(function () {
+//        connect();
+    // 채팅입력창에서 키가 눌리면 함수가 호출
+    // 엔터를 입력하면 send()함수가 호출
+    $("#msg_content").keypress(function(e) {
+        if (e.keyCode == 13){
+            send();
+        }
+    });
+
+    $( "#sendMsg" ).click(function() { send(); });
+});
+</script>
+			
+			
 	

@@ -1,9 +1,8 @@
 package web.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,12 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 import web.dto.FileUpload;
 import web.dto.Follow;
 import web.dto.Member;
-import web.dto.Product;
-import web.service.face.MemberService;
-import web.service.face.MypageService;
-
 import web.dto.MemberQuiz;
 import web.dto.MemberQuizSet;
+import web.dto.Message;
+import web.dto.MessageRoom;
 import web.dto.Product;
 import web.dto.ProductBrand;
 import web.dto.ProductCategory;
@@ -38,6 +35,8 @@ import web.dto.ProductOccasion;
 import web.dto.ProductPattern;
 import web.dto.ProductStyle;
 import web.dto.QuizQuestion;
+import web.service.face.MemberService;
+import web.service.face.MessageService;
 import web.service.face.MypageService;
 
 
@@ -46,15 +45,22 @@ public class MypageContorller {
 	@Autowired MypageService mypageService;	
 	@Autowired MemberService memberService;
 	@Autowired ServletContext context;
+	@Autowired MessageService mServ;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MypageContorller.class);
 	
 //	마이페이지 이동
 	@RequestMapping("/mypage/mypage")
-	public void mypagego(Model model, Member member, int m_no, Follow f) {
+	public void mypagego(Model model, Member member, int m_no, Follow f, HttpSession session, Message message) {
 		
 //		회원정보 뿌리기
 		model.addAttribute("mypage", mypageService.getUserInfo(member));
+		
+		FileUpload fu = new FileUpload();
+		String m_nick = (String) session.getAttribute("m_nick");
+		String fu_storedname = mypageService.getUserImg(m_nick);
+		session.setAttribute("fu_storedname", fu_storedname);
+		
 //		팔로우 숫자 뿌리기
 		int countFollower = mypageService.getFollower(member);
 		model.addAttribute("countFollower", countFollower);
@@ -64,18 +70,32 @@ public class MypageContorller {
 //		본인이 만든 스타일링 숫자 뿌리기
 		int countStyling = mypageService.getCoStyling(member);
 		model.addAttribute("countStyling", countStyling);
-//		본인이 만든 컬렉션 숫자 뿌리기
+//		본인이 좋아요한 상품 숫자
 		int countCollection = mypageService.getCoCollection(member);
 		model.addAttribute("countCollection", countCollection);
-//		본인이 체크한 모든 좋아요 숫자 뿌리기 -> 이건 문제있음 체크해야함
+//		본인이 좋아요한 스타일링 숫자
 		int countLike = mypageService.getCoLike(member);
 		model.addAttribute("countLike", countLike);
 		
 		List<Member> followList = mypageService.getFollowList(m_no);
-		
 		model.addAttribute("followList", followList);
-		System.out.println(followList);
 		
+//		마이페이지 채팅방 리스트
+		List<MessageRoom> MRList = mServ.getmrList(m_no);
+		for(int i=0 ; i<MRList.size(); i++) {
+			int mr_no = MRList.get(i).getMr_no();
+			int m_no1 = (int) session.getAttribute("m_no");
+			MRList.get(i).setNotRead(mServ.getNotRead(mr_no, m_no1));
+		}
+		model.addAttribute("MRList", MRList);
+		
+		
+//		메세지 전체 안읽은 수.
+		int countAllRead = 0;
+		countAllRead = mypageService.getCountAllRead(message);
+		model.addAttribute("countAllRead", countAllRead);
+		
+
 	}
 //	현재 아이디 비밀번호 확인
 	@RequestMapping(value = "/mypage/checkPass", method = RequestMethod.POST)
@@ -197,6 +217,8 @@ public class MypageContorller {
 		model.addAttribute("StylingList", StylingList);
 		
 	}
+	
+	
 	
 	
 	

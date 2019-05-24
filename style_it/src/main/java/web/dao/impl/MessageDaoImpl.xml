@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="web.dao.face.MessageDao">
+
+	<select id="dualNo" resultType="int">
+	
+		SELECT MessageRoom_SEQ.nextval from dual
+	
+	</select>
+	
+	<insert id="MakeMroom" parameterType="web.dto.MessageRoom">
+	
+		INSERT INTO MessageRoom
+			(mr_no, participant1, participant2 )
+		VALUES 
+			( #{mr_no }, #{participant1 }, #{participant2 } )
+	
+	</insert>
+	
+	<insert id="sendMassege" parameterType="web.dto.Message">
+	
+		INSERT INTO Message
+			(msg_no, msg_content, sender_no, receiver_no, mr_no )
+		VALUES 
+			( Message_SEQ.nextval, #{msg_content }, #{sender_no },  #{receiver_no }, #{mr_no } )
+	
+	</insert>
+	
+	<select id="countChat" parameterType="web.dto.MessageRoom" resultType="int">
+			
+			select count(*) from MessageRoom
+			where participant1 =  #{participant1 } and participant2 = #{participant2 }
+			or participant2 = #{participant1 } and participant1 =  #{participant2 } 
+	
+	</select>
+	
+	<select id="getMr_no" parameterType="web.dto.MessageRoom" resultType="int">
+			
+			select mr_no from MessageRoom
+			where participant1 =  #{participant1 } and participant2 = #{participant2 }
+			or participant2 = #{participant1 } and participant1 =  #{participant2 } 
+	
+	</select>
+	
+	<select id="MessageList" parameterType="int" resultType="web.dto.Message">
+	
+			select m.m_no, m.m_nick, me.msg_content, fu.fu_storedname, me.msg_date, me.sender_no, me.receiver_no from Message me, member m, fileupload fu
+            where me.sender_no = m.m_no
+            and m.fu_no = fu.fu_no
+            and mr_no = #{mr_no }
+            order by me.msg_date asc
+	
+	</select>
+	
+	<select id="getmrList" parameterType="int" resultType="web.dto.MessageRoom">
+	
+		select m.m_no, me.mr_no,me.mr_date, m.m_nick, fu.fu_storedname  from member m, fileupload fu, (            
+            select*from messageroom
+            where participant1 = #{m_no } or participant2 = #{m_no }
+            )me
+            where m.m_no != #{m_no } and m.m_no = me.participant1 and m.fu_no = fu.fu_no
+            or m.m_no != #{m_no } and m.m_no = me.participant2 and m.fu_no = fu.fu_no
+        order by mr_date desc
+	
+	</select>
+	
+	<select id="countUpdate" parameterType="web.dto.Message" resultType="web.dto.Message">
+	
+			   UPDATE message
+               SET msg_read = 'y'
+               where mr_no = #{mr_no }
+               and sender_no = #{m_no }
+	
+	</select>
+	
+	<select id="getNotRead" resultType="int">
+	
+		SELECT COUNT(*) FROM message  where mr_no=#{mr_no } and receiver_no = #{m_no1 } and msg_read= 'n'
+	
+	</select>
+	
+
+</mapper>
