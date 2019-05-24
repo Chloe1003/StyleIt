@@ -331,23 +331,21 @@ $(document).ready(function() {
 	</div>
 	
 	<div class="mypageBottom" style="margin-left: 168px;">
+   
+      <div class="sBottom" style="position: relative; left: 242px; bottom: -63px;">
+         <span style="position: relative; left: 25px; font-size: 20px; font-weight: bold;">
+         <a style="cursor: pointer; color: black" onclick="showMemStylingList()">${countStyling }</a></span>
+      <br>스타일링</div>
+      <div class="lBottom" style="position: relative; bottom: -13px; left: 490px;">
+         <span style="cursor: pointer; position: relative; left: 15px; font-size: 20px; font-weight: bold; color: black;" onclick="showMemProductLikeList()">${countLike }</span>
+      <br><span style="position: relative; left: -22px;">Product 좋아요</span></div>
+      <div class="cBottom" style="position: relative; bottom: 36px;  left: 740px;">
+         <span style="cursor: pointer; position: relative; left: 15px; font-size: 20px; font-weight: bold;" onclick="showMemberStylingLikeList()">${countCollection }</span>
+      <br><span style="position: relative; left: -20px;">Styling 좋아요</span></div>
+   
+   </div>
+		
 	
-		<div class="sBottom" style="position: relative; left: 242px; bottom: -63px;">
-			<span style="position: relative; left: 25px; font-size: 20px; font-weight: bold;">
-			<a style="cursor: pointer; color: black" onclick="showMemStylingList()">${countStyling }</a></span>
-		<br>스타일링</div>
-		<div class="lBottom" style="position: relative; bottom: -13px; left: 490px;">
-			<span style="cursor: pointer; position: relative; left: 15px; font-size: 20px; font-weight: bold; color: black;" onclick="showMemProductLikeList()">${countLike }</span>
-
-		<br>좋아요</div>
-
-		<br><span style="position: relative; left: -22px;">Product 좋아요</span></div>
-		<div class="cBottom" style="position: relative; bottom: 36px;  left: 740px;">
-			<span style="cursor: pointer; position: relative; left: 15px; font-size: 20px; font-weight: bold;" onclick="showMemberStylingLikeList()">${countCollection }</span>
-		<br><span style="position: relative; left: -20px;">Styling 좋아요</span></div>
-
-	
-	</div>
 			<!-- 멤퍼페이지에서 팔로우 한 리스트 -->
 			<div class="bg_follow" id="bg_follow"></div>
 				<div class="follow_display" id="follow_display">

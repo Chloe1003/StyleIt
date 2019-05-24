@@ -209,7 +209,7 @@ a:visited { color: black; text-decoration: none; }
 	<td><img src="/resources/image/banner/${i.fu_storedname }" style="width: 100px; height:100px;"/> </td>
 	<td><fmt:formatDate value="${i.b_date }" pattern="yyyy-MM-dd"/></td>
 	<td><button class="bannerUpdate" style="background-color: transparent; border-color: transparent;" 
-		data-backdrop="static" data-target="#updateBanner_display" data-toggle="modal" onclick="update()">수정</button>
+		data-backdrop="static" data-target="#updateBanner_display" data-toggle="modal" >수정</button>
 	 / <a href="/admin/banner/delete?b_no=${i.b_no }" style="">삭제</a>
 	</td>
 	</tr>

@@ -598,7 +598,7 @@ $(document).ready(function() {
 				
 	<div class="mypageLine">
 		<div class="mypageNick">안녕,&nbsp;&nbsp;&nbsp;&nbsp;<span style="text-transform: capitalize; text-decoration: underline; font-size: 18px;">${mypage.m_nick }</span>  
-			<a a style="cursor: pointer;" onclick="showMail()"><img class="mail" src="/resources/image/mypage/mail.png"/></a>
+			<a style="cursor: pointer;" onclick="showMail()"><img class="mail" src="/resources/image/mypage/mail.png"/></a>
 				<span style="position: relative; left: 290px; border: solid 2px red; border-radius: 8px; background-color: red; top: -7px;" >${countAllRead }</span>
 			<a style="cursor: pointer;" onclick="showQuiz()"><img class="sQuiz" src="/resources/image/mypage/clipboard.png"/></a>
 			<a style="cursor: pointer;" onclick="showSetting()"><img class="mySet" src="/resources/image/mypage/settings.png"/></a>
@@ -632,7 +632,6 @@ $(document).ready(function() {
 			<a style="cursor: pointer; color: black" onclick="Stylinglikelist()">${countCollection }</a></span>
 		<br><span style="position: relative; left: -20px;">Styling 좋아요</span></div>
 
-		<br>좋아요</div>
 
 	
 	</div>

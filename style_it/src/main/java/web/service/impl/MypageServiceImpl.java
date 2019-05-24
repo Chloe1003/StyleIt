@@ -289,15 +289,15 @@ public class MypageServiceImpl implements MypageService{
 		return mypageDao.getProductLikeList();
 	}
 	
-	@Override
-	public List<StylingLike> getStylingLikeList() {				
-		return mypageDao.getStylingLikeList();
-	}
+//	@Override
+//	public List<StylingLike> getStylingLikeList() {				
+//		return mypageDao.getStylingLikeList();
+//	}
 	
-	@Override
-	public List<Styling> getStylingList(int m_no) {
-		return mypageDao.getStylingList(m_no);
-	}
+//	@Override
+//	public List<Styling> getStylingList(int m_no) {
+//		return mypageDao.getStylingList(m_no);
+//	}
 	
 	@Override
 	public int getCountStyling(int m_no) {

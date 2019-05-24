@@ -114,10 +114,10 @@ public interface MypageDao {
 	//제품 좋아요 리스트 가져오기
 	public List<ProductLike> getProductLikeList();
 	
-	//스타일링 좋아요 리스트 가져오기
-	public List<StylingLike> getStylingLikeList();
-	
-	public List<Styling> getStylingList(int m_no);
+//	//스타일링 좋아요 리스트 가져오기
+//	public List<StylingLike> getStylingLikeList();
+//	
+//	public List<Styling> getStylingList(int m_no);
 	
 	//마이페이지 내가 좋아요한 스타일링 수
 	public int selectCountStyling(int m_no);

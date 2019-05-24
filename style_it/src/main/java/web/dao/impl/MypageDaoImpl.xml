@@ -275,32 +275,6 @@
   		VALUES (memberquiz_seq.nextval, #{m_no }, 8, #{p_highprice })	
   	</insert>	
   	
-<!--   	<insert id="insertMemberQuiz" parameterType="web.dto.MemberQuizSet"> -->
-<!-- 		INSERT ALL -->
-<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 1, #{p_gender }) -->
-<!-- 		<foreach collection="po_no" item="data" > -->
-<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 2, #{data }) -->
-<!-- 		</foreach> -->
-<!-- 		<foreach collection="pb_no" item="data" > -->
-<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 3, #{data }) -->
-<!-- 		</foreach> -->
-<!-- 		<foreach collection="ps_no" item="data" > -->
-<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 4, #{data }) -->
-<!-- 		</foreach> -->
-<!-- 		<foreach collection="pca_no" item="data" > -->
-<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 5, #{data }) -->
-<!-- 		</foreach> -->
-<!-- 		<foreach collection="pco_no" item="data" > -->
-<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 6, #{data }) -->
-<!-- 		</foreach> -->
-<!-- 		<foreach collection="pp_no" item="data" > -->
-<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 7, #{data }) -->
-<!-- 		</foreach> -->
-<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 8, #{lprice }) -->
-<!-- 			INTO memberquiz(mq_no, m_no, qq_no, mq_answer) VALUES (memberquiz_seq.nextval, #{m_no }, 8, #{hprice }) -->
-<!-- 		SELECT 1 FROM dual -->
-<!--   	</insert> -->
-  	
   	<select id="selectRecommendProduct" parameterType="web.dto.MemberQuizSet" resultType="web.dto.Product">
   		SELECT * FROM (
 			WITH ratings AS(
@@ -354,19 +328,6 @@
   	
 	<select id="getProductLikeList" parameterType="int" resultType="web.dto.ProductLike">
 		SELECT p_no, m_no, plike_date FROM productlike
-	</select>
-	
-	<select id="getStylingLikeList" parameterType="int" resultType="web.dto.StylingLike">
-		SELECT s_no, m_no, slike_date FROM stylinglike
-	</select>
-	
-	<select id="getStylingList" parameterType="int" resultType="web.dto.Styling">
-		SELECT s.s_no, s.m_no, s.s_name, s.s_content, s.fu_no, f.fu_storedname, s.st_no, s.s_date
-		    , ( select count(*) from stylinglike l where s.s_no = l.s_no ) cntslike
-		    , ( select count(*) from stylinglike l where s.s_no = l.s_no and m_no = #{m_no } ) slikecheck
-		FROM styling S
-		JOIN fileupload f ON s.fu_no = f.fu_no
-		where ( select count(*) from stylinglike l where s.s_no = l.s_no and m_no = #{m_no } )=1
 	</select>
 	
 	<select id="selectCountStyling" resultType="int" parameterType="int">

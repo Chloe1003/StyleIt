@@ -173,7 +173,7 @@ html2canvas(document.getElementById('createStyle'), {
         	    , dataType: "json"
 				, success: function( res ){
 					alert("저장되었습니다.");
-					location.href = "/main";
+					location.href = "/mypage/mystylinglist?m_no="+${m_no };
 				}
         		, error: function( e ) {
         			console.log(e)
@@ -217,7 +217,6 @@ html2canvas(document.getElementById('createStyle'), {
 			<input type="text" id="s_name" name="s_name" placeholder="Title" style="width: 90%;"/>
 			<input type="text" id="s_content" name="s_content" placeholder="Description" style="width: 90%;"/>
 			<select id="st_no" name="st_no"> 
-				<option value="">태그 선택</option>
 				<c:forEach items="${stList }" var="s">	
 					<option value="${s.st_no }">${s.st_name }</option>
 				</c:forEach>

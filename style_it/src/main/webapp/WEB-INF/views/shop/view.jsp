@@ -376,6 +376,10 @@ function productView(p_no){
 
 $(document).ready(function(){
 	
+	$(".icon").click(function(){
+		location.href="/styling/create"
+	});
+	
 	var login = false;
 
 	$(".like").click(function(){	

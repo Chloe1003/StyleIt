@@ -46,4 +46,12 @@
 		delete banner where b_no=#{value }
 	</delete>
 	
+	<update id="bannerUpdate" parameterType="HashMap">
+		update banner set b_name=#{b_name }
+		<if test="no != empty">
+		, fu_no=#{no }
+		</if>
+		where b_no=#{b_no }
+	</update>
+	
 </mapper>
