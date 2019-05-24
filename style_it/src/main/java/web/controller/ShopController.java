@@ -79,7 +79,7 @@ public class ShopController {
 	//SHOP 상세 페이지
 	@RequestMapping(value="/shop/view", method=RequestMethod.GET)
 	public void shopView(HttpSession session, Model model, @RequestParam int p_no){
-		HashMap<String, Integer> map = new HashMap<>();
+		HashMap<String, Object> map = new HashMap<>();
 		HashMap<String, Object> view = new HashMap<>();
 		logger.info("제품 상세 페이지");
 		
@@ -99,7 +99,8 @@ public class ShopController {
 						
 		map.put("m_no", m_no);
 		map.put("p_no", p_no);
-			
+		map.put("login", login);
+		
 		Product p = shopService.getProductView(map);
 		Product selected = shopService.getProduct(p_no);
 			

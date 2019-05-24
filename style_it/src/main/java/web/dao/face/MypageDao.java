@@ -62,7 +62,7 @@ public interface MypageDao {
 //	좋아요한 상품 리스트
 	public List<Product> getProLikeList(int m_no);
 //	유저가 좋아요 한 상품 리스트
-	public List<Product> getMemProLikeList(int m_no);
+	public List<Product> getMemProLikeList(HashMap<String, Object> map);
 //  유저가 좋아요한 스타일링 리스트
 	public List<Product> getStylingLikeList(int m_no);
 //	유저가 만든 스타일링 리스트

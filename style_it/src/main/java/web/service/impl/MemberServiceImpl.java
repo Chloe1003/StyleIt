@@ -101,13 +101,13 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public List<Product> getMemberStylingList(int m_no) {
-		return memberDao.getMemberStylingList(m_no);
+	public List<Product> getMemberStylingList(HashMap<String, Object> map) {
+		return memberDao.getMemberStylingList(map);
 	}
 	
 	@Override
-	public List<Product> getMemberStylingLikeList(int m_no) {
-		return memberDao.getMemberStylingLikeList(m_no);
+	public List<Product> getMemberStylingLikeList(HashMap<String, Object> map) {
+		return memberDao.getMemberStylingLikeList(map);
 	}
 
 	

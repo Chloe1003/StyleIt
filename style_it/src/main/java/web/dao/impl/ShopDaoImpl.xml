@@ -70,7 +70,7 @@
 	<select id="selectProductView" parameterType="HashMap" resultType="web.dto.Product">
         SELECT p.p_no, p.p_price, p.p_name, f.fu_storedname, b.pb_name, p.p_url,
             (select count(*) from productlike l where p.p_no = l.p_no) cntplike
-            <if test="login=='true'">
+            <if test="login">
             ,(select count(*) from productlike l where p.p_no = l.p_no and m_no = #{m_no }) plikecheck
             </if>
         FROM product p

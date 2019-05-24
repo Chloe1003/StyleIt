@@ -882,12 +882,12 @@ function showMessage(msg_content) {
    
     if('${m_nick}' == jsonMessage.m_nick){
        
-		$("#meaa").append('<p style="margin-bottom: -4px; margin-top: 8px;">'+jsonMessage.m_nick+  curDate.format('yy/MM/dd, HH:mm:ss')+'</p>');
+		$("#meaa").append('<p style="margin-bottom: -4px; margin-top: 8px;">'+jsonMessage.m_nick+curDate.format('yy/MM/dd, HH:mm:ss')+'</p>');
 		$("#meaa").append('<p style="width: 300px; height: 30px; background-color: #ffff9e; display: inline-block; font-weight: bold; font-size: 17px;">'+jsonMessage.msg_content+'</p>');
 		$("#meaa").append('<div style="position: relative; display: inline-block"><img style="border-radius: 150px; width: 45px;height: 45px;"src="/upload/'+jsonMessage.fu_storedname+'"</img></div>');
 		$("#meaa").append('<hr>');
     }else{
-    	$("#meaa").append('<p style="margin-bottom: -4px; margin-top: 8px;">'+jsonMessage.m_nick+ '</p>');
+    	$("#meaa").append('<p style="margin-bottom: -4px; margin-top: 8px;">'+jsonMessage.m_nick+curDate.format('yy/MM/dd, HH:mm:ss')+'</p>');
     	$("#meaa").append('<p style="width: 300px; height: 30px; background-color: #87e1ff; display: inline-block; font-weight: bold; font-size: 17px;">'+jsonMessage.msg_content+'</p>');
     	$("#meaa").append('<div style="position: relative; display: inline-block"><img style="border-radius: 150px; width: 45px;height: 45px;"src="/upload/'+jsonMessage.fu_storedname+'"</img></div>');
     	$("#meaa").append('<hr>');
@@ -901,7 +901,7 @@ function showMessage(msg_content) {
 
 function connect() {
     // SockJS라이브러리를 이용하여 서버에 연결
-    ws = new WebSocket("ws://localhost:8088/chatEcho");
+    ws = new WebSocket("ws://192.168.20.89:8088/chatEcho");
   	console.log(ws);
 
     // 서버가 메시지를 보내주면 함수가 호출된다.

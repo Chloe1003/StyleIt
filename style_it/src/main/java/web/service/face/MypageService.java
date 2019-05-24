@@ -65,7 +65,7 @@ public interface MypageService {
 //	유저가 좋아요 한 스타일링 리스트
 	public List<Product> getStylingLikeList(int m_no);
 //	유저가 좋아요 한 상품리스트
-	public List<Product> getMemProLikeList(int m_no);
+	public List<Product> getMemProLikeList(HashMap<String, Object> map);
 	
 //	프로필 사진 세션에 넘김.
 	public String getUserImg(String m_nick);

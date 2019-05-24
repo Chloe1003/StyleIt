@@ -246,25 +246,39 @@ public class MemberController {
 	}
 //	멤버페이지에서 보는 멤버가 좋아요한 상품 리스트
 	@RequestMapping(value = "/member/MemProductlikelist")
-	public void MemberProLikeList(Model model, int m_no, Product p) {
+	public void MemberProLikeList(Model model, int m_no, Product p, HttpSession session) {
 		System.out.println("m_no은?"+m_no);
-		List<Product> ProLikeList = mypageService.getMemProLikeList(m_no); // 실수로 마이페이지 서비스로 보내버림..
+		int mm_no = (int) session.getAttribute("m_no");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("m_no", m_no);
+		map.put("mm_no", mm_no);
+		List<Product> ProLikeList = mypageService.getMemProLikeList(map); // 실수로 마이페이지 서비스로 보내버림..
 		model.addAttribute("ProLikeList", ProLikeList);
 		
 	}
 //	멤버페이지에서 보는 멤버가 좋아요한 상품 리스트
 	@RequestMapping(value = "/member/MemberStylingLikeList")
-	public void MemberStylingLikeList(Model model, int m_no, Product p) {
+	public void MemberStylingLikeList(Model model, int m_no, Product p, HttpSession session) {
 		System.out.println("m_no은?"+m_no);
-		List<Product> StylingLikeList = memberService.getMemberStylingLikeList(m_no); // 실수로 마이페이지 서비스로 보내버림..
+		int mm_no = (int) session.getAttribute("m_no");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("m_no", m_no);
+		map.put("mm_no", mm_no);
+		List<Product> StylingLikeList = memberService.getMemberStylingLikeList(map); // 실수로 마이페이지 서비스로 보내버림..
 		model.addAttribute("StylingLikeList", StylingLikeList);
 		
 	}
 //	멤머페이지에서 보는 멤머가 만든 스타일링 리스트
 	@RequestMapping(value = "/member/MemberStylingList")
-	public void MemberStylingList(Model model, int m_no, Product p) {
+	public void MemberStylingList(Model model, int m_no, Product p, HttpSession session) {
 		System.out.println("m_no은?"+m_no);
-		List<Product> memberstylingList = memberService.getMemberStylingList(m_no); // 실수로 마이페이지 서비스로 보내버림..
+		
+		int mm_no = (int) session.getAttribute("m_no");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("m_no", m_no);
+		map.put("mm_no", mm_no);
+		
+		List<Product> memberstylingList = memberService.getMemberStylingList(map); // 실수로 마이페이지 서비스로 보내버림..
 		model.addAttribute("memberstylingList", memberstylingList);
 		
 	}
