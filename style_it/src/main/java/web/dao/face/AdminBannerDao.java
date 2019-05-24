@@ -37,6 +37,7 @@ public interface AdminBannerDao {
 	
 	public void bannerUpdate(HashMap<String, Object> map);
 	
+	public void fileUploadUpdate(HashMap<String, Object> map);
 	
 	
 

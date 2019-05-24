@@ -132,15 +132,15 @@ display:inline-flex;
     border-radius: 15px;
     color: white;
     margin-left:30px;
-
+    border : none;
 }
 .list_UNFOLLOW{
 	padding: 5px 30px;
-    background: #009994;
+    background: gray;
     border-radius: 15px;
     color: white;
     margin-left:30px;
-
+	border : none;
 }
 .product{
 	position: relative;
@@ -414,7 +414,18 @@ function productView(p_no){
 }
 
 function comment(){
+	
+	var login = false;
+	
+	if(${login ne true}){
+//	 		console.log("비로그인");
+			showlogin();
+			
+	}	else {
+		
 	$("#stylingComment").modal();
+	}
+	
 }
 
 function replydelete(co_no){

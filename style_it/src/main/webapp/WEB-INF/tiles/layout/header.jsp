@@ -309,7 +309,7 @@
 						<li><a href="javascript:void(0);" onclick="showlogin();">LOGIN</a></li>
 					</c:if>
 
-					<li><a href="faq"><span><img alt="faq" src="/resources/image/main/faq.png" style="width: 20px;"></span></a></li>
+					<li><a href="/faq"><span><img alt="faq" src="/resources/image/main/faq.png" style="width: 20px;"></span></a></li>
 				</ul>
 			</div>
 		</div>

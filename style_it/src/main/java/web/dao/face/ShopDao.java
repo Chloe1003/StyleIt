@@ -32,10 +32,10 @@ public interface ShopDao {
 	public int plikeCnt(int p_no);
 
 //	제품 상세보기	
-	public Product selectProductView(HashMap<String, Integer> map);
+	public Product selectProductView(HashMap<String, Object> map);
 	
 //	제품별 스타일링 정보 얻어오기
-	public List<Styling> selectStylingByProduct(HashMap<String, Integer> map);
+	public List<Styling> selectStylingByProduct(HashMap<String, Object> map);
 
 //	유사한 제품 정보 얻어오기(5개)
 	public List<Product> selectSimilarProduct(HashMap<String, Object> map);

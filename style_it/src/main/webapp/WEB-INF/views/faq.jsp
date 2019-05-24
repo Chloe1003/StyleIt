@@ -112,15 +112,15 @@ th, td {
 					<!-- faq 제목 입력 창 -->
 					<div class="form-group">
 						<input type="hidden" class="form-control" id="Faq_no" name="faq_no">
-						<input type="text"  class="form-control" id="Faq_name" name="faq_name" placeholder="FAQ제목" value="name">
+						<input type="text"  class="form-control" id="Faq_name" name="faq_name" placeholder="FAQ제목" value="name" disabled>
 					</div>
 					<!-- faq 내용 입력 창 -->
 					<div class="form-group">
-						<textarea rows="13" cols="80" id="Faq_answer" name="faq_answer" style="width : 98%; height: 300px;">내용</textarea>
+						<textarea rows="13" cols="80" id="Faq_answer" name="faq_answer" style="width : 98%; height: 300px;" disabled>내용</textarea>
 					</div>
 					<!-- 확인  -->
 					<div class="form-group">
-						<button id="btnInsert2" class="btn btn-default" style="width: 285.83px; margin-left: 38px; background: #009994; color: white;">확인</button>
+<!-- 						<button id="btnInsert2" class="btn btn-default" style="width: 285.83px; margin-left: 38px; background: #009994; color: white;">확인</button> -->
 						<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 					</div>
 				</div>

@@ -49,10 +49,10 @@ public interface MemberDao {
 	public void stylingquizUpdate(int qq_no);
 
 	// 멤버가 만든 스타일링 리스트
-	public List<Product> getMemberStylingList(int m_no);
+	public List<Product> getMemberStylingList(HashMap<String, Object> map);
 
 	// 멤버가 좋아요한 좋아요 리스트
-	public List<Product> getMemberStylingLikeList(int m_no);
+	public List<Product> getMemberStylingLikeList(HashMap<String, Object> map);
 
 
 	// m_no로 멤버 정보 가져오기

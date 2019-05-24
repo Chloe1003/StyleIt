@@ -110,11 +110,12 @@ object-fit: contain;
 <div id="block">
 	<div class="img-wrapper img" onclick="stylingView(${s.s_no })" data-sno="${s.s_no }">
 		<img src="/upload/${s.fu_storedname }" alt="images">
+		
 		<div class="likecnt" id="likecnt">${s.cntslike }</div>	
 
-		<div class="like red"></div>
+		<div class="like empty"></div>
 	
-		<div class="comment" onclick="comment(${s.s_no })"><img src="/resources/image/styling/comment.png" alt="comments"></div>
+<%-- 		<div class="comment" onclick="comment(${s.s_no })"><img src="/resources/image/styling/comment.png" alt="comments"></div> --%>
 		<div class="darkness"></div>
      	<div class="stylingname"><span draggable="false">${s.s_name }</span></div>
 	</div>

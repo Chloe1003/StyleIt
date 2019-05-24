@@ -110,7 +110,7 @@ public class AdminUserController {
 	}
 	
 	//회원관리 정지
-	@RequestMapping(value="/admin/user/disable", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/user/disable", method=RequestMethod.POST)
 	public String adminUserDisable(HttpServletRequest req){
 		
 		String checked[] = req.getParameterValues("checkedList");

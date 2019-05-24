@@ -106,6 +106,7 @@ object-fit: contain;
 }
 </style>
 <div class="frame">
+<c:if test="${stylingList.size()>0 }">
 <c:forEach items="${stylingList }" var="s" begin="0" end="${stylingList.size()-1 }">
 <div id="block">
 	<div class="img-wrapper img" onclick="stylingView(${s.s_no })" data-sno="${s.s_no }">
@@ -119,12 +120,16 @@ object-fit: contain;
 			<div class="like red"></div>
 		</c:if>
 		
-		<div class="comment" onclick="comment(${s.s_no })"><img src="/resources/image/styling/comment.png" alt="comments"></div>
+<%-- 		<div class="comment" onclick="comment(${s.s_no })"><img src="/resources/image/styling/comment.png" alt="comments"></div> --%>
 		<div class="darkness"></div>
      	<div class="stylingname"><span draggable="false">${s.s_name }</span></div>
 	</div>
 </div>
 </c:forEach>
+</c:if>
+<c:if test="${stylingList.size() eq 0 }">
+<div>아직 스타일링이 없습니다</div>
+</c:if>
 </div>
 
 <script type="text/javascript">

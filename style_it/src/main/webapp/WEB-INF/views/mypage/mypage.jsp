@@ -598,7 +598,7 @@ $(document).ready(function() {
 				
 	<div class="mypageLine">
 		<div class="mypageNick">안녕,&nbsp;&nbsp;&nbsp;&nbsp;<span style="text-transform: capitalize; text-decoration: underline; font-size: 18px;">${mypage.m_nick }</span>  
-			<a a style="cursor: pointer;" onclick="showMail()"><img class="mail" src="/resources/image/mypage/mail.png"/></a>
+			<a style="cursor: pointer;" onclick="showMail()"><img class="mail" src="/resources/image/mypage/mail.png"/></a>
 				<span style="position: relative; left: 290px; border: solid 2px red; border-radius: 8px; background-color: red; top: -7px;" >${countAllRead }</span>
 			<a style="cursor: pointer;" onclick="showQuiz()"><img class="sQuiz" src="/resources/image/mypage/clipboard.png"/></a>
 			<a style="cursor: pointer;" onclick="showSetting()"><img class="mySet" src="/resources/image/mypage/settings.png"/></a>
@@ -632,7 +632,6 @@ $(document).ready(function() {
 			<a style="cursor: pointer; color: black" onclick="Stylinglikelist()">${countCollection }</a></span>
 		<br><span style="position: relative; left: -20px;">Styling 좋아요</span></div>
 
-		<br>좋아요</div>
 
 	
 	</div>
@@ -883,12 +882,12 @@ function showMessage(msg_content) {
    
     if('${m_nick}' == jsonMessage.m_nick){
        
-		$("#meaa").append('<p style="margin-bottom: -4px; margin-top: 8px;">'+jsonMessage.m_nick+  curDate.format('yy/MM/dd, HH:mm:ss')+'</p>');
+		$("#meaa").append('<p style="margin-bottom: -4px; margin-top: 8px;">'+jsonMessage.m_nick+curDate.format('yy/MM/dd, HH:mm:ss')+'</p>');
 		$("#meaa").append('<p style="width: 300px; height: 30px; background-color: #ffff9e; display: inline-block; font-weight: bold; font-size: 17px;">'+jsonMessage.msg_content+'</p>');
 		$("#meaa").append('<div style="position: relative; display: inline-block"><img style="border-radius: 150px; width: 45px;height: 45px;"src="/upload/'+jsonMessage.fu_storedname+'"</img></div>');
 		$("#meaa").append('<hr>');
     }else{
-    	$("#meaa").append('<p style="margin-bottom: -4px; margin-top: 8px;">'+jsonMessage.m_nick+ '</p>');
+    	$("#meaa").append('<p style="margin-bottom: -4px; margin-top: 8px;">'+jsonMessage.m_nick+curDate.format('yy/MM/dd, HH:mm:ss')+'</p>');
     	$("#meaa").append('<p style="width: 300px; height: 30px; background-color: #87e1ff; display: inline-block; font-weight: bold; font-size: 17px;">'+jsonMessage.msg_content+'</p>');
     	$("#meaa").append('<div style="position: relative; display: inline-block"><img style="border-radius: 150px; width: 45px;height: 45px;"src="/upload/'+jsonMessage.fu_storedname+'"</img></div>');
     	$("#meaa").append('<hr>');
@@ -902,7 +901,7 @@ function showMessage(msg_content) {
 
 function connect() {
     // SockJS라이브러리를 이용하여 서버에 연결
-    ws = new WebSocket("ws://localhost:8088/chatEcho");
+    ws = new WebSocket("ws://192.168.20.89:8088/chatEcho");
   	console.log(ws);
 
     // 서버가 메시지를 보내주면 함수가 호출된다.

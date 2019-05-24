@@ -31,10 +31,10 @@ public interface ShopService {
 	public int plikeCheck(HashMap<String, Object> like);
 	
 //	제품 상세보기	
-	public Product getProductView(HashMap<String, Integer> map);
+	public Product getProductView(HashMap<String, Object> map);
 
 //	제품별 스타일링 정보 얻어오기
-	public List<Styling> getStylingByProduct(HashMap<String, Integer> map);
+	public List<Styling> getStylingByProduct(HashMap<String, Object> map);
 	
 //	유사한 제품 정보 얻어오기(5개)
 	public List<Product> getSimilarProduct(HashMap<String, Object> map);

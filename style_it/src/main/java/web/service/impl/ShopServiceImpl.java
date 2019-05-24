@@ -62,13 +62,13 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 	@Override
-	public Product getProductView(HashMap<String, Integer> map) {
+	public Product getProductView(HashMap<String, Object> map) {
 		return shopDao.selectProductView(map);
 	}
 
 	
 	@Override
-	public List<Styling> getStylingByProduct(HashMap<String, Integer> map) {
+	public List<Styling> getStylingByProduct(HashMap<String, Object> map) {
 		return shopDao.selectStylingByProduct(map);
 	}
 

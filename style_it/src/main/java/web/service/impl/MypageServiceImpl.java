@@ -132,8 +132,8 @@ public class MypageServiceImpl implements MypageService{
 	}
 //	유저가 좋아요한 상품 리스트
 	@Override
-	public List<Product> getMemProLikeList(int m_no) {
-		return mypageDao.getMemProLikeList(m_no);
+	public List<Product> getMemProLikeList(HashMap<String, Object> map) {
+		return mypageDao.getMemProLikeList(map);
 	}
 //	세션 유저 프로필
 	@Override
@@ -289,15 +289,15 @@ public class MypageServiceImpl implements MypageService{
 		return mypageDao.getProductLikeList();
 	}
 	
-	@Override
-	public List<StylingLike> getStylingLikeList() {				
-		return mypageDao.getStylingLikeList();
-	}
+//	@Override
+//	public List<StylingLike> getStylingLikeList() {				
+//		return mypageDao.getStylingLikeList();
+//	}
 	
-	@Override
-	public List<Styling> getStylingList(int m_no) {
-		return mypageDao.getStylingList(m_no);
-	}
+//	@Override
+//	public List<Styling> getStylingList(int m_no) {
+//		return mypageDao.getStylingList(m_no);
+//	}
 	
 	@Override
 	public int getCountStyling(int m_no) {

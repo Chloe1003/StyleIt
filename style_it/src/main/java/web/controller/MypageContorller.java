@@ -230,12 +230,12 @@ public class MypageContorller {
 	
 	
 	
-//	스타일링 작성 수정 삭제 
-	@RequestMapping(value = "/mypage/styling")
-	public String MypageStyling(HttpSession session, Model model) {
-		
-		return "mypage/styling";
-	}
+////	스타일링 작성 수정 삭제 
+//	@RequestMapping(value = "/mypage/styling")
+//	public String MypageStyling(HttpSession session, Model model) {
+//		
+//		return "mypage/styling";
+//	}
 
 		
 	}
@@ -344,39 +344,39 @@ public class MypageContorller {
 //	}
 	
 //	마이페이지에서 보는 본인이 체크한 스타일링 좋아요 리스트
-	@RequestMapping(value = "/mypage/stylinglikelist")
-	public void StylingLikeList(Model model) {
-		
-		List<StylingLike> sKList = new ArrayList<>();
-		
-		sKList = mypageService.getStylingLikeList();
-		
-		model.addAttribute("sKList", sKList);
-		
-	}
+//	@RequestMapping(value = "/mypage/stylinglikelist")
+//	public void StylingLikeList(Model model) {
+//		
+//		List<StylingLike> sKList = new ArrayList<>();
+//		
+//		sKList = mypageService.getStylingLikeList();
+//		
+//		model.addAttribute("sKList", sKList);
+//		
+//	}
 	
 	
 	
 //	본인이 만든 모든 스타일링리스트
-	@RequestMapping(value = "/mypage/stylinglist")
-	public void MypageStylingList(Model model, Styling st, HttpSession session) {
-		
-		logger.info("st : "+st);
-		logger.info("stylinglist");
-		logger.info("session : "+session.getAttribute("m_no"));
-		int m_no = (int) session.getAttribute("m_no");
-		
-		List<Styling> sList = mypageService.getStylingList(m_no);
-		logger.info("stylinglist2 : "+sList);
-		model.addAttribute("sList", sList);
-		
-		int countStyling = mypageService.getCountStyling(m_no);
-		logger.info("countStyling : "+countStyling);
-		model.addAttribute("countStyling", countStyling);
-		
-		
-		
-	}	
+//	@RequestMapping(value = "/mypage/stylinglist")
+//	public void MypageStylingList(Model model, Styling st, HttpSession session) {
+//		
+//		logger.info("st : "+st);
+//		logger.info("stylinglist");
+//		logger.info("session : "+session.getAttribute("m_no"));
+//		int m_no = (int) session.getAttribute("m_no");
+//		
+//		List<Styling> sList = mypageService.getStylingList(m_no);
+//		logger.info("stylinglist2 : "+sList);
+//		model.addAttribute("sList", sList);
+//		
+//		int countStyling = mypageService.getCountStyling(m_no);
+//		logger.info("countStyling : "+countStyling);
+//		model.addAttribute("countStyling", countStyling);
+//		
+//		
+//		
+//	}	
 	
 	
 	

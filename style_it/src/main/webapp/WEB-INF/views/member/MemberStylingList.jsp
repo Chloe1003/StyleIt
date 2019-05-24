@@ -111,9 +111,13 @@ object-fit: contain;
 	<div class="img-wrapper img" onclick="stylingView(${s.s_no })" data-sno="${s.s_no }">
 		<img src="/upload/${s.fu_storedname }" alt="images">
 		<div class="likecnt" id="likecnt">${s.cntslike }</div>
+		<c:if test="${s.slikecheck eq 0 }">
+			<div class="like empty"></div>
+		</c:if>
+		<c:if test="${s.slikecheck>= 1 }">
+			<div class="like red"></div>
+		</c:if>
 		
-		
-		<div class="comment" onclick="comment(${s.s_no })"><img src="/resources/image/styling/comment.png" alt="comments"></div>
 		<div class="darkness"></div>
      	<div class="stylingname"><span draggable="false">${s.s_name }</span></div>
 	</div>
