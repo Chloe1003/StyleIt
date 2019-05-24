@@ -96,15 +96,29 @@
   		select rownum rnum, B.* from(
   		select p.fu_no, f.fu_storedname from product p
 		inner join fileupload f on f.fu_no = p.fu_no
-  		where pca_no=#{pca_no}
-  		) B	order by rnum) R where rnum between #{paging.startNo} and #{paging.endNo}
+  		where 1=1
+  		<if test="pca_no != ''">
+  			and pca_no=#{pca_no}
+  		</if> 
+  		<if test="p_name != ''">
+  			and p_name like '%' || #{word} || '%'
+  		</if> 
+  		) B	order by rnum 
+  		) R where rnum between #{paging.startNo} and #{paging.endNo}
   	</select>
   	
   	<select id="selectSearchCount" resultType="int" parameterType="HashMap">
   		select count(*) from (
 		select p.fu_no, f.fu_storedname from product p
 		inner join fileupload f on f.fu_no = p.fu_no
-		where pca_no=#{pca_no})
+		where 1=1
+		<if test="pca_no != ''">
+		and pca_no=#{pca_no} 
+		</if> 
+		<if test="p_name != ''"> 
+		and p_name like '%' || #{word} || '%' 
+		</if>
+		)
   	</select>
   	
   	<insert id="fileUploadInsert" parameterType="HashMap">
@@ -121,9 +135,6 @@
   		insert into styling(s_no, m_no, s_name, s_content, fu_no, st_no, s_date)
   		values(styling_seq.nextval, #{m_no}, #{s_name}, #{s_content}, #{no}, #{st_no}, sysdate)
   	</insert>
-  	
-
-
 
 	<select id="selectProductByStylingNoLogin" parameterType="int" resultType="web.dto.Product">
 		SELECT s.s_no, s.p_no, p.p_name, p.p_price, b.pb_name, f.fu_storedname, 
@@ -137,5 +148,43 @@
         ON p.pb_no = b.pb_no
   		WHERE s.s_no = #{s_no }	
 	</select>
+	
+
+	<select id="selectComments" parameterType="int" resultType="web.dto.StylingComment">
+		SELECT c.co_no, c.m_no, c.co_date, c.co_content, c.s_no, m.m_nick 
+		FROM stylingcomment c
+		JOIN member m
+		ON c.m_no = m.m_no
+		WHERE c.s_no = #{s_no }
+		ORDER BY c.co_date ASC
+	</select>
+	
+	<insert id="insertComment" parameterType="HashMap">
+		INSERT INTO stylingcomment(co_no, m_no, co_content, s_no)
+		VALUES (stylingcomment_seq.nextval, #{m_no }, #{co_content }, #{s_no }) 
+	</insert>
+	
+	<delete id="deleteComment" parameterType="int">
+		DELETE stylingcomment
+		WHERE co_no = #{co_no }
+	</delete>
+	
+	<select id="commentCnt" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM stylingcomment
+		WHERE s_no = #{s_no }
+	</select>
+
+	<select id="selectStylingNo" parameterType="HashMap" resultType="int">
+		select s_no from styling where fu_no=#{no}
+	</select>
+	
+	<select id="selectProductNo" parameterType="HashMap" resultType="int">
+		select p_no from product where fu_no=#{funo}
+	</select>
+	
+	<insert id="selectStylingProductInsert" parameterType="HashMap">
+		insert into stylingproduct (sp_no, s_no, p_no) values(stylingproduct_seq.nextval, #{sno}, #{pno})
+	</insert>
+
 
 </mapper>

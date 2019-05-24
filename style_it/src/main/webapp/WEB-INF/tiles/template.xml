@@ -8,8 +8,8 @@
 <tiles-definitions>
 
 
-	<definition name="shop/listloading" template="/WEB-INF/views/shop/listloading.jsp">
-	</definition>
+	<definition name="shop/listloading" template="/WEB-INF/views/shop/listloading.jsp"/>
+	<definition name="styling/comment" template="/WEB-INF/views/styling/comment.jsp"/>
 
 	<definition name="styling/create/ajax" template="/WEB-INF/views/styling/create/ajax.jsp"/>
 

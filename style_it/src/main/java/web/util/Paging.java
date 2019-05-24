@@ -15,6 +15,10 @@ public class Paging {
 	private int startNo; // 게시글 시작번호 (계산으로 알아냄)
 	private int endNo; // 게시글 끝 번호 (계산으로 알아냄)
 	
+	public Paging() {
+	
+	}
+	
 	// 총 게시글 수만 입력하는 생성자
 	public Paging(int totalCount) {
 		this.setTotalCount(totalCount);

@@ -625,11 +625,15 @@ $(document).ready(function() {
 		<div class="lBottom" style="position: relative; bottom: -13px; left: 490px;">
 			<span style="position: relative; left: 15px; font-size: 20px; font-weight: bold;">
 				<a style="cursor: pointer; color: black" onclick="showProductLikeList()">${countLike }</a></span>
+
 		<br><span style="position: relative; left: -22px;">Product 좋아요</span></div>
 		<div class="cBottom" style="position: relative; bottom: 36px;  left: 740px;">
 			<span style="position: relative; left: 15px; font-size: 20px; font-weight: bold;">
 			<a style="cursor: pointer; color: black" onclick="Stylinglikelist()">${countCollection }</a></span>
 		<br><span style="position: relative; left: -20px;">Styling 좋아요</span></div>
+
+		<br>좋아요</div>
+
 	
 	</div>
 	

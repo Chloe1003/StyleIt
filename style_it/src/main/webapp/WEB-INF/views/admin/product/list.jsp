@@ -59,7 +59,7 @@ th, td {
 
 <div class="container">
 
-<div class="row row-offcanvas row-offcanvas-right">
+<div class="row row-offcanvas row-offcanvas-right">           
 
 
 <div style="text-align: center; padding-bottom: 80px;" class="container">
@@ -81,7 +81,7 @@ th, td {
 		<select class="form-control" id="category" name="category" onchange="filter();"> 
 			<option value="">카테고리 전체</option>
 		<c:forEach items="${pcaList }" var="p">	
-			<option value="${p.PCA_CATEGORY }">${p.PCA_CATEGORY }</option>
+			<option value="${p.PCA_CATEGORY }" <c:if test="${ map.cate eq p.PCA_CATEGORY }"> selected </c:if>>${p.PCA_CATEGORY }</option>  
 		</c:forEach>
 		</select>
 	</th>
@@ -89,7 +89,7 @@ th, td {
 		<select class="form-control" id="brand" name="brand" onchange="filter();">
 			<option value="">브랜드 전체</option>
 		<c:forEach items="${pbList }" var="b">
-			<option value="${b.PB_NAME }">${b.PB_NAME }</option>		
+			<option value="${b.PB_NAME }" <c:if test="${ map.brand eq b.PB_NAME }"> selected </c:if> >${b.PB_NAME }</option>		
 		</c:forEach>
 		</select></th>
 	<th style="width: 55%">제품명</th>

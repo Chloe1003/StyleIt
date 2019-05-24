@@ -58,4 +58,14 @@ public class AdminUserServiceImpl implements AdminUserService {
 		uDao.disableMember(m_no);
 	}
 
+	@Override
+	public void updateProfile(Member m) {
+		uDao.userUpdate(m);
+	}
+
+	@Override
+	public Member getUser(int m_no) {
+		return uDao.selectUser(m_no);
+	}
+
 }

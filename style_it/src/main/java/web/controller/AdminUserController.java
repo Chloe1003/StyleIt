@@ -2,6 +2,7 @@ package web.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -55,6 +56,42 @@ public class AdminUserController {
 		model.addAttribute("search", search);
 		model.addAttribute("mList", mList);
 		model.addAttribute("paging", paging);	
+	}
+	
+	//회원 정보 가져오기
+	@RequestMapping(value="/admin/user/profile")
+	public String getUserProfile(int m_no, Model model) {
+		Member m = uServ.getUser(m_no);
+		
+		Map map = new HashMap();
+		
+		map.put("m_no", m.getM_no());
+		map.put("m_nick", m.getM_nick());
+		map.put("m_email", m.getM_email());
+		map.put("m_pw", m.getM_pw());
+//		map.put("m_valid", m.getM_valid());
+		
+		model.addAllAttributes(map);
+		
+		return "jsonView";
+		
+	}
+	
+	//회원 정보 수정
+	@RequestMapping(value="/admin/user/updateprofile", method=RequestMethod.POST)
+	public String adminUserUpdateProfile(String m_nick, String m_pw, int m_no) {
+		Member m = new Member();
+		
+		logger.info("비번"+m_pw);
+		
+
+		m.setM_no(m_no);
+		m.setM_nick(m_nick);
+		m.setM_pw(m_pw);
+		
+		uServ.updateProfile(m);	
+		
+		return "redirect:/admin/user/list";
 	}
 	
 	

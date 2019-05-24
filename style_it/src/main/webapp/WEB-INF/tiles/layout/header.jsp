@@ -26,7 +26,9 @@
 	top: 50%;
 	left: 50%;
 	transform: translateX(-50%) translateY(-50%);
+
 	z-index:9999;
+
 }
 
 /* 뒷배경 설정 */
@@ -90,6 +92,10 @@
 		location.href="/mypage/mypage?m_no=${m_no }";
 	}
 	
+	function adminpage(){
+		location.href="/admin/user/list";
+	}
+	
 </script>
 
 <script type="text/javascript">
@@ -150,7 +156,7 @@
 							 $("#loginChk").css("color","red");
 							}
 						}
-						,error : function(e) {
+						,error : function(e) {  
 							console.log("실패");
 						}
 					});
@@ -258,6 +264,10 @@
 				location.href = "/styling/create";
 			   }
 		});
+		
+		$("#style").click(function(){
+			location.href = "/main";
+		});
 	});
 </script>
 
@@ -276,16 +286,21 @@
 						class="icon-bar"></span>
 				</button>
 				<h1
-					style="color: #009994; font-family: 'Permanent Marker', cursive; margin-bottom: 15px;">style
-					it</h1>
+					style="color: #009994; font-family: 'Permanent Marker', cursive; margin-bottom: 15px;">
+					<span id="style" style="cursor:pointer">
+					style it
+					</span>
+					</h1>
 			</div>
 			<div id="navbar" class="navbar-right">
 				<ul class="nav navbar-nav" style="font-size: 0.85em;">
 					<li><a href="javascript:void(0)" id="create">CREATE+&nbsp;<span><img alt="faq"
 								src="/resources/image/main/hanger.png" style="width: 20px;"></span></a></li>
 
-
-					<c:if test="${login eq true }">
+					<c:if test="${m_nick eq 'admin' }">  
+						<li><a href="javascript:void(0);" onclick="adminpage();">ADMINPAGE</a></li>
+					</c:if>
+					<c:if test="${login eq true }">   
 						<li><a href="javascript:void(0);" onclick="mypage();">MYPAGE</a></li>
 						<li><a href="javascript:void(0);" onclick="logout();">LOGOUT</a></li>
 					</c:if>

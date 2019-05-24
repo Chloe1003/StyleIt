@@ -81,7 +81,7 @@ th, td {
 	<div class="form-group">
 		<label for="fu_no" class="col-sm-3 col-sm-offset-1 control-label" >이미지</label>
 		<div class="col-sm-5">
-			<img src="/upload/image/${list.FU_STOREDNAME }" style="width: 120px; height: 120px">
+			<img src="/upload/${list.FU_STOREDNAME }" style="width: 120px; height: 120px">
 		</div>
 	</div>	
 	
