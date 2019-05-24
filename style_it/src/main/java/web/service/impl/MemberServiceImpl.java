@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import web.dao.face.MemberDao;
 import web.dto.Follow;
 import web.dto.Member;
+import web.dto.Product;
 import web.service.face.MemberService;
 
 @Service
@@ -98,7 +99,16 @@ public class MemberServiceImpl implements MemberService{
 	public List<Member> getFollowList(Member member) {
 		return memberDao.getFollowList(member);
 	}
-
+	
+	@Override
+	public List<Product> getMemberStylingList(int m_no) {
+		return memberDao.getMemberStylingList(m_no);
+	}
+	
+	@Override
+	public List<Product> getMemberStylingLikeList(int m_no) {
+		return memberDao.getMemberStylingLikeList(m_no);
+	}
 
 	
 	
@@ -128,6 +138,9 @@ public class MemberServiceImpl implements MemberService{
 	public Member getMemberByMno(int m_no) {
 		return memberDao.selectMemberByMno(m_no);
 	}
+
+
+	
 
 	
 	

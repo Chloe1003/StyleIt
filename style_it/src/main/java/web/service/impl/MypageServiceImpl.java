@@ -15,6 +15,7 @@ import web.dto.Member;
 
 import web.dto.MemberQuiz;
 import web.dto.MemberQuizSet;
+import web.dto.Message;
 import web.dto.Product;
 import web.dto.ProductBrand;
 import web.dto.ProductCategory;
@@ -119,90 +120,34 @@ public class MypageServiceImpl implements MypageService{
 	public List<Product> getProLikeList(int m_no) {
 		return mypageDao.getProLikeList(m_no);
 	}
+//	내가 만든 스타일링 리스트
+	@Override
+	public List<Product> getStylingList(int m_no) {
+		return mypageDao.getStylingList(m_no);
+	}
+//	유저가 좋아요한 스타일링 리스트
+	@Override
+	public List<Product> getStylingLikeList(int m_no) {
+		return mypageDao.getStylingLikeList(m_no);
+	}
 //	유저가 좋아요한 상품 리스트
 	@Override
 	public List<Product> getMemProLikeList(int m_no) {
 		return mypageDao.getMemProLikeList(m_no);
 	}
+//	세션 유저 프로필
+	@Override
+	public String getUserImg(String m_nick) {
+		return mypageDao.getUserImg(m_nick);
+	}
+//	안읽은 메세지 총 수
+	@Override
+	public int getCountAllRead(Message message) {
+		return mypageDao.getCountAllRead(message);
+	}
 	
 	
 	
-	
-	
-	@Override
-	public List getFollowingList() {
-		return mypageDao.getFollowingList();
-	}
-
-	@Override
-	public List getStylieLikeList() {
-		return mypageDao.getStylieLikeList();
-	}
-
-	@Override
-	public void removeStylieList() {
-		mypageDao.removeStylieList();
-	}
-
-	@Override
-	public List getCollectionLikeList() {
-		return mypageDao.getCollectionLikeList();
-	}
-
-	@Override
-	public void removeCollectionList() {
-		mypageDao.removeCollectionList();
-	}
-
-	@Override
-	public List getProdurctLikeList() {
-		return mypageDao.getProdurctLikeList();
-	}
-
-	@Override
-	public void removeProductLike() {
-		mypageDao.removeProductLike();
-	}
-
-	@Override
-	public List getMypageStyling() {
-		return mypageDao.getMypageStyling();
-	}
-
-	@Override
-	public void insertStyling() {
-		mypageDao.insertStyling();
-	}
-
-	@Override
-	public void updateStyling() {
-		mypageDao.updateStyling();
-	}
-
-	@Override
-	public void deleteStyling() {
-		mypageDao.deleteStyling();
-	}
-
-	@Override
-	public List getMypageCollection() {
-		return mypageDao.getMypageCollection();
-	}
-
-	@Override
-	public void insertCollection() {
-		mypageDao.insertCollection();
-	}
-
-	@Override
-	public void updateCollection() {
-		mypageDao.updateCollection();
-	}
-
-	@Override
-	public void deleteCollection() {
-		mypageDao.deleteCollection();
-	}
 
 	@Override
 	public List<Product> getRecommendProduct(MemberQuizSet mq) {				
@@ -248,6 +193,8 @@ public class MypageServiceImpl implements MypageService{
 	public List<ProductStyle> getStyle() {
 		return mypageDao.selectStyle();
 	}
+	
+	
   
   	@Override
 	public void saveMemberQuiz(MemberQuizSet mq) {
@@ -332,6 +279,8 @@ public class MypageServiceImpl implements MypageService{
 		
 		return mqs;		
 	}
+	
+	
 
 	//---------yoon---------//
 

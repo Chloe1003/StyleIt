@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <style type="text/css">
 a:link { color: white; text-decoration: none;}
@@ -75,6 +76,8 @@ a:active {text-decoration: none; color: white;}
    	left:50%;
     transform:translateX(-50%) translateY(-50%);
     z-index:9999;
+    width: 1200px;
+	height: auto;
 }
 .bg_follow {
 	background: rgba(0, 0, 0, 0.5);
@@ -86,6 +89,7 @@ a:active {text-decoration: none; color: white;}
 	width: 100%;
 	height: 100%;
 	display: none;
+	z-index:9999;
 }    
 .userImg{
 	border-radius: 150px;
@@ -94,9 +98,24 @@ a:active {text-decoration: none; color: white;}
    /*  margin-left: 50px;
     margin-right: inherit; */
 }
-.follow_display{
-	width: 1200px;
+.message_display{
+	position: fixed; width:365px; display:none; font-family:nanum; 
+	margin-left: auto; margin-right: auto; background : white;
+	top : 50%;
+   	left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    z-index:9999;
+	width: 600px;
 	height: auto;
+	
+}
+.message_display1{
+	position: fixed; height: 640px; width: 680px; display:none; font-family:nanum;
+	margin-left: auto; margin-right: auto; background : white;
+	top : 50%;
+   	left:50%;
+    transform:translateX(-50%) translateY(-50%);
+    z-index:9999;
 	
 }
 .followeeUser{
@@ -146,11 +165,21 @@ function showProductLikeList() {
 	location.href ="/mypage/Productlikelist?m_no=${m_no}";
 	
 }
+function showMyStylingList() {
+	location.href ="/mypage/mystylinglist?m_no=${m_no}";
+}
+function Stylinglikelist() {
+	location.href ="/mypage/Stylinglikelist?m_no=${m_no}";
+}
+function showQuiz() {
+	location.href ="/mypage/quiz?m_no=${m_no}";
+}
 
 function showSetting() {
 	document.getElementById("set_display").style.display="block";
 	document.getElementById("bg_set").style.display="block";//배경 어둡게 하는 것
 }
+
 	
 	function  followee(m_no){
 		
@@ -197,7 +226,7 @@ function showSetting() {
 				   	    $.each(data.followingList, function(index, item) {
 			   	    	
 			   	    	html += '<div style="text-align: center; margin-top: 10px; margin-left: 1%; width:11.5%; float:left;">'
-			   	    	html += '<a href="/member/memberPage?m_no='+item.m_no+'"><img class="userImg" src="/upload/'+item.fu_storedName+'"/></a>'
+			   	    	html += '<a href="/member/memberPage?m_no='+item.m_no+'"><img class="userImg" src="/upload/'+item.fu_storedname+'"/></a>'
 			   	 		html +='<br><br>'
 			   	    	html += item.m_nick	
 			   	    	html +='<br><br>'
@@ -255,6 +284,112 @@ function showFollowList() {
 	document.getElementById("bg_follow1").style.display="block";//배경 어둡게 하는 것 
 		 
 }
+function showMail() {
+	
+	document.getElementById("mrlist_display").style.display="block";
+	document.getElementById("bg_mrlist").style.display="block";
+		 
+}
+Date.prototype.format = function (f) {
+
+    if (!this.valueOf()) return " ";
+
+
+
+    var weekKorName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+
+    var weekKorShortName = ["일", "월", "화", "수", "목", "금", "토"];
+
+    var weekEngName = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+    var weekEngShortName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    var d = this;
+
+
+
+    return f.replace(/(yyyy|yy|MM|dd|KS|KL|ES|EL|HH|hh|mm|ss|a\/p)/gi, function ($1) {
+
+        switch ($1) {
+
+
+            case "yy": return (d.getFullYear() % 1000).zf(2); // 년 (2자리)
+
+            case "MM": return (d.getMonth() + 1).zf(2); // 월 (2자리)
+
+            case "dd": return d.getDate().zf(2); // 일 (2자리)
+
+            case "HH": return d.getHours().zf(2); // 시간 (24시간 기준, 2자리)
+
+            case "mm": return d.getMinutes().zf(2); // 분 (2자리)
+
+            case "ss": return d.getSeconds().zf(2); // 초 (2자리)
+
+            default: return $1;
+
+        }
+
+    });
+
+};
+String.prototype.string = function (len) { var s = '', i = 0; while (i++ < len) { s += this; } return s; };
+
+String.prototype.zf = function (len) { return "0".string(len - this.length) + this; };
+
+Number.prototype.zf = function (len) { return this.toString().zf(len); };
+function showMessage1(mr_no, m_no) {
+	aaa= m_no
+	$.ajax({
+		type : "get"
+		,url : "/message/Mr_no"
+		,data : { "mr_no" : mr_no,
+					"m_no" : m_no	}
+		,dataType : "json"
+		,success : function( res ) {
+			var list = res.MessageList
+			console.log("성공");
+			console.log(res.m_no);
+				var html ="";
+			
+			$.each( list, function(index, value) {
+				var date = new Date(value.msg_date);
+				date.format('yy/MM/dd, HH:mm:ss');
+				
+				
+							
+				if( value.receiver_no == m_no ){
+					
+					html += '<p style="margin-bottom: -4px; margin-top: 8px;">'+value.m_nick+' '+ date.format('yy/MM/dd, HH:mm:ss') +'</p>';
+					html += '<p style="width: 300px; height: 30px; background-color: #ffff9e; display: inline-block; font-weight: bold; font-size: 17px;">'+value.msg_content+'</p>';
+					html += '<div style="position: relative; display: inline-block"><img style="border-radius: 150px; width: 45px;height: 45px;"src="/upload/'+value.fu_storedname+'"</img></div>';
+					html += '<hr>'
+				
+				}else{
+					
+					html += '<p style="margin-bottom: -4px; margin-top: 8px;">'+value.m_nick+' '+ date.format('yy/MM/dd, HH:mm:ss') +'</p>';
+					html += '<p style="width: 300px; height: 30px; background-color: #87e1ff; display: inline-block; font-weight: bold; font-size: 17px;">'+value.msg_content+'</p>';
+					html += '<div style="position: relative; display: inline-block"><img style="border-radius: 150px; width: 45px;height: 45px;"src="/upload/'+value.fu_storedname+'"</img></div>';
+					html += '<hr>'
+				}
+				
+			} );
+			
+// 			html += value.m_nick
+			 $("#meaa").html(html);
+			$('#chatAreabox').scrollTop($('#chatAreabox')[0].scrollHeight);
+			
+			
+		}
+		,error : function(e) {
+			console.log("실패");
+			console.log(e);
+		}
+	});
+	
+	showMessage(msg_content);
+	 
+	
+}
 
 //비밀번호 정규식
 var regex = /^[A-Za-z0-9]{6,12}$/;
@@ -305,9 +440,41 @@ function deleteUser() {
 	}
 };
 
-
+var aaa = 0;
 $(document).ready(function() {
+	$("#sendMsg").click(function() {
+
+		$.ajax({
+			type : "post"
+			,url : "/message/insertmr"
+			,data : { "m_no" : aaa,
+					  "msg_content" : $("#msg_content").val() }
+			,dataType : "json"
+			,success : function( res ) {
+				console.log("성공");
+				console.log(res.message.msg_content);
+				 $("#msg_content").focus();				
+				
+			}
+			,error : function(e) {
+				console.log("실패");
+				console.log(e);
+			}
+			});
+			
+		});
 	// 비밀번호 정규식 
+	$("#messageListCancel").click(function() {
+		document.getElementById("mrlist_display").style.display = "none"; 
+		document.getElementById("bg_mrlist").style.display = "none";
+		location.reload();
+	})
+	$("#messageCancel").click(function() {
+		document.getElementById("Message_display").style.display = "none"; 
+		document.getElementById("bg_Message").style.display = "none";
+		location.reload();
+		disconnect();
+	})
 	$("#m_pw_set1").keyup(function() {
 		if(!regex.test($("#m_pw_set1").val())) {
 			$("#ChangePassChk").html("숫자와 문자 포함 형태의 6~12자리 이내의 암호");
@@ -431,8 +598,9 @@ $(document).ready(function() {
 				
 	<div class="mypageLine">
 		<div class="mypageNick">안녕,&nbsp;&nbsp;&nbsp;&nbsp;<span style="text-transform: capitalize; text-decoration: underline; font-size: 18px;">${mypage.m_nick }</span>  
-			<img class="mail" src="/resources/image/mypage/mail.png"/>
-			<img class="sQuiz" src="/resources/image/mypage/clipboard.png"/>
+			<a a style="cursor: pointer;" onclick="showMail()"><img class="mail" src="/resources/image/mypage/mail.png"/></a>
+				<span style="position: relative; left: 290px; border: solid 2px red; border-radius: 8px; background-color: red; top: -7px;" >${countAllRead }</span>
+			<a style="cursor: pointer;" onclick="showQuiz()"><img class="sQuiz" src="/resources/image/mypage/clipboard.png"/></a>
 			<a style="cursor: pointer;" onclick="showSetting()"><img class="mySet" src="/resources/image/mypage/settings.png"/></a>
 		</div>
 		<!-- 프로필 사진 -->
@@ -451,15 +619,21 @@ $(document).ready(function() {
 	<div class="mypageBottom" style="margin-left: 168px;">
 	
 		<div class="sBottom" style="position: relative; left: 242px; bottom: -63px;">
-			<span style="position: relative; left: 25px; font-size: 20px; font-weight: bold;">${countStyling }</span>
+			<span style="position: relative; left: 25px; font-size: 20px; font-weight: bold;">
+			<a style="cursor: pointer; color: black" onclick="showMyStylingList()">${countStyling }</a></span>
 		<br>스타일링</div>
 		<div class="lBottom" style="position: relative; bottom: -13px; left: 490px;">
 			<span style="position: relative; left: 15px; font-size: 20px; font-weight: bold;">
 				<a style="cursor: pointer; color: black" onclick="showProductLikeList()">${countLike }</a></span>
+
+		<br><span style="position: relative; left: -22px;">Product 좋아요</span></div>
+		<div class="cBottom" style="position: relative; bottom: 36px;  left: 740px;">
+			<span style="position: relative; left: 15px; font-size: 20px; font-weight: bold;">
+			<a style="cursor: pointer; color: black" onclick="Stylinglikelist()">${countCollection }</a></span>
+		<br><span style="position: relative; left: -20px;">Styling 좋아요</span></div>
+
 		<br>좋아요</div>
-<!-- 		<div class="cBottom" style="position: relative; bottom: 36px;  left: 740px;"> -->
-<%-- 			<span style="position: relative; left: 15px; font-size: 20px; font-weight: bold;">${countCollection }</span> --%>
-<!-- 		<br>컬렉션</div> -->
+
 	
 	</div>
 	
@@ -632,4 +806,143 @@ $(document).ready(function() {
 						</div>
 					</div>
 				</div>	
+				
+				
+				<!-- 채팅방 리스트 -->	
+				<div class="bg_follow" id="bg_mrlist"></div>
+					<div class="message_display" id="mrlist_display">
+						<button type="button" class="close" id="messageListCancel" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<div style="background-color: #61d2d6; height: 80px; text-align: center; padding-top: 29px; font-size: 22px; color: white;">Messages</div>
+								
+									<div style="width:100%; height:auto;">
+										<div id="mrList1" style="overflow-y: scroll; height: 460px">
+													<c:forEach items="${MRList }" var="mr">
+			 											<div style="background-color: #f2feff; text-align: center; margin-top: 10px; margin-left: 1%; border: 2px solid rgba(231,214,207,.66); width: 98%; height: 100px; padding: 25px 100px;">
+															<p style="margin-bottom: -4px; margin-top: 8px; font-size: 10px; color: #b0b0b0;">
+																<fmt:formatDate value="${mr.mr_date }" pattern="yy/MM/dd, HH:mm:SS"/>
+															<span style="color: red; font-size: 14px; font-weight: bold;">${mr.notRead }</span>
+															</p>
+															<input type="hidden" id="m_no" name=m_no value="${mr.m_no }"/>
+															<a onclick="showMessage1(${mr.mr_no }, ${mr.m_no })" style="width: 300px; height: 30px; margin: auto; display: inline-block; font-size: 20px; cursor: pointer;">
+																	${mr.m_nick }
+															</a>
+															<div style="position: relative; display: flex;  bottom: 45px; width: 45px;">
+																<a href="/member/memberPage?m_no=${mr.m_no }"><img style="border-radius: 150px; width: 45px;height: 45px;" src="/upload/${mr.fu_storedname }"/></a>
+															</div> 
+														</div>
+													</c:forEach>
+											</div>
+	  							   	  </div> 
+							</div>
+				
+				
+				<!-- 챠팅방 -->
+						<div class="bg_follow" id="bg_Message"></div>
+							<div class="message_display1" id="Message_display">
+					  				<input type="hidden" id="m_no"  name="m_no" value="${mypage.m_no }">
+						  				<button type="button" class="close" id="messageCancel" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+								<div style="background-color: #61d2d6; height: 80px; text-align: center; padding-top: 29px; font-size: 22px; color: white;">MessageRoom</div>
+									<div style="width:100%; height:auto;">
+											<div id="chatAreabox" style="overflow-y: scroll; height: 460px">
+												<div id="meaa"style="text-align: center; margin-top: 10px; margin-left: 1%;"></div>
+											</div>
+	  							   	  </div> 
+	  							  <div style="width: 100%; height: 100px; background-color: #e8e8e8;">
+										<input type="text" id="msg_content" name="msg_content" placeholder="메세지를 입력해주세요."
+										style="width: 524px; height: 75px; margin-left: 61px; margin-top: 12px;
+											   font-size: 16px; line-height: 18px; color: #b0b0b0;"/>
+				  						<input type="button" id="sendMsg"value="SEND" 
+				  						style="height: 40px; width: 67px; background-color: #61d2d6; border-color: #61d2d6; border: none; font-size: 18px; color: white;"/>
+	  							  </div>
+							</div>
+				
+				
+<script>
+// sockjs 를 이용한 서버와 연결되는 객체
+var ws = null;
+var user_nick= null;
+var first = 0;
+function showMessage(msg_content) {
+	
+	document.getElementById("mrlist_display").style.display = "none"; 
+	document.getElementById("bg_mrlist").style.display = "none";
+	document.getElementById("Message_display").style.display="block";
+	document.getElementById("bg_Message").style.display="block";//배경 어둡게 하는 것 
+	 $("#msg_content").focus();
+	 $('#chatAreabox').scrollTop($('#chatAreabox')[0].scrollHeight);
+	 
+	 if(first==0){
+			connect();
+			first++;
+		}
+    console.log(msg_content);
+    var jsonMessage = JSON.parse(msg_content);
+    var curDate =  new Date();
+   
+    if('${m_nick}' == jsonMessage.m_nick){
+       
+		$("#meaa").append('<p style="margin-bottom: -4px; margin-top: 8px;">'+jsonMessage.m_nick+  curDate.format('yy/MM/dd, HH:mm:ss')+'</p>');
+		$("#meaa").append('<p style="width: 300px; height: 30px; background-color: #ffff9e; display: inline-block; font-weight: bold; font-size: 17px;">'+jsonMessage.msg_content+'</p>');
+		$("#meaa").append('<div style="position: relative; display: inline-block"><img style="border-radius: 150px; width: 45px;height: 45px;"src="/upload/'+jsonMessage.fu_storedname+'"</img></div>');
+		$("#meaa").append('<hr>');
+    }else{
+    	$("#meaa").append('<p style="margin-bottom: -4px; margin-top: 8px;">'+jsonMessage.m_nick+ '</p>');
+    	$("#meaa").append('<p style="width: 300px; height: 30px; background-color: #87e1ff; display: inline-block; font-weight: bold; font-size: 17px;">'+jsonMessage.msg_content+'</p>');
+    	$("#meaa").append('<div style="position: relative; display: inline-block"><img style="border-radius: 150px; width: 45px;height: 45px;"src="/upload/'+jsonMessage.fu_storedname+'"</img></div>');
+    	$("#meaa").append('<hr>');
+    }
+	
+	$('#chatAreabox').scrollTop($('#chatAreabox')[0].scrollHeight);
+	
+
+}
+
+
+function connect() {
+    // SockJS라이브러리를 이용하여 서버에 연결
+    ws = new WebSocket("ws://localhost:8088/chatEcho");
+  	console.log(ws);
+
+    // 서버가 메시지를 보내주면 함수가 호출된다.
+    ws.onmessage = function(msg_content) {
+        showMessage(msg_content.data);
+    }
+}
+
+function disconnect() {
+    if (ws != null) {
+        ws.close();
+    }
+    setConnected(false);
+    console.log("Disconnected");
+}
+
+function send() {
+    // 웹소켓 서버에 메시지를 전송
+    ws.send(JSON.stringify({'msg_content': $("#msg_content").val()}));
+    // 채팅입력창을 지우고 포커싱하라.
+    $("#msg_content").val('');
+    $("#msg_content").focus();
+}
+
+
+// $(함수(){ 함수내용 });  // jquery에서 문서가 다 읽어들이면 함수()를 호출한다.
+$(function () {
+//        connect();
+    // 채팅입력창에서 키가 눌리면 함수가 호출
+    // 엔터를 입력하면 send()함수가 호출
+    $("#msg_content").keypress(function(e) {
+        if (e.keyCode == 13){
+            send();
+        }
+    });
+
+    $( "#sendMsg" ).click(function() { send(); });
+});
+</script>
+				
+				
+				
 	

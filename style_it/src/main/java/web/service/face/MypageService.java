@@ -12,6 +12,7 @@ import web.dto.Product;
 
 import web.dto.MemberQuiz;
 import web.dto.MemberQuizSet;
+import web.dto.Message;
 import web.dto.Product;
 import web.dto.ProductBrand;
 import web.dto.ProductCategory;
@@ -59,51 +60,28 @@ public interface MypageService {
 	public List<Member> getFollowingList(int m_no);
 //	내가 좋아요 한 상품 리스트
 	public List<Product> getProLikeList(int m_no);
+//	내가 만든 스타일링 리스트
+	public List<Product> getStylingList(int m_no);
+//	유저가 좋아요 한 스타일링 리스트
+	public List<Product> getStylingLikeList(int m_no);
 //	유저가 좋아요 한 상품리스트
 	public List<Product> getMemProLikeList(int m_no);
 	
+//	프로필 사진 세션에 넘김.
+	public String getUserImg(String m_nick);
 	
-//	팔로잉 리스트
-	public List getFollowingList();
+//	안일은 메세지 전체 수
+	public int getCountAllRead(Message message);
 	
-//	본인이 좋아요한 스타일 리스트
-	public List getStylieLikeList();
-//	마이페이지에서 삭제할 좋아요한 스타일 리스트
-	public void removeStylieList();
 	
-//	본인이 좋아요한 컬렉션 리스트
-	public List getCollectionLikeList();
-//	마이페이지에서 삭제할 좋아요한 컬렉션 리스트
-	public void removeCollectionList();
-	
-//	본인이 좋아요한 상품 리스트
-	public List getProdurctLikeList();
-//	마이페이지에서 삭제할 좋아요한 상품 리스트
-	public void removeProductLike();
-	
-//	본인이 작성한 스타일링 리스트
-	public List getMypageStyling();
-//	스타일링 작성
-	public void insertStyling();
-//	스타일링 수정
-	public void updateStyling();
-//	스타일링 삭제
-	public void deleteStyling();
-	
-//	본인이 작성한 컬렉션 리스트
-	public List getMypageCollection();
-//	컬렉션 작성
-	public void insertCollection();
-//	컬렉션 수정
-	public void updateCollection();
-//	컬렉션 삭제
-	public void deleteCollection();
 
 //	추천받은 상품 리스트
 	public List<Product> getRecommendProduct(MemberQuizSet mq);
 	
 //	작성된 스타일링 퀴즈 가져오기 
 	public List<MemberQuiz> getMemberQuiz(int m_no);
+	
+
 	
 //	스타일링 퀴즈 답변 가져오기
 	public List<QuizQuestion> getStylingQuiz();
@@ -119,7 +97,7 @@ public interface MypageService {
 	
 //	멤버퀴즈 리스트를 멤버퀴즈셋 형태로 변경
 	public MemberQuizSet transferToMemberQuizSet(List<MemberQuiz> answer);
-	
+
 	//---------yoon---------//
 	
 	//마이페이지 좋아요한 제품 리스트
@@ -135,6 +113,7 @@ public interface MypageService {
 	
 	//마이페이지 내가 좋아요한 제품 수
 	public int getCountProduct(int m_no);
+
 		
 	
 }

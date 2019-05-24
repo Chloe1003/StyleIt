@@ -5,6 +5,7 @@ import java.util.List;
 
 import web.dto.Follow;
 import web.dto.Member;
+import web.dto.Product;
 
 public interface MemberDao {
 
@@ -40,19 +41,25 @@ public interface MemberDao {
 	public List<Member> getFollowingList(Member member);
 	// 멤퍼페이지에서 팔로우 된 리스트
 	public List<Member> getFollowList(Member member);
-	
-	
+
 	// 스타일링퀴즈 추가
 	public void stylingquizInsert(int qq_no);
 	
 	// 스타일링퀴즈 업데이트
 	public void stylingquizUpdate(int qq_no);
 
+	// 멤버가 만든 스타일링 리스트
+	public List<Product> getMemberStylingList(int m_no);
 
+	// 멤버가 좋아요한 좋아요 리스트
+	public List<Product> getMemberStylingLikeList(int m_no);
 
 
 	// m_no로 멤버 정보 가져오기
 	public Member selectMemberByMno(int m_no);
+
+
+	
 
 	
 
