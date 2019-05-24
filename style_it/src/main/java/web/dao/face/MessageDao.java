@@ -2,20 +2,30 @@ package web.dao.face;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import web.dto.Message;
 import web.dto.MessageRoom;
 
 public interface MessageDao {
 	
-	// 메시지 방 리스트 가져오기
-	public List<MessageRoom> selectRoomList(int m_no);
+	public int dualNo();
+
+	public void MakeMroom(MessageRoom mr);
+
+	public void sendMassege(Message m);
+
+	public int countChat(MessageRoom mr);
+
+	public int getMr_no(MessageRoom mr);
+
+	public List<Message> MessageList(int mr_no);
+
+	public List<MessageRoom> getmrList(int m_no);
+
+	public void countUpdate(Message message);
+
+	public int getNotRead(@Param("mr_no") int mr_no, @Param("m_no1") int m_no1);
 	
-	// 메시지 리스트 반환
-	public List<Message> selectMsgList(int mr_no);
 	
-	// 메시지 보내기
-	public void insertMsg(Message msg);
-	
-	// 메시지 열람여부 업데이트
-	public void updateRead(int msg_no);
 }

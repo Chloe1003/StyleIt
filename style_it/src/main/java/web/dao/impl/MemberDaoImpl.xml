@@ -114,10 +114,32 @@
       and f.follower_no= #{follower_no }
   	
   	</select>
-
+	
+	<select id="getMemberStylingList" parameterType="int" resultType="web.dto.Styling">
+	
+		select s.s_no, s.m_no, s.s_name, s.s_content, s.fu_no, fu.fu_storedname, s.st_no, s.s_date
+		, ( select count(*) from stylinglike l where s.s_no = l.s_no ) cntslike
+        from styling S, fileupload fu, member m
+        where s.m_no = m.m_no
+        and s.fu_no = fu.fu_no
+        and m.m_no= #{m_no }
+        
+	
+	</select>
   
   
-  
+  	<select id="getMemberStylingLikeList" parameterType="int" resultType="web.dto.Styling">
+  		
+  		 select s.s_no, s.m_no, s.s_name, s.s_content, s.fu_no, fu.fu_storedname, s.st_no, s.s_date
+			, ( select count(*) from stylinglike l where s.s_no = l.s_no ) cntslike
+    		, ( select count(*) from stylinglike l where s.s_no = l.s_no and l.m_no = #{m_no }  ) slikecheck
+	        from styling S, fileupload fu, stylinglike l
+	        where l.s_no = s.s_no
+	        and s.fu_no = fu.fu_no
+	        and l.m_no = #{m_no }
+  		
+  		
+  	</select>
   
   
   

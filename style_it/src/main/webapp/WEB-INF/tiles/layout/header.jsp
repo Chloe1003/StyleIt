@@ -26,7 +26,9 @@
 	top: 50%;
 	left: 50%;
 	transform: translateX(-50%) translateY(-50%);
-	z-index:9998;
+
+	z-index:9999;
+
 }
 
 /* 뒷배경 설정 */
@@ -40,6 +42,7 @@
 	width: 100%;
 	height: 100%;
 	display: none;
+	z-index:9999;
 }
 
 .bg1 {
@@ -52,6 +55,7 @@
 	width: 100%;
 	height: 100%;
 	display: none;
+	z-index:9999;	
 }
 
 /* X표시  */
@@ -292,6 +296,7 @@
 				<ul class="nav navbar-nav" style="font-size: 0.85em;">
 					<li><a href="javascript:void(0)" id="create">CREATE+&nbsp;<span><img alt="faq"
 								src="/resources/image/main/hanger.png" style="width: 20px;"></span></a></li>
+
 					<c:if test="${m_nick eq 'admin' }">  
 						<li><a href="javascript:void(0);" onclick="adminpage();">ADMINPAGE</a></li>
 					</c:if>
@@ -400,7 +405,6 @@
 		</div>
 	</form>
 </div>
-
 
 
 

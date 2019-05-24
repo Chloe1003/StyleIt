@@ -5,6 +5,7 @@ import java.util.List;
 
 import web.dto.Follow;
 import web.dto.Member;
+import web.dto.Product;
 
 public interface MemberService {
 
@@ -54,6 +55,12 @@ public interface MemberService {
 				
 		// 스타일링퀴즈 업데이트
 		public void stylingquizUpdate(int qq_no);
+
+		// 멤버가 만든 스타일링
+		public List<Product> getMemberStylingList(int m_no);
+		
+		// 멤버가 좋아요한 스타일링 리스트
+		public List<Product> getMemberStylingLikeList(int m_no);
 
 		
 

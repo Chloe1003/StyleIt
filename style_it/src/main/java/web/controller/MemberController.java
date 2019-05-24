@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import web.dto.Follow;
 import web.dto.Member;
+import web.dto.Message;
+import web.dto.MessageRoom;
 import web.dto.Product;
 import web.service.face.MemberService;
+import web.service.face.MessageService;
 import web.service.face.MypageService;
 
 @Controller
@@ -28,6 +31,7 @@ public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	@Autowired MemberService memberService;
 	@Autowired MypageService mypageService;	
+	@Autowired MessageService mServ;
 	
 	@RequestMapping("/main")
 	public void maingo() {
@@ -141,6 +145,29 @@ public class MemberController {
 		List<Member> memberfollowingList = memberService.getFollowingList(member);
 		model.addAttribute("memberfollowingList", memberfollowingList);
 		
+		
+		
+//		------------------------ 쪽지 리스트-----------------
+		
+		MessageRoom mr = new MessageRoom();
+		int mm_no =(int) session.getAttribute("m_no");
+		mr.setParticipant1(mm_no); //세션
+		mr.setParticipant2(m_no); //대상
+			
+		System.out.println("sesssion"+mm_no);
+		System.out.println("대상? "+m_no);
+		
+		int cnt = mServ.countChat(mr);
+		
+		if(cnt != 0) {
+			int mr_no = mServ.getMr_no(mr);
+			
+			List<Message> MessageList = mServ.MessageList(mr_no);
+			model.addAttribute("MessageList", MessageList);
+		}
+		
+			
+		
 			
 	}
 	// 맴버 팔로우할때 + 마이페이지에서 언팔로우 할때.
@@ -217,12 +244,28 @@ public class MemberController {
 //		팔로잉 할때 세션 아이디값을 followee에 넣고
 //		follower 에는 현재 보고 있는 페이지의 유저 넘버를 넣어야함. 
 	}
-//	마이페이지에서 보는 본인이 체크한 상품 좋아요 리스트
+//	멤버페이지에서 보는 멤버가 좋아요한 상품 리스트
 	@RequestMapping(value = "/member/MemProductlikelist")
 	public void MemberProLikeList(Model model, int m_no, Product p) {
 		System.out.println("m_no은?"+m_no);
-		List<Product> ProLikeList = mypageService.getMemProLikeList(m_no);
+		List<Product> ProLikeList = mypageService.getMemProLikeList(m_no); // 실수로 마이페이지 서비스로 보내버림..
 		model.addAttribute("ProLikeList", ProLikeList);
+		
+	}
+//	멤버페이지에서 보는 멤버가 좋아요한 상품 리스트
+	@RequestMapping(value = "/member/MemberStylingLikeList")
+	public void MemberStylingLikeList(Model model, int m_no, Product p) {
+		System.out.println("m_no은?"+m_no);
+		List<Product> StylingLikeList = memberService.getMemberStylingLikeList(m_no); // 실수로 마이페이지 서비스로 보내버림..
+		model.addAttribute("StylingLikeList", StylingLikeList);
+		
+	}
+//	멤머페이지에서 보는 멤머가 만든 스타일링 리스트
+	@RequestMapping(value = "/member/MemberStylingList")
+	public void MemberStylingList(Model model, int m_no, Product p) {
+		System.out.println("m_no은?"+m_no);
+		List<Product> memberstylingList = memberService.getMemberStylingList(m_no); // 실수로 마이페이지 서비스로 보내버림..
+		model.addAttribute("memberstylingList", memberstylingList);
 		
 	}
 	
